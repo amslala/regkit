@@ -14,7 +14,7 @@
 #' @export
 #' @import logger data.table
 
-filter_demo <- function(data, data_type, filter_param, id_col = NULL, any = FALSE, rm_na = TRUE, log_path = NULL){
+filter_demo_dt <- function(data, data_type, filter_param, id_col = NULL, any = FALSE, rm_na = TRUE, log_path = NULL){
 
   ##### Set up logging #####
   log_threshold(DEBUG)
@@ -61,30 +61,28 @@ filter_demo <- function(data, data_type, filter_param, id_col = NULL, any = FALS
     return(data_no_na)
   }
 
-  do_filter <- function(data, filter_param, id_col = null, any = FALSE){
-    filtered_data <- purrr::reduce(names(filter_param), function(df, col) {
-      if(any){
-        df |>
-          dplyr::group_by(!!rlang::sym(id_col)) |>
-          dplyr::filter(any(!!rlang::sym(col) %in% filter_param[[col]])) |>
-          dplyr::ungroup()
+  do_filter_dt <- function(data, filter_param, id_col = NULL, any = FALSE) {
+    for (col in names(filter_param)) {
+      if (any && !is.null(id_col)) {
+        id_symbol <- as.name(id_col)
+        data <- data[, .SD[any(get(col) %in% filter_param[[col]])], by = id_symbol]
       } else {
-        df |>  dplyr::filter(!!rlang::sym(col) %in% filter_param[[col]])
+        data <- data[get(col) %in% filter_param[[col]], ]
       }
-    }, .init = data)
+    }
+    return(data)
   }
-
 
 
   ####Main filtering####
   if(data_type == "t_invariant"){
-    filtered_data <- do_filter(data, filter_param)
+    filtered_data <- do_filter_dt(data, filter_param)
     message("Filtering time-invariant dataset...")
     cli::cli_alert_success("Filtered time-invariant dataset by '{names(filter_param)}' column(s)")
     cli::cli_alert_info("Filtered {.val {nrow(data) - nrow(filtered_data)}} rows ({.strong {round((nrow(data) - nrow(filtered_data)) / nrow(data) * 100, 1)}%} removed)")
     log_info("Filtering time-invariant by '{names(filter_param)}' column(s)")
   } else if (data_type == "t_variant"){
-    filtered_data <- do_filter(data, filter_param, id_col, any)
+    filtered_data <- do_filter_dt(data, filter_param, id_col, any)
     message("Filtering time-variant dataset...")
     cli::cli_alert_success("Filtered time-variant by '{names(filter_param)}' column(s)")
     cli::cli_alert_info("Filtered {.val {nrow(data) - nrow(filtered_data)}} rows ({.strong {round((nrow(data) - nrow(filtered_data)) / nrow(data) * 100, 1)}%} removed)")

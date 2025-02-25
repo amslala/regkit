@@ -10,6 +10,8 @@
 #' @return Filtered diagnostic data frame containing only relevant observations based on diagnostic codes of interest.
 #'
 #' @export
+#' @import logger data.table
+#'
 #'
 
 filter_diag_dt <- function(data, codes, id_col = "id", code_col = "icd_code", log_path = NULL){
@@ -70,10 +72,10 @@ filter_diag_dt <- function(data, codes, id_col = "id", code_col = "icd_code", lo
   if (!(all(codes %in% dt[[code_col]]))){
     cli::cli_alert_warning("Warning: The following codes are not found in the dataset: {paste(codes[!codes %in% dt[[code_col]]], collapse = ', ')}")
     log_warn("The following codes are not found in the dataset: {paste(codes[!codes %in% dt[[code_col]]], collapse = ', ')}")
-    filtered_data = dt[dt[[code_col]] %chin% codes, ]
+    message(substitute(code_col))
+    filtered_data <- dt[get(code_col) %in% codes, ]
   } else{
-    print(code_col)
-    filtered_data = dt[dt[[code_col]] %chin% codes, ]
+    filtered_data <- dt[get(code_col) %in% codes, ]
   }
 
   ###### Summary data #####

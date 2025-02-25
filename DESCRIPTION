@@ -14,6 +14,7 @@ RoxygenNote: 7.3.2
 Imports: 
     cli,
     crayon,
+    data.table,
     dplyr,
     glue,
     haven,

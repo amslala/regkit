@@ -9,7 +9,8 @@ link_diag_demo(
   data_demo_inv = NULL,
   data_demo_var = NULL,
   id_col = "id",
-  date_col = "year"
+  date_col = "year",
+  log_path = NULL
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ link_diag_demo(
 \item{id_col}{Name (character) of the ID column in the data set (unique personal identifier), default is "id"}
 
 \item{date_col}{Name (character) of the date column in the data set, in case of using time-variant data.}
+
+\item{log_path}{File path of the log file to be used}
 }
 \value{
 Linked dataset including relevant diagnostic and demographic characteristics.
