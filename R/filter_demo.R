@@ -35,9 +35,10 @@ filter_demo <- function(data, data_type, filter_param, id_col = NULL, any = FALS
 
   ###Validate input ####
 
-  if(!names(filter_param) %in% colnames(data)){
-    log_error("The specified variables do not exist in the dataset")
-    stop(glue::glue("The specified variables does not exist in the dataset"))
+  missing_cols <- names(filter_param)[!names(filter_param) %in% colnames(data)]
+  if(length(missing_cols) > 0){
+    log_error("The following variables do not exist in the dataset: {paste(missing_cols, collapse = ', ')}")
+    stop(glue::glue("The following variables do not exist in the dataset: {paste(missing_cols, collapse = ', ')}"))
   }
 
   if(missing(data_type)) {
@@ -46,24 +47,17 @@ filter_demo <- function(data, data_type, filter_param, id_col = NULL, any = FALS
   }
 
   ###Helper functions####
-  remove_na <- function(data){
-    n_missing <- data |>
-      dplyr::filter(if_any(everything(), is.na)) |>
-      nrow()
+  remove_na <- function(filtered_data) {
+    data_no_na <- filtered_data[complete.cases(filtered_data), ]
+    n_missing <- nrow(filtered_data) - nrow(data_no_na)
 
-    if(sum(n_missing) > 0){
-      cat("\n")
-      message(glue::glue("Removing observations containing NAs in any column... "))
-      data_no_na <- data |>
-        tidyr::drop_na()
-      cli::cli_alert_success("Removed {.val {sum(n_missing)}} rows with NAs.")
-      log_info("Removed {sum(n_missing)} rows with NAs.")
-      } else {
-        cat("\n")
-        cli::cli_alert_warning("The dataset has no NAs or they are coded in a different format.")
-        log_warn("The dataset has no NAs or they are coded in a different format.")
-        data_no_na <- data
-      }
+    if (n_missing > 0) {
+      cli::cli_alert_success("Removed {.val {n_missing}} rows with NAs.")
+      log_info("Removed {n_missing} rows with NAs.")
+    } else {
+      cli::cli_alert_warning("The dataset has no NAs or they are coded in a different format.")
+      log_warn("The dataset has no NAs or they are coded in a different format.")
+    }
     return(data_no_na)
   }
 
@@ -78,7 +72,7 @@ filter_demo <- function(data, data_type, filter_param, id_col = NULL, any = FALS
         df |>  dplyr::filter(!!rlang::sym(col) %in% filter_param[[col]])
       }
     }, .init = data)
-    }
+  }
 
 
   ####Main filtering####
