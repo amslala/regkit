@@ -1,0 +1,30 @@
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://amslala.github.io/regtools/404.html</loc></url>
+<url><loc>https://amslala.github.io/regtools/LICENSE-text.html</loc></url>
+<url><loc>https://amslala.github.io/regtools/LICENSE.html</loc></url>
+<url><loc>https://amslala.github.io/regtools/articles/Introduction to regtools.html</loc></url>
+<url><loc>https://amslala.github.io/regtools/articles/index.html</loc></url>
+<url><loc>https://amslala.github.io/regtools/authors.html</loc></url>
+<url><loc>https://amslala.github.io/regtools/index.html</loc></url>
+<url><loc>https://amslala.github.io/regtools/reference/calculate_incidence.html</loc></url>
+<url><loc>https://amslala.github.io/regtools/reference/calculate_prevalence.html</loc></url>
+<url><loc>https://amslala.github.io/regtools/reference/calculate_prevalence_series.html</loc></url>
+<url><loc>https://amslala.github.io/regtools/reference/curate_diag.html</loc></url>
+<url><loc>https://amslala.github.io/regtools/reference/diag_df.html</loc></url>
+<url><loc>https://amslala.github.io/regtools/reference/filter_demo.html</loc></url>
+<url><loc>https://amslala.github.io/regtools/reference/filter_diag.html</loc></url>
+<url><loc>https://amslala.github.io/regtools/reference/get_population_ssb.html</loc></url>
+<url><loc>https://amslala.github.io/regtools/reference/harmonize_municipality_codes.html</loc></url>
+<url><loc>https://amslala.github.io/regtools/reference/index.html</loc></url>
+<url><loc>https://amslala.github.io/regtools/reference/invar_df.html</loc></url>
+<url><loc>https://amslala.github.io/regtools/reference/kommuner_2016.html</loc></url>
+<url><loc>https://amslala.github.io/regtools/reference/link_diag_demo.html</loc></url>
+<url><loc>https://amslala.github.io/regtools/reference/linked_df.html</loc></url>
+<url><loc>https://amslala.github.io/regtools/reference/plot_rates.html</loc></url>
+<url><loc>https://amslala.github.io/regtools/reference/read_demo_data.html</loc></url>
+<url><loc>https://amslala.github.io/regtools/reference/read_diag_data.html</loc></url>
+<url><loc>https://amslala.github.io/regtools/reference/regtools-package.html</loc></url>
+<url><loc>https://amslala.github.io/regtools/reference/simulate_data.html</loc></url>
+<url><loc>https://amslala.github.io/regtools/reference/var_df.html</loc></url>
+</urlset>
+
