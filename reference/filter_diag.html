@@ -15,10 +15,12 @@
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/regtools.html">Get started</a></li>
+<li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/Introduction%20to%20regtools.html">Introduction to regtools</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/h-functions.html">Other useful functions</a></li>
+    <li><a class="dropdown-item" href="../articles/Introduction%20to%20regtools.html">Introduction to regtools</a></li>
   </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -46,6 +48,7 @@
 <span>  <span class="va">data</span>,</span>
 <span>  codes <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  pattern_codes <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  classification <span class="op">=</span> <span class="st">"icd"</span>,</span>
 <span>  id_col <span class="op">=</span> <span class="st">"id"</span>,</span>
 <span>  code_col <span class="op">=</span> <span class="st">"icd_code"</span>,</span>
 <span>  log_path <span class="op">=</span> <span class="cn">NULL</span></span>
@@ -65,7 +68,11 @@
 
 
 <dt id="arg-pattern-codes">pattern_codes<a class="anchor" aria-label="anchor" href="#arg-pattern-codes"></a></dt>
-<dd><p>A character vector. Pattern of ICD-10 codes to validate and filter in <code>data</code>. For example, F84 will use all codes starting with F84 (F840, F841, F842, F844, etc.)</p></dd>
+<dd><p>A character vector. Pattern of ICD-10 codes to validate and filter in <code>data</code>. For example, F84 will use all codes starting with F84 (F840, F841, F842, F844, etc.</p></dd>
+
+
+<dt id="arg-classification">classification<a class="anchor" aria-label="anchor" href="#arg-classification"></a></dt>
+<dd><p>A character string. Classification used in diagnostic codes: ICD-10  or ICPC-2. Options are "icd" or "icpc". Default is "icd".</p></dd>
 
 
 <dt id="arg-id-col">id_col<a class="anchor" aria-label="anchor" href="#arg-id-col"></a></dt>

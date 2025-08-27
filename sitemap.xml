@@ -3,7 +3,9 @@
 <url><loc>https://amslala.github.io/regtools/LICENSE-text.html</loc></url>
 <url><loc>https://amslala.github.io/regtools/LICENSE.html</loc></url>
 <url><loc>https://amslala.github.io/regtools/articles/Introduction to regtools.html</loc></url>
+<url><loc>https://amslala.github.io/regtools/articles/h-functions.html</loc></url>
 <url><loc>https://amslala.github.io/regtools/articles/index.html</loc></url>
+<url><loc>https://amslala.github.io/regtools/articles/regtools.html</loc></url>
 <url><loc>https://amslala.github.io/regtools/authors.html</loc></url>
 <url><loc>https://amslala.github.io/regtools/index.html</loc></url>
 <url><loc>https://amslala.github.io/regtools/reference/calculate_incidence.html</loc></url>
@@ -24,7 +26,7 @@
 <url><loc>https://amslala.github.io/regtools/reference/read_demo_data.html</loc></url>
 <url><loc>https://amslala.github.io/regtools/reference/read_diag_data.html</loc></url>
 <url><loc>https://amslala.github.io/regtools/reference/regtools-package.html</loc></url>
-<url><loc>https://amslala.github.io/regtools/reference/simulate_data.html</loc></url>
+<url><loc>https://amslala.github.io/regtools/reference/synthetic_data.html</loc></url>
 <url><loc>https://amslala.github.io/regtools/reference/var_df.html</loc></url>
 </urlset>
 
