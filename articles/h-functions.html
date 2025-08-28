@@ -66,11 +66,9 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/amslala/regtools" class="external-link">regtools</a></span><span class="op">)</span></span></code></pre></div>
-<p>This vignette includes other useful functions in regtools. These
-functions are particularly useful …</p>
-<p>It is important to note that the <code><a href="../reference/get_population_ssb.html">get_population_ssb()</a></code>
+<p>This vignette includes additional functions in <code>regtools</code>
+that can be helpful when working with individual-level data in Norway.
+It is important to note that the <code><a href="../reference/get_population_ssb.html">get_population_ssb()</a></code>
 function requires an internet connection and therefore only works
 outside of TSD (Services for sensitive data). In certain cases described
 in this vignette, the <code><a href="../reference/synthetic_data.html">synthetic_data()</a></code> function also
@@ -86,10 +84,11 @@ confidentiality agreements. In Norway, sensitive health and
 sociodemographic individual-level data cannot be shared or used outside
 of secure platforms, such as TSD (Services for sensitive data). While
 this type of disclosure control protects the privacy of study
-participants, it can also pose a challenge to reproducibility and
-transparency practices in research. Although code sharing has gained
-popularity, code cannot be appropriately evaluated (and potentially
-reused) if the original analytic data is unavailable.</p>
+participants, it can also pose a significant challenge to
+reproducibility and transparency practices in research. Although code
+sharing has gained popularity, code cannot be appropriately evaluated
+(and potentially reused) if the original analytic data is
+unavailable.</p>
 <p>One possible solution to the challenges associated with using
 confidential data is to create synthetic or simulated data that have
 similar structure and statistical characteristics as the original data.
@@ -108,57 +107,224 @@ attacks.</p>
 some of the challenges associated with working with confidential
 individual-level data in Norway by creating synthetic datasets without
 the need of pre-existing data. As this function does not require the use
-of pre-existing data, it also does not aim to capture the internal
+of pre-existing data, it also does not attempt to capture the internal
 statistical characteristics and relationships between variables.
 However, <code><a href="../reference/synthetic_data.html">synthetic_data()</a></code> is still particularly useful for
 researchers working with Norwegian health and sociodemographic datasets,
-as it produces synthetic datasets with the same structure and semantics
-found in real individual-level data.</p>
-<p>In broad strokes, the <code><a href="../reference/synthetic_data.html">synthetic_data()</a></code> function has the
-ability to create three different types of datasets:</p>
-<ul>
-<li><p><strong>Diagnostic (health) data:</strong> Including at least a
-unique personal identifier (ID), date of diagnostic event, and diagnosis
-code (such as ICD-10 or ICP-2). For instance, datasets from NPR
-(Norwegian Patient Registry) or KUHR (Norwegian Control and Payment of
-Health Reimbursements Database).</p></li>
-<li><p><strong>Time-invariant data:</strong> Including at least a unique
-personal identifier (ID) and sociodemographic variables such as date of
-birth, immigration background, etc.</p></li>
-<li><p><strong>Time-varying data:</strong> Including at least a unique
-personal identifier (ID), date, and sociodemographic variables such as
-place of residence or marital status. This type of information usually
-is updated quarterly or yearly in administrative registries.</p></li>
-<li><p>Even if the final product is not completely “perfect”, it can be
-a basis that you can further modify or add other
-characteristics.</p></li>
-</ul>
-<p>Three main use cases:</p>
+as it produces synthetic datasets with a structure and semantics
+resembling those found in actual individual-level data (e.g NPR, KUHR,
+SSB).</p>
+<p>Consider the features the <code><a href="../reference/synthetic_data.html">synthetic_data()</a></code> function, we
+have identified three main use cases:</p>
 <ol style="list-style-type: decimal">
-<li><p>easier to share analytical code. Let reviewers and other
-researchers (collaborators) execute your code, easier to evaluate what
-code does and potentially how to reuse it. Consider that it does not
-keep all statistical properties.</p></li>
-<li><p>It can also be used for educational purposes, low barrier/low
-risk to explore and train/onboard new people in the team.</p></li>
-<li><p>In case we dont have access to secure zone for any reason, we can
-still keep working on the code. Also useful in case data-access is
-delayed, you can still prepare analytic scripts, or also it is possible
-to prepare scripts at the same time as pre-registration?</p></li>
+<li><p><strong>Easier code sharing:</strong> this type of synthetic
+datasets allow researchers to simultaneously share their analytically
+code and data without privacy concerns. In turn, reviewers and
+collaborators can successfully execute the code, facilitating its
+correct evaluation and potential reuse.</p></li>
+<li><p><strong>Educational purposes:</strong> the data generated by the
+<code><a href="../reference/synthetic_data.html">synthetic_data()</a></code> function also provides a low-barrier and
+low-risk way of exploring and manipulating data, making it ideal for
+training or onboarding new researchers.</p></li>
+<li><p><strong>Development without data access:</strong> if data
+availability is delayed or not possible to access for other reasons
+(e.g. preregistration), researchers can still prepare analytic scripts
+in advance.</p></li>
 </ol>
-<p>Data generation process is well documented in with output in CLI to
-the user. Additionally, after running the function in the same object
-you have the datasets and also the metadata, like the function call and
-the arguments used to generate the dataset. In this way, easier to keep
-track of datasets and how they were constructed.</p>
 </div>
 <div class="section level3">
 <h3 id="how">How?<a class="anchor" aria-label="anchor" href="#how"></a>
 </h3>
-<p>Seeds to ensure reproducibility</p>
+<p>Broadly speaking, the <code><a href="../reference/synthetic_data.html">synthetic_data()</a></code> function has the
+ability to create three different types of datasets that meet certain
+minimum characteristics:</p>
 <ul>
-<li>Explain the cases where it requires internet connection.</li>
+<li><p><strong>Diagnostic (health) data:</strong> This includes at least
+a unique personal identifier (ID), date of diagnostic event, and
+diagnosis code (such as ICD-10 or ICP-2). For instance, datasets from
+NPR (Norwegian Patient Registry) or KUHR (Norwegian Control and Payment
+of Health Reimbursements Database).</p></li>
+<li><p><strong>Time-invariant data:</strong> Including at least a unique
+personal identifier (ID) and sociodemographic variables such as date of
+birth, immigration background, etc.</p></li>
+<li><p><strong>Time-varying data:</strong> Encompassing at least a
+unique personal identifier (ID), date, and sociodemographic variables
+such as place of residence or marital status. This type of information
+usually is updated quarterly or yearly in administrative
+registries.</p></li>
 </ul>
+<p>Considering the complexity and variability of registry data, the
+datasets created by <code><a href="../reference/synthetic_data.html">synthetic_data()</a></code> will likely differ to
+a certain degree from the actual data delivered by NPR or SSB
+(Statistics Norway). Even when the structure of the synthetic datasets
+varies from the original data, the simulated datasets serve as a useful
+starting point that researchers can further modify and tailor to suit
+their specific needs. Furthermore, the <code><a href="../reference/synthetic_data.html">synthetic_data()</a></code>
+function also keeps track of important metadata associated with the data
+generation process. In this way, it is possible for researchers to
+produce consistent datasets in an efficient manner.</p>
+<div class="section level4">
+<h4 id="practical-example">Practical example<a class="anchor" aria-label="anchor" href="#practical-example"></a>
+</h4>
+<p>To successfully generate the three different synthetic datasets
+describe in the section above, you will need to provide some information
+about the population size and classifications you want to include in the
+different datasets. For the whole description of each argument please
+consult the <code><a href="../reference/synthetic_data.html">synthetic_data()</a></code> function’s documentation.</p>
+<p>The <code>population_size</code> parameter will be used to ensure
+that the size of the datasets is similar to the one you will encounter
+working with real data, while also generating the necessary number of
+diagnostic cases for the given prevalence or incidence rate. In the code
+below, the population size is specified as 15,000 with a period
+prevalence of .06 (6%). Therefore, there will be 900 relevant cases in
+the data.</p>
+<p>With the purpose of making the synthetic datasets as realistic as
+possible, they all include an additional number of non-relevant cases
+(to complete the specified population size). Additionally, all the
+individuals in the diagnostic dataset can have a random number of
+repeated diagnostic events either in the same year or different
+years.</p>
+<p>The arguments <code>family_codes</code>, <code>pattern</code>,
+<code>diag_years</code>, <code>sex_vector</code>, <code>y_birth</code>,
+<code>invariant_codes</code>, <code>varying_query</code> are all used to
+populate the diagnostic, time-invariant and time-varying information of
+the relevant 900 cases. The remainder arguments are used to generate the
+filler non-relevant cases.</p>
+<p>In most cases you will want to specify your own column names and
+codes for the invariant and time-varying variables
+(<code>invariant_codes</code>, <code>invariant_codes_filler</code>,
+<code>varying_codes</code>, <code>varying_codes_filler</code>), however
+the function also supports looking for classification codes in SSB’s
+Statistical Classifications and Codelists (Klass). Both
+<code>varying_query</code> and <code>invariant_queries</code> options
+require an internet connection to retrieve the specified classifications
+and codelists from SSB.</p>
+<p>With the purpose of facilitating transparency and reproducibility,
+the <code><a href="../reference/synthetic_data.html">synthetic_data()</a></code> function outputs a list with two named
+lists: “datasets” and “metadata”. Within the first list (“datasets”),
+you will find the diagnostic, time-invariant and time-varying data as
+separate data frames.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">dummy_data</span> <span class="op">&lt;-</span> <span class="fu">regtools</span><span class="fu">::</span><span class="fu"><a href="../reference/synthetic_data.html">synthetic_data</a></span><span class="op">(</span></span>
+<span>  population_size <span class="op">=</span> <span class="fl">15000</span>,</span>
+<span>  prefix_ids <span class="op">=</span> <span class="st">"P000"</span>,</span>
+<span>  length_ids <span class="op">=</span> <span class="fl">6</span>,</span>
+<span>  family_codes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"F84"</span><span class="op">)</span>,</span>
+<span>  pattern <span class="op">=</span> <span class="st">"increase"</span>,</span>
+<span>  prevalence <span class="op">=</span> <span class="fl">.060</span>,</span>
+<span>  diag_years  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2012</span><span class="op">:</span><span class="fl">2020</span><span class="op">)</span>,</span>
+<span>  sex_vector <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  y_birth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2010</span><span class="op">:</span><span class="fl">2018</span><span class="op">)</span>,</span>
+<span>  filler_codes <span class="op">=</span> <span class="st">"F"</span>,</span>
+<span>  filler_y_birth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2000</span><span class="op">:</span><span class="fl">2009</span><span class="op">)</span>,</span>
+<span>  invariant_codes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"innvandringsgrunn"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ARB"</span>, <span class="st">"NRD"</span>, <span class="st">"UKJ"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  invariant_codes_filler <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"innvandringsgrunn"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"FAMM"</span>, <span class="st">"UTD"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  varying_query <span class="op">=</span> <span class="st">"fylke"</span>,</span>
+<span>  seed <span class="op">=</span> <span class="fl">123</span><span class="op">)</span> </span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Creating relevant cases with the following characteristics:</span></span>
+<span><span class="co">#&gt; • Population size = 15000</span></span>
+<span><span class="co">#&gt; • Prefix IDs = P000</span></span>
+<span><span class="co">#&gt; • Length IDs = 6</span></span>
+<span><span class="co">#&gt; • Diagnostic relevant codes = F84</span></span>
+<span><span class="co">#&gt; • Pattern of incidence = increase</span></span>
+<span><span class="co">#&gt; • Prevalence = 0.06</span></span>
+<span><span class="co">#&gt; • Diagnostic years = 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, and 2020</span></span>
+<span><span class="co">#&gt; • Incidence =</span></span>
+<span><span class="co">#&gt; • Coding sex = 0 and 1</span></span>
+<span><span class="co">#&gt; • Relevant years of birth = 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, and</span></span>
+<span><span class="co">#&gt; 2018</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Creating filler cases with the following characteristics:</span></span>
+<span><span class="co">#&gt; • Filler diagnostic codes = F</span></span>
+<span><span class="co">#&gt; • Filler years of birth = 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008,</span></span>
+<span><span class="co">#&gt; and 2009</span></span>
+<span><span class="co">#&gt; • Pattern for filler incidence = 'random'</span></span>
+<span><span class="co">#&gt; • Number of filler cases to generate = 14100</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> This process can take some minutes...</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Succesfully generated diagnostic, time-varying and time-invariant datasets!</span></span>
+<span></span>
+<span><span class="va">dummy_diag_df</span> <span class="op">&lt;-</span> <span class="va">dummy_data</span><span class="op">$</span><span class="va">datasets</span><span class="op">$</span><span class="va">diag_df</span> </span></code></pre></div>
+<p>The second list (“metadata”) includes useful metadata like the exact
+call used to generate the datasets, as well as the values of each
+argument used in the function call.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">dummy_data</span><span class="op">$</span><span class="va">metadata</span><span class="op">)</span></span>
+<span><span class="co">#&gt; List of 2</span></span>
+<span><span class="co">#&gt;  $ call     : language regtools::synthetic_data(population_size = 15000, prefix_ids = "P000",      length_ids = 6, seed = 123, family_co| __truncated__ ...</span></span>
+<span><span class="co">#&gt;  $ arguments:List of 15</span></span>
+<span><span class="co">#&gt;   ..$ population_size       : num 15000</span></span>
+<span><span class="co">#&gt;   ..$ prefix_ids            : chr "P000"</span></span>
+<span><span class="co">#&gt;   ..$ length_ids            : num 6</span></span>
+<span><span class="co">#&gt;   ..$ seed                  : num 123</span></span>
+<span><span class="co">#&gt;   ..$ family_codes          : language c("F84")</span></span>
+<span><span class="co">#&gt;   ..$ pattern               : chr "increase"</span></span>
+<span><span class="co">#&gt;   ..$ prevalence            : num 0.06</span></span>
+<span><span class="co">#&gt;   ..$ diag_years            : language c(2012:2020)</span></span>
+<span><span class="co">#&gt;   ..$ sex_vector            : language c(0, 1)</span></span>
+<span><span class="co">#&gt;   ..$ y_birth               : language c(2010:2018)</span></span>
+<span><span class="co">#&gt;   ..$ filler_codes          : chr "F"</span></span>
+<span><span class="co">#&gt;   ..$ filler_y_birth        : language c(2000:2009)</span></span>
+<span><span class="co">#&gt;   ..$ invariant_codes       : language list(innvandringsgrunn = c("ARB", "NRD", "UKJ"))</span></span>
+<span><span class="co">#&gt;   ..$ invariant_codes_filler: language list(innvandringsgrunn = c("FAMM", "UTD"))</span></span>
+<span><span class="co">#&gt;   ..$ varying_query         : chr "fylke"</span></span></code></pre></div>
+<p>Let’s say you are researcher looking into the co-occurrence of two
+particular family codes (ICD-10 F8 and F7) in your population of
+interest. However, there has been a delay in data access. However, using
+the diagnostic dataset generated in the previous step and some of the
+functions from <code>regtools</code>, it is possible to prepare some
+analytic scripts before you have access to the actual data in your
+project.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Output in console has been silenced for this example </span></span>
+<span></span>
+<span><span class="va">dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2012</span><span class="op">:</span><span class="fl">2018</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">diag_df_first</span> <span class="op">&lt;-</span> <span class="va">dummy_diag_df</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">regtools</span><span class="fu">::</span><span class="fu"><a href="../reference/curate_diag.html">curate_diag</a></span><span class="op">(</span></span>
+<span>    code_col <span class="op">=</span> <span class="st">"code"</span>, </span>
+<span>    date_col <span class="op">=</span> <span class="st">"diag_year"</span>, </span>
+<span>    log_path <span class="op">=</span> <span class="va">l_file</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">diag_f8_year</span> <span class="op">&lt;-</span> <span class="va">dates</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">regtools</span><span class="fu">::</span><span class="fu"><a href="../reference/filter_diag.html">filter_diag</a></span><span class="op">(</span></span>
+<span>    <span class="va">diag_df_first</span>, </span>
+<span>    pattern_codes <span class="op">=</span> <span class="st">"F8"</span>, </span>
+<span>    code_col <span class="op">=</span> <span class="st">"code"</span>, </span>
+<span>    date_col <span class="op">=</span> <span class="st">"y_diagnosis_first"</span>, </span>
+<span>    diag_dates <span class="op">=</span> <span class="va">x</span>, </span>
+<span>    log_path <span class="op">=</span> <span class="va">l_file</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"id"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">diag_f7</span> <span class="op">&lt;-</span> <span class="va">dummy_diag_df</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">regtools</span><span class="fu">::</span><span class="fu"><a href="../reference/filter_diag.html">filter_diag</a></span><span class="op">(</span></span>
+<span>    pattern_codes <span class="op">=</span> <span class="st">"F7"</span>, </span>
+<span>    code_col <span class="op">=</span> <span class="st">"code"</span>, </span>
+<span>    log_path <span class="op">=</span> <span class="va">l_file</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">intersect_f8_f7</span> <span class="op">&lt;-</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">diag_f8_year</span>, \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://generics.r-lib.org/reference/setops.html" class="external-link">intersect</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">diag_f7</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">intersect_f8_f7</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">dates</span></span>
+<span></span>
+<span><span class="va">intersect_f8_f7_df</span> <span class="op">&lt;-</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html" class="external-link">map_df</a></span><span class="op">(</span><span class="va">intersect_f8_f7</span>, <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span>, .id<span class="op">=</span><span class="st">"year"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span><span class="st">"count"</span> <span class="op">=</span> <span class="st">".x"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">regtools</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_rates.html">plot_rates</a></span><span class="op">(</span></span>
+<span>  <span class="va">intersect_f8_f7_df</span>, </span>
+<span>  date_col <span class="op">=</span> <span class="st">"year"</span>, </span>
+<span>  grouping_var <span class="op">=</span> <span class="st">"year"</span>, </span>
+<span>  rate_col <span class="op">=</span> <span class="st">"count"</span>, </span>
+<span>  plot_type <span class="op">=</span> <span class="st">"lollipop"</span>,</span>
+<span>  percent <span class="op">=</span> <span class="cn">FALSE</span>, </span>
+<span>  palette <span class="op">=</span> <span class="st">"viridis"</span>, </span>
+<span>  plot_title <span class="op">=</span> <span class="st">"New yearly F8 diagnoses"</span>,  </span>
+<span>  y_name <span class="op">=</span> <span class="st">"Count"</span>, </span>
+<span>  coord_flip <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>subtitle <span class="op">=</span> <span class="st">"Individuals with a previous or future F7 diagnosis"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="h-functions_files/figure-html/plot-coocurrent-1.png" width="528"></p>
+</div>
 </div>
 </div>
 <div class="section level2">
