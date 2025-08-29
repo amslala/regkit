@@ -5,18 +5,18 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Other useful functions • regtools</title>
+<title>Simulate individual-level data • regtools</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Other useful functions">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Simulate individual-level data">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top bg-primary" data-bs-theme="dark" aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="../index.html">regtools</a>
 
@@ -34,8 +34,8 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/h-functions.html">Other useful functions</a></li>
-    <li><a class="dropdown-item" href="../articles/Introduction%20to%20regtools.html">Introduction to regtools</a></li>
+<li><a class="dropdown-item" href="../articles/h-functions.html">Simulate individual-level data</a></li>
+    <li><a class="dropdown-item" href="../articles/other-useful-fun.html">Other useful functions</a></li>
   </ul>
 </li>
       </ul>
@@ -57,25 +57,19 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Other useful functions</h1>
+      <h1>Simulate individual-level data</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/amslala/regtools/blob/master/vignettes/h-functions.Rmd" class="external-link"><code>vignettes/h-functions.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/amslala/regtools/blob/HEAD/vignettes/h-functions.Rmd" class="external-link"><code>vignettes/h-functions.Rmd</code></a></small>
       <div class="d-none name"><code>h-functions.Rmd</code></div>
     </div>
 
     
     
-<p>This vignette includes additional functions in <code>regtools</code>
-that can be helpful when working with individual-level data in Norway.
-It is important to note that the <code><a href="../reference/get_population_ssb.html">get_population_ssb()</a></code>
-function requires an internet connection and therefore only works
-outside of TSD (Services for sensitive data). In certain cases described
-in this vignette, the <code><a href="../reference/synthetic_data.html">synthetic_data()</a></code> function also
-requires an internet connection.</p>
-<div class="section level2">
-<h2 id="simulate-dataset">Simulate dataset<a class="anchor" aria-label="anchor" href="#simulate-dataset"></a>
-</h2>
+<p>This vignette describes the aim and potential use cases of the
+function <code><a href="../reference/synthetic_data.html">synthetic_data()</a></code>. In certain cases described in
+this vignette, the <code><a href="../reference/synthetic_data.html">synthetic_data()</a></code> also requires an
+internet connection.</p>
 <div class="section level3">
 <h3 id="why">Why?<a class="anchor" aria-label="anchor" href="#why"></a>
 </h3>
@@ -199,11 +193,6 @@ Statistical Classifications and Codelists (Klass). Both
 <code>varying_query</code> and <code>invariant_queries</code> options
 require an internet connection to retrieve the specified classifications
 and codelists from SSB.</p>
-<p>With the purpose of facilitating transparency and reproducibility,
-the <code><a href="../reference/synthetic_data.html">synthetic_data()</a></code> function outputs a list with two named
-lists: “datasets” and “metadata”. Within the first list (“datasets”),
-you will find the diagnostic, time-invariant and time-varying data as
-separate data frames.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">dummy_data</span> <span class="op">&lt;-</span> <span class="fu">regtools</span><span class="fu">::</span><span class="fu"><a href="../reference/synthetic_data.html">synthetic_data</a></span><span class="op">(</span></span>
@@ -241,13 +230,33 @@ separate data frames.</p>
 <span><span class="co">#&gt; • Pattern for filler incidence = 'random'</span></span>
 <span><span class="co">#&gt; • Number of filler cases to generate = 14100</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> This process can take some minutes...</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Succesfully generated diagnostic, time-varying and time-invariant datasets!</span></span>
-<span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Succesfully generated diagnostic, time-varying and time-invariant datasets!</span></span></code></pre></div>
+<p>With the purpose of facilitating transparency and reproducibility,
+the <code><a href="../reference/synthetic_data.html">synthetic_data()</a></code> function outputs a list with two named
+lists: “datasets” and “metadata”. Within the first list (“datasets”),
+you will find the diagnostic, time-invariant and time-varying data as
+separate data frames.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">dummy_data</span><span class="op">$</span><span class="va">datasets</span><span class="op">)</span></span>
+<span><span class="co">#&gt; List of 3</span></span>
+<span><span class="co">#&gt;  $ invar_df: tibble [15,000 × 4] (S3: tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ id               : chr [1:15000] "P000000037" "P000000183" "P000000395" "P000000431" ...</span></span>
+<span><span class="co">#&gt;   ..$ sex              : Factor w/ 2 levels "0","1": 2 2 1 1 2 2 2 2 1 2 ...</span></span>
+<span><span class="co">#&gt;   ..$ y_birth          : int [1:15000] 2002 2002 2005 2000 2003 2007 2012 2009 2008 2004 ...</span></span>
+<span><span class="co">#&gt;   ..$ innvandringsgrunn: chr [1:15000] "FAMM" "UTD" "UTD" "UTD" ...</span></span>
+<span><span class="co">#&gt;  $ var_df  : tibble [135,000 × 3] (S3: tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ id          : chr [1:135000] "P000000037" "P000000037" "P000000037" "P000000037" ...</span></span>
+<span><span class="co">#&gt;   ..$ year_varying: int [1:135000] 2012 2013 2014 2015 2016 2017 2018 2019 2020 2012 ...</span></span>
+<span><span class="co">#&gt;   ..$ varying_code: chr [1:135000] "34" "34" "34" "34" ...</span></span>
+<span><span class="co">#&gt;  $ diag_df : tibble [60,104 × 3] (S3: tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ id       : chr [1:60104] "P000000651" "P000000651" "P000000651" "P000000651" ...</span></span>
+<span><span class="co">#&gt;   ..$ code     : chr [1:60104] "F842" "F928" "F492" "F393" ...</span></span>
+<span><span class="co">#&gt;   ..$ diag_year: int [1:60104] 2019 2012 2014 2014 2017 2019 2016 2012 2018 2017 ...</span></span>
 <span><span class="va">dummy_diag_df</span> <span class="op">&lt;-</span> <span class="va">dummy_data</span><span class="op">$</span><span class="va">datasets</span><span class="op">$</span><span class="va">diag_df</span> </span></code></pre></div>
 <p>The second list (“metadata”) includes useful metadata like the exact
 call used to generate the datasets, as well as the values of each
 argument used in the function call.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">dummy_data</span><span class="op">$</span><span class="va">metadata</span><span class="op">)</span></span>
 <span><span class="co">#&gt; List of 2</span></span>
 <span><span class="co">#&gt;  $ call     : language regtools::synthetic_data(population_size = 15000, prefix_ids = "P000",      length_ids = 6, seed = 123, family_co| __truncated__ ...</span></span>
@@ -274,7 +283,7 @@ the diagnostic dataset generated in the previous step and some of the
 functions from <code>regtools</code>, it is possible to prepare some
 analytic scripts before you have access to the actual data in your
 project.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Output in console has been silenced for this example </span></span>
 <span></span>
 <span><span class="va">dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2012</span><span class="op">:</span><span class="fl">2018</span><span class="op">)</span><span class="op">)</span></span>
@@ -309,7 +318,7 @@ project.</p>
 <span></span>
 <span><span class="va">intersect_f8_f7_df</span> <span class="op">&lt;-</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html" class="external-link">map_df</a></span><span class="op">(</span><span class="va">intersect_f8_f7</span>, <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span>, .id<span class="op">=</span><span class="st">"year"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span><span class="st">"count"</span> <span class="op">=</span> <span class="st">".x"</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">regtools</span><span class="fu">::</span><span class="fu"><a href="../reference/plot_rates.html">plot_rates</a></span><span class="op">(</span></span>
 <span>  <span class="va">intersect_f8_f7_df</span>, </span>
 <span>  date_col <span class="op">=</span> <span class="st">"year"</span>, </span>
@@ -325,27 +334,6 @@ project.</p>
 <span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="h-functions_files/figure-html/plot-coocurrent-1.png" width="528"></p>
 </div>
-</div>
-</div>
-<div class="section level2">
-<h2 id="harmonize-municipality-codes">Harmonize municipality codes<a class="anchor" aria-label="anchor" href="#harmonize-municipality-codes"></a>
-</h2>
-<p>Explain geographical composition of Norway now (as of writing in
-2025). Explain region reforms and what they do. Example as one of the
-challenges of working with registries. Consequences for data, and
-analysis.</p>
-<p>What to do? Use recommendation from SSB to use harmonized regions
-(possible to use regiosn from xxxx-2024). The full list of geographical
-classifications can be found at klass SSB.</p>
-<p>Give example of harmonize municipality codes.</p>
-</div>
-<div class="section level2">
-<h2 id="get-population-ssb">Get population SSB<a class="anchor" aria-label="anchor" href="#get-population-ssb"></a>
-</h2>
-<p>If you are working with population based microdata, might be useful
-to get population counts from SSB. Or could also give you an idea of how
-big your real dataset is going to be.</p>
-<p>API SSB: not able to run inside of TSD</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
