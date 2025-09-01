@@ -63,7 +63,7 @@ The input data sets must be CSV, RDS, RDA or .SAV files.</p>
 
 
 <dl><dt id="arg-file-path">file_path<a class="anchor" aria-label="anchor" href="#arg-file-path"></a></dt>
-<dd><p>A character string. File path to the diagnostic data to read. Supports CSV, RDS, RDA and .SAV files.</p></dd>
+<dd><p>A character string. File path to the diagnostic data to read. Supports CSV, RDS, RDA, SAV and parquet (database) files.</p></dd>
 
 
 <dt id="arg-id-col">id_col<a class="anchor" aria-label="anchor" href="#arg-id-col"></a></dt>
@@ -110,7 +110,9 @@ The input data sets must be CSV, RDS, RDA or .SAV files.</p>
 <span class="r-in"><span>  log_path <span class="op">=</span> <span class="va">log_file</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Reading /home/runner/.cache/R/renv/library/regtools-66178653/linux-ubuntu-noble/R-4.5/x86_64-pc-linux-gnu/regtools/extdata/diag_data.csv file...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Succesfully read file: /home/runner/.cache/R/renv/library/regtools-66178653/linux-ubuntu-noble/R-4.5/x86_64-pc-linux-gnu/regtools/extdata/diag_data.csv</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Checking column requirements:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> ID column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Code column</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Date column</span>
@@ -125,10 +127,11 @@ The input data sets must be CSV, RDS, RDA or .SAV files.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Number of rows: <span style="color: #0000BB;">120256</span>. Number of columns: <span style="color: #0000BB;">3</span>.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 'data.frame':	120256 obs. of  3 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ id       : chr  "P000000704" "P000000704" "P000000704" "P000000704" ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ code     : chr  "F4522" "F305" "F65" "F840" ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ diag_year: int  2016 2020 2014 2017 2014 2017 2018 2020 2016 2013 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Rows: 120,256</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Columns: 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ id        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "P000000704"<span style="color: #949494;">, </span>"P000000704"<span style="color: #949494;">, </span>"P000000704"<span style="color: #949494;">, </span>"P000000704"<span style="color: #949494;">, </span>"P00…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ code      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "F4522"<span style="color: #949494;">, </span>"F305"<span style="color: #949494;">, </span>"F65"<span style="color: #949494;">, </span>"F840"<span style="color: #949494;">, </span>"F728"<span style="color: #949494;">, </span>"F450"<span style="color: #949494;">, </span>"F187"<span style="color: #949494;">, </span>"F73…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ diag_year <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2016<span style="color: #949494;">, </span>2020<span style="color: #949494;">, </span>2014<span style="color: #949494;">, </span>2017<span style="color: #949494;">, </span>2014<span style="color: #949494;">, </span>2017<span style="color: #949494;">, </span>2018<span style="color: #949494;">, </span>2020<span style="color: #949494;">, </span>2016<span style="color: #949494;">, </span>2013<span style="color: #949494;">, </span>…</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

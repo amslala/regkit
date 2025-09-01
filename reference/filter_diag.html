@@ -117,10 +117,10 @@
 <span class="r-in"><span>                                 code_col <span class="op">=</span> <span class="st">"code"</span>,</span></span>
 <span class="r-in"><span>                                 log_path <span class="op">=</span> <span class="va">log_file</span></span></span>
 <span class="r-in"><span>                                 <span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Checking that code exists in ICD-10 code list...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Selected ICD-10 codes are valid: F45, F84</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Checking that code exists in ICD-10 or ICPC-2 code list...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Selected codes are valid: F45, F84</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Filtering data by selected ICD-10 codes...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Filtering data by selected codes...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────────────────────────────</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00; font-weight: bold;">Diagnostic dataset succesfully filtered</span></span>
@@ -132,13 +132,14 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── After filtering: </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Remaining number of rows: <span style="color: #0000BB;">2539</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Remaining number of columns: <span style="color: #0000BB;">3</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Unique IDs in dataset: <span style="color: #0000BB;">2464</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> ICD-10 codes in dataset: <span style="color: #0000BB;">F4520</span>, <span style="color: #0000BB;">F454</span>, <span style="color: #0000BB;">F840</span>, <span style="color: #0000BB;">F845</span>, <span style="color: #0000BB;">F4529</span>, <span style="color: #0000BB;">F456</span>, <span style="color: #0000BB;">F4541</span>, <span style="color: #0000BB;">F841</span>, <span style="color: #0000BB;">F4522</span>, <span style="color: #0000BB;">F844</span>, <span style="color: #0000BB;">F842</span>, <span style="color: #0000BB;">F849</span>, <span style="color: #0000BB;">F457</span>, <span style="color: #0000BB;">F846</span>, <span style="color: #0000BB;">F455</span>, <span style="color: #0000BB;">F452</span>, <span style="color: #0000BB;">F45</span>, <span style="color: #0000BB;">F847</span>, …, <span style="color: #0000BB;">F459</span>, and <span style="color: #0000BB;">F843</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Unique IDs in dataset: <span style="color: #0000BB;">2464</span>.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> ICD-10 codes in dataset: <span style="color: #0000BB;">28</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> tibble [2,539 × 3] (S3: tbl_df/tbl/data.frame)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ id       : chr [1:2539] "P000000704" "P000000704" "P000000886" "P000001615" ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ code     : chr [1:2539] "F4522" "F840" "F450" "F845" ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ diag_year: int [1:2539] 2016 2017 2017 2020 2019 2016 2019 2020 2013 2019 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Rows: 2,539</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Columns: 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ id        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "P000000704"<span style="color: #949494;">, </span>"P000000704"<span style="color: #949494;">, </span>"P000000886"<span style="color: #949494;">, </span>"P000001615"<span style="color: #949494;">, </span>"P00…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ code      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "F4522"<span style="color: #949494;">, </span>"F840"<span style="color: #949494;">, </span>"F450"<span style="color: #949494;">, </span>"F845"<span style="color: #949494;">, </span>"F4520"<span style="color: #949494;">, </span>"F455"<span style="color: #949494;">, </span>"F457"<span style="color: #949494;">, </span>"F…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ diag_year <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2016<span style="color: #949494;">, </span>2017<span style="color: #949494;">, </span>2017<span style="color: #949494;">, </span>2020<span style="color: #949494;">, </span>2019<span style="color: #949494;">, </span>2016<span style="color: #949494;">, </span>2019<span style="color: #949494;">, </span>2020<span style="color: #949494;">, </span>2013<span style="color: #949494;">, </span>2019<span style="color: #949494;">, </span>…</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

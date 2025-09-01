@@ -62,7 +62,7 @@ The input data sets must be CSV, RDS, RDA or .SAV files.</p>
 
 
 <dl><dt id="arg-file-path">file_path<a class="anchor" aria-label="anchor" href="#arg-file-path"></a></dt>
-<dd><p>A character string. File path to the demographic data to read. Supports CSV, RDS, RDA and .SAV files.</p></dd>
+<dd><p>A character string. File path to the demographic data to read. Supports CSV, RDS, RDA, SAV and parquet (dataset) files.</p></dd>
 
 
 <dt id="arg-data-type">data_type<a class="anchor" aria-label="anchor" href="#arg-data-type"></a></dt>
@@ -120,11 +120,13 @@ The input data sets must be CSV, RDS, RDA or .SAV files.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Number of rows: <span style="color: #0000BB;">30024</span>. Number of columns: <span style="color: #0000BB;">4</span>.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Unique IDs in dataset: <span style="color: #0000BB;">30024</span>.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 'data.frame':	30024 obs. of  4 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ id               : chr  "P000000037" "P000000052" "P000000059" "P000000111" ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ sex              : int  0 0 0 1 1 0 1 0 0 0 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ y_birth          : int  2008 2000 2007 2003 2000 2003 2009 2005 2004 2002 ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ innvandringsgrunn: chr  "FAMM" "FAMM" "FAMM" "FAMM" ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Rows: 30,024</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Columns: 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ id                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "P000000037"<span style="color: #949494;">, </span>"P000000052"<span style="color: #949494;">, </span>"P000000059"<span style="color: #949494;">, </span>"P00000011…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ sex               <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ y_birth           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2008<span style="color: #949494;">, </span>2000<span style="color: #949494;">, </span>2007<span style="color: #949494;">, </span>2003<span style="color: #949494;">, </span>2000<span style="color: #949494;">, </span>2003<span style="color: #949494;">, </span>2009<span style="color: #949494;">, </span>2005<span style="color: #949494;">, </span>2004…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ innvandringsgrunn <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "FAMM"<span style="color: #949494;">, </span>"FAMM"<span style="color: #949494;">, </span>"FAMM"<span style="color: #949494;">, </span>"FAMM"<span style="color: #949494;">, </span>"UTD"<span style="color: #949494;">, </span>"FAMM"<span style="color: #949494;">, </span>"UTD"…</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

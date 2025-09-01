@@ -189,10 +189,11 @@ to specify the column names corresponding to the id and date variables
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Number of rows: <span style="color: #0000BB;">120256</span>. Number of columns: <span style="color: #0000BB;">3</span>.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; 'data.frame':    120256 obs. of  3 variables:</span></span>
-<span><span class="co">#&gt;  $ id       : chr  "P000000704" "P000000704" "P000000704" "P000000704" ...</span></span>
-<span><span class="co">#&gt;  $ code     : chr  "F4522" "F305" "F65" "F840" ...</span></span>
-<span><span class="co">#&gt;  $ diag_year: int  2016 2020 2014 2017 2014 2017 2018 2020 2016 2013 ...</span></span></code></pre></div>
+<span><span class="co">#&gt; Rows: 120,256</span></span>
+<span><span class="co">#&gt; Columns: 3</span></span>
+<span><span class="co">#&gt; $ id        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "P000000704"<span style="color: #949494;">, </span>"P000000704"<span style="color: #949494;">, </span>"P000000704"<span style="color: #949494;">, </span>"P000000704"<span style="color: #949494;">, </span>"P00…</span></span>
+<span><span class="co">#&gt; $ code      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "F4522"<span style="color: #949494;">, </span>"F305"<span style="color: #949494;">, </span>"F65"<span style="color: #949494;">, </span>"F840"<span style="color: #949494;">, </span>"F728"<span style="color: #949494;">, </span>"F450"<span style="color: #949494;">, </span>"F187"<span style="color: #949494;">, </span>"F73…</span></span>
+<span><span class="co">#&gt; $ diag_year <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2016<span style="color: #949494;">, </span>2020<span style="color: #949494;">, </span>2014<span style="color: #949494;">, </span>2017<span style="color: #949494;">, </span>2014<span style="color: #949494;">, </span>2017<span style="color: #949494;">, </span>2018<span style="color: #949494;">, </span>2020<span style="color: #949494;">, </span>2016<span style="color: #949494;">, </span>2013<span style="color: #949494;">, </span>…</span></span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">demo_csv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"invar_data.csv"</span>, package <span class="op">=</span> <span class="st">"regtools"</span><span class="op">)</span></span>
 <span></span>
@@ -216,11 +217,13 @@ to specify the column names corresponding to the id and date variables
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Number of rows: <span style="color: #0000BB;">30024</span>. Number of columns: <span style="color: #0000BB;">4</span>.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Unique IDs in dataset: <span style="color: #0000BB;">30024</span>.</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; 'data.frame':    30024 obs. of  4 variables:</span></span>
-<span><span class="co">#&gt;  $ id               : chr  "P000000037" "P000000052" "P000000059" "P000000111" ...</span></span>
-<span><span class="co">#&gt;  $ sex              : int  0 0 0 1 1 0 1 0 0 0 ...</span></span>
-<span><span class="co">#&gt;  $ y_birth          : int  2008 2000 2007 2003 2000 2003 2009 2005 2004 2002 ...</span></span>
-<span><span class="co">#&gt;  $ innvandringsgrunn: chr  "FAMM" "FAMM" "FAMM" "FAMM" ...</span></span></code></pre></div>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Rows: 30,024</span></span>
+<span><span class="co">#&gt; Columns: 4</span></span>
+<span><span class="co">#&gt; $ id                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "P000000037"<span style="color: #949494;">, </span>"P000000052"<span style="color: #949494;">, </span>"P000000059"<span style="color: #949494;">, </span>"P00000011…</span></span>
+<span><span class="co">#&gt; $ sex               <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1…</span></span>
+<span><span class="co">#&gt; $ y_birth           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2008<span style="color: #949494;">, </span>2000<span style="color: #949494;">, </span>2007<span style="color: #949494;">, </span>2003<span style="color: #949494;">, </span>2000<span style="color: #949494;">, </span>2003<span style="color: #949494;">, </span>2009<span style="color: #949494;">, </span>2005<span style="color: #949494;">, </span>2004…</span></span>
+<span><span class="co">#&gt; $ innvandringsgrunn <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "FAMM"<span style="color: #949494;">, </span>"FAMM"<span style="color: #949494;">, </span>"FAMM"<span style="color: #949494;">, </span>"FAMM"<span style="color: #949494;">, </span>"UTD"<span style="color: #949494;">, </span>"FAMM"<span style="color: #949494;">, </span>"UTD"…</span></span></code></pre></div>
 <p>Note: the read functions only check for minimum requirements, your
 real datasets can contain additional variables/columns. For example, NPR
 sometimes includes sex and age information for each individual in the
@@ -250,9 +253,9 @@ ICD-10 code <em>F840</em> or <em>F841</em>:</p>
 <span>                                    code_col <span class="op">=</span> <span class="st">"code"</span>,</span>
 <span>                                    log_path <span class="op">=</span> <span class="va">log_file</span></span>
 <span>                                    <span class="op">)</span></span>
-<span><span class="co">#&gt; Checking that code exists in ICD-10 code list...</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Selected ICD-10 codes are valid: F840, F841</span></span>
-<span><span class="co">#&gt; Filtering data by selected ICD-10 codes...</span></span>
+<span><span class="co">#&gt; Checking that code exists in ICD-10 or ICPC-2 code list...</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Selected codes are valid: F840, F841</span></span>
+<span><span class="co">#&gt; Filtering data by selected codes...</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">────────────────────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00; font-weight: bold;">Diagnostic dataset succesfully filtered</span></span></span>
@@ -264,13 +267,14 @@ ICD-10 code <em>F840</em> or <em>F841</em>:</p>
 <span><span class="co">#&gt; ── After filtering:</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Remaining number of rows: <span style="color: #0000BB;">225</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Remaining number of columns: <span style="color: #0000BB;">3</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Unique IDs in dataset: <span style="color: #0000BB;">225</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> ICD-10 codes in dataset: <span style="color: #0000BB;">F840</span> and <span style="color: #0000BB;">F841</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Unique IDs in dataset: <span style="color: #0000BB;">225</span>.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> ICD-10 codes in dataset: <span style="color: #0000BB;">2</span></span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; tibble [225 × 3] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;  $ id       : chr [1:225] "P000000704" "P000010070" "P000010584" "P000044255" ...</span></span>
-<span><span class="co">#&gt;  $ code     : chr [1:225] "F840" "F840" "F840" "F840" ...</span></span>
-<span><span class="co">#&gt;  $ diag_year: int [1:225] 2017 2019 2016 2019 2015 2013 2015 2015 2015 2019 ...</span></span></code></pre></div>
+<span><span class="co">#&gt; Rows: 225</span></span>
+<span><span class="co">#&gt; Columns: 3</span></span>
+<span><span class="co">#&gt; $ id        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "P000000704"<span style="color: #949494;">, </span>"P000010070"<span style="color: #949494;">, </span>"P000010584"<span style="color: #949494;">, </span>"P000044255"<span style="color: #949494;">, </span>"P00…</span></span>
+<span><span class="co">#&gt; $ code      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "F840"<span style="color: #949494;">, </span>"F840"<span style="color: #949494;">, </span>"F840"<span style="color: #949494;">, </span>"F840"<span style="color: #949494;">, </span>"F840"<span style="color: #949494;">, </span>"F841"<span style="color: #949494;">, </span>"F840"<span style="color: #949494;">, </span>"F84…</span></span>
+<span><span class="co">#&gt; $ diag_year <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2017<span style="color: #949494;">, </span>2019<span style="color: #949494;">, </span>2016<span style="color: #949494;">, </span>2019<span style="color: #949494;">, </span>2015<span style="color: #949494;">, </span>2013<span style="color: #949494;">, </span>2015<span style="color: #949494;">, </span>2015<span style="color: #949494;">, </span>2015<span style="color: #949494;">, </span>2019<span style="color: #949494;">, </span>…</span></span></code></pre></div>
 <p>Alternatively, it is also possible to filter by pattern/family of
 codes. For example, to keep the observations with all codes starting
 with <em>F45</em> or <em>F84</em>:</p>
@@ -281,9 +285,9 @@ with <em>F45</em> or <em>F84</em>:</p>
 <span>                                      code_col <span class="op">=</span> <span class="st">"code"</span>,</span>
 <span>                                      log_path <span class="op">=</span> <span class="va">log_file</span></span>
 <span>                                      <span class="op">)</span></span>
-<span><span class="co">#&gt; Checking that code exists in ICD-10 code list...</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Selected ICD-10 codes are valid: F45, F84</span></span>
-<span><span class="co">#&gt; Filtering data by selected ICD-10 codes...</span></span>
+<span><span class="co">#&gt; Checking that code exists in ICD-10 or ICPC-2 code list...</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Selected codes are valid: F45, F84</span></span>
+<span><span class="co">#&gt; Filtering data by selected codes...</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">────────────────────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00; font-weight: bold;">Diagnostic dataset succesfully filtered</span></span></span>
@@ -295,13 +299,14 @@ with <em>F45</em> or <em>F84</em>:</p>
 <span><span class="co">#&gt; ── After filtering:</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Remaining number of rows: <span style="color: #0000BB;">2539</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Remaining number of columns: <span style="color: #0000BB;">3</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Unique IDs in dataset: <span style="color: #0000BB;">2464</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> ICD-10 codes in dataset: <span style="color: #0000BB;">F4520</span>, <span style="color: #0000BB;">F454</span>, <span style="color: #0000BB;">F840</span>, <span style="color: #0000BB;">F845</span>, <span style="color: #0000BB;">F4529</span>, <span style="color: #0000BB;">F456</span>, <span style="color: #0000BB;">F4541</span>, <span style="color: #0000BB;">F841</span>, <span style="color: #0000BB;">F4522</span>, <span style="color: #0000BB;">F844</span>, <span style="color: #0000BB;">F842</span>, <span style="color: #0000BB;">F849</span>, <span style="color: #0000BB;">F457</span>, <span style="color: #0000BB;">F846</span>, <span style="color: #0000BB;">F455</span>, <span style="color: #0000BB;">F452</span>, <span style="color: #0000BB;">F45</span>, <span style="color: #0000BB;">F847</span>, …, <span style="color: #0000BB;">F459</span>, and <span style="color: #0000BB;">F843</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Unique IDs in dataset: <span style="color: #0000BB;">2464</span>.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> ICD-10 codes in dataset: <span style="color: #0000BB;">28</span></span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; tibble [2,539 × 3] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;  $ id       : chr [1:2539] "P000000704" "P000000704" "P000000886" "P000001615" ...</span></span>
-<span><span class="co">#&gt;  $ code     : chr [1:2539] "F4522" "F840" "F450" "F845" ...</span></span>
-<span><span class="co">#&gt;  $ diag_year: int [1:2539] 2016 2017 2017 2020 2019 2016 2019 2020 2013 2019 ...</span></span></code></pre></div>
+<span><span class="co">#&gt; Rows: 2,539</span></span>
+<span><span class="co">#&gt; Columns: 3</span></span>
+<span><span class="co">#&gt; $ id        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "P000000704"<span style="color: #949494;">, </span>"P000000704"<span style="color: #949494;">, </span>"P000000886"<span style="color: #949494;">, </span>"P000001615"<span style="color: #949494;">, </span>"P00…</span></span>
+<span><span class="co">#&gt; $ code      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "F4522"<span style="color: #949494;">, </span>"F840"<span style="color: #949494;">, </span>"F450"<span style="color: #949494;">, </span>"F845"<span style="color: #949494;">, </span>"F4520"<span style="color: #949494;">, </span>"F455"<span style="color: #949494;">, </span>"F457"<span style="color: #949494;">, </span>"F…</span></span>
+<span><span class="co">#&gt; $ diag_year <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2016<span style="color: #949494;">, </span>2017<span style="color: #949494;">, </span>2017<span style="color: #949494;">, </span>2020<span style="color: #949494;">, </span>2019<span style="color: #949494;">, </span>2016<span style="color: #949494;">, </span>2019<span style="color: #949494;">, </span>2020<span style="color: #949494;">, </span>2013<span style="color: #949494;">, </span>2019<span style="color: #949494;">, </span>…</span></span></code></pre></div>
 <p>To further refine the filter of a diagnostic dataset, the
 <code><a href="../reference/curate_diag.html">curate_diag()</a></code> provides additional options. For example, you
 can keep only individuals (identified by an unique person identifier)
@@ -338,10 +343,11 @@ resided in the municiplality “1146” between the years 2012-2015:</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Remaining number of rows: <span style="color: #0000BB;">0</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Remaining number of columns: <span style="color: #0000BB;">3</span></span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; tibble [0 × 3] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;  $ id          : chr(0) </span></span>
-<span><span class="co">#&gt;  $ year_varying: int(0) </span></span>
-<span><span class="co">#&gt;  $ varying_code: chr(0)</span></span></code></pre></div>
+<span><span class="co">#&gt; Rows: 0</span></span>
+<span><span class="co">#&gt; Columns: 3</span></span>
+<span><span class="co">#&gt; $ id           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
+<span><span class="co">#&gt; $ year_varying <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> </span></span>
+<span><span class="co">#&gt; $ varying_code <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span></code></pre></div>
 <p>In the case of time-invariant data, to keep only individuals with
 year of birth between 2006-2008 and reason of immigration “FAMM” or
 “UTD”:</p>
@@ -364,11 +370,12 @@ year of birth between 2006-2008 and reason of immigration “FAMM” or
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Remaining number of rows: <span style="color: #0000BB;">691</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Remaining number of columns: <span style="color: #0000BB;">4</span></span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; tibble [691 × 4] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;  $ id               : chr [1:691] "P000000704" "P000000886" "P000001615" "P000004197" ...</span></span>
-<span><span class="co">#&gt;  $ sex              : Factor w/ 2 levels "0","1": 2 1 1 2 1 2 2 2 2 2 ...</span></span>
-<span><span class="co">#&gt;  $ y_birth          : int [1:691] 2016 2016 2011 2010 2014 2015 2012 2010 2016 2011 ...</span></span>
-<span><span class="co">#&gt;  $ innvandringsgrunn: chr [1:691] "UKJ" "ARB" "ARB" "NRD" ...</span></span></code></pre></div>
+<span><span class="co">#&gt; Rows: 691</span></span>
+<span><span class="co">#&gt; Columns: 4</span></span>
+<span><span class="co">#&gt; $ id                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "P000000704"<span style="color: #949494;">, </span>"P000000886"<span style="color: #949494;">, </span>"P000001615"<span style="color: #949494;">, </span>"P00000419…</span></span>
+<span><span class="co">#&gt; $ sex               <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> 1<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>0…</span></span>
+<span><span class="co">#&gt; $ y_birth           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2016<span style="color: #949494;">, </span>2016<span style="color: #949494;">, </span>2011<span style="color: #949494;">, </span>2010<span style="color: #949494;">, </span>2014<span style="color: #949494;">, </span>2015<span style="color: #949494;">, </span>2012<span style="color: #949494;">, </span>2010<span style="color: #949494;">, </span>2016…</span></span>
+<span><span class="co">#&gt; $ innvandringsgrunn <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "UKJ"<span style="color: #949494;">, </span>"ARB"<span style="color: #949494;">, </span>"ARB"<span style="color: #949494;">, </span>"NRD"<span style="color: #949494;">, </span>"ARB"<span style="color: #949494;">, </span>"UKJ"<span style="color: #949494;">, </span>"UKJ"<span style="color: #949494;">, </span>"AR…</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
