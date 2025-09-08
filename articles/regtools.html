@@ -75,7 +75,7 @@ capitalize on their characteristics.</p>
 <p>Researchers with access to microdata from health and/or
 administrative registers in Norway can use {regtools} to streamline
 their initial analytical process. The package includes functions for
-data preprocessing, linkage, and the computation of relevant statistics
+data pre-processing, linkage, and the computation of relevant statistics
 and visualizations, such as stratified frequencies, incidence and
 prevalence rates.</p>
 <p>This vignette introduces you to regtool’s main functions and shows
@@ -150,7 +150,7 @@ important operations (filter, select, join, etc)</p>
 (in Norway) will find their datasets divided (and delivered) in three
 different categories:</p>
 <ul>
-<li><p><strong>Diagnostic data:</strong> normally including unique
+<li><p><strong>Diagnostic data:</strong> at least including unique
 personal identifier (id), date of diagnostic event, and diagnosis code
 (such as ICD-10 or ICP-2). For instance, datasets from NPR (Norwegian
 Patient Registry) or KUHR.</p></li>
@@ -168,13 +168,15 @@ dataset and a time-invariant dataset (including sex).</p>
 as well as giving a quick summary of the dataset’s structure. You need
 to specify the column names corresponding to the id and date variables
 (see the function documentation for more info).</p>
+<!-- Mention what type of files are supported, and refere to the parquet vignette for more information about it. It is recommended for performance, that large datasets stored as parquet files and then read/filtered -->
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">diag_csv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"diag_data.csv"</span>, package <span class="op">=</span> <span class="st">"regtools"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">diag_data_validated</span> <span class="op">&lt;-</span> <span class="fu">regtools</span><span class="fu">::</span><span class="fu"><a href="../reference/read_diag_data.html">read_diag_data</a></span><span class="op">(</span><span class="va">diag_csv</span>,</span>
-<span>                                                 id_col <span class="op">=</span> <span class="st">"id"</span>,</span>
-<span>                                                 date_col <span class="op">=</span> <span class="st">"diag_year"</span>,</span>
-<span>                                                 log_path <span class="op">=</span> <span class="va">log_file</span><span class="op">)</span></span>
+<span><span class="va">diag_data_validated</span> <span class="op">&lt;-</span> <span class="fu">regtools</span><span class="fu">::</span><span class="fu"><a href="../reference/read_diag_data.html">read_diag_data</a></span><span class="op">(</span></span>
+<span>  <span class="va">diag_csv</span>,</span>
+<span>  id_col <span class="op">=</span> <span class="st">"id"</span>,</span>
+<span>  date_col <span class="op">=</span> <span class="st">"diag_year"</span>,</span>
+<span>  log_path <span class="op">=</span> <span class="va">log_file</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Reading /home/runner/.cache/R/renv/library/regtools-66178653/linux-ubuntu-noble/R-4.5/x86_64-pc-linux-gnu/regtools/extdata/diag_data.csv file...</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Succesfully read file: /home/runner/.cache/R/renv/library/regtools-66178653/linux-ubuntu-noble/R-4.5/x86_64-pc-linux-gnu/regtools/extdata/diag_data.csv</span></span>
 <span><span class="co">#&gt; Checking column requirements:</span></span>
@@ -198,10 +200,11 @@ to specify the column names corresponding to the id and date variables
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">demo_csv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"invar_data.csv"</span>, package <span class="op">=</span> <span class="st">"regtools"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">demo_data_validated</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_demo_data.html">read_demo_data</a></span><span class="op">(</span><span class="va">demo_csv</span>, </span>
-<span>                                      data_type <span class="op">=</span> <span class="st">"t_invariant"</span>,</span>
-<span>                                      id_col <span class="op">=</span> <span class="st">"id"</span>, </span>
-<span>                                      log_path <span class="op">=</span> <span class="va">log_file</span><span class="op">)</span></span>
+<span><span class="va">demo_data_validated</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_demo_data.html">read_demo_data</a></span><span class="op">(</span></span>
+<span>  <span class="va">demo_csv</span>, </span>
+<span>  data_type <span class="op">=</span> <span class="st">"t_invariant"</span>,</span>
+<span>  id_col <span class="op">=</span> <span class="st">"id"</span>, </span>
+<span>  log_path <span class="op">=</span> <span class="va">log_file</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Reading /home/runner/.cache/R/renv/library/regtools-66178653/linux-ubuntu-noble/R-4.5/x86_64-pc-linux-gnu/regtools/extdata/invar_data.csv file...</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Succesfully read file: /home/runner/.cache/R/renv/library/regtools-66178653/linux-ubuntu-noble/R-4.5/x86_64-pc-linux-gnu/regtools/extdata/invar_data.csv</span></span>
 <span><span class="co">#&gt; Checking column requirements:</span></span>
@@ -236,6 +239,7 @@ same diagnostic dataset.</p>
 large. Therefore, regtools encourages a filter first approach. The
 following functions are useful to keep only relevant cases to your
 analysis.</p>
+<!-- Mention again that parquet files are going to be more efficient when filtering data -->
 <div class="section level3">
 <h3 id="filter-diagnostic-data">Filter diagnostic data<a class="anchor" aria-label="anchor" href="#filter-diagnostic-data"></a>
 </h3>
@@ -244,15 +248,16 @@ analysis.</p>
 codes you are indeed valid. If they are valid, it filters the given
 diagnostic dataset to keep only the observations with the relevant
 ICD-10 codes.</p>
+<!-- Include that also supports ICP-2 codes in the case of primary care data  -->
 <p>For example, to keep only the observations that either have the
 ICD-10 code <em>F840</em> or <em>F841</em>:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">filtered_diag_codes</span> <span class="op">&lt;-</span>  <span class="fu"><a href="../reference/filter_diag.html">filter_diag</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">diag_df</span>,</span>
-<span>                                    codes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"F840"</span>, <span class="st">"F841"</span><span class="op">)</span>,</span>
-<span>                                    id_col <span class="op">=</span> <span class="st">"id"</span>,</span>
-<span>                                    code_col <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>                                    log_path <span class="op">=</span> <span class="va">log_file</span></span>
-<span>                                    <span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">filtered_diag_codes</span> <span class="op">&lt;-</span>  <span class="fu"><a href="../reference/filter_diag.html">filter_diag</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">diag_df</span>,</span>
+<span>  codes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"F840"</span>, <span class="st">"F841"</span><span class="op">)</span>,</span>
+<span>  id_col <span class="op">=</span> <span class="st">"id"</span>,</span>
+<span>  code_col <span class="op">=</span> <span class="st">"code"</span>,</span>
+<span>  log_path <span class="op">=</span> <span class="va">log_file</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Checking that code exists in ICD-10 or ICPC-2 code list...</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Selected codes are valid: F840, F841</span></span>
 <span><span class="co">#&gt; Filtering data by selected codes...</span></span>
@@ -281,12 +286,12 @@ ICD-10 code <em>F840</em> or <em>F841</em>:</p>
 codes. For example, to keep the observations with all codes starting
 with <em>F45</em> or <em>F84</em>:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">filtered_diag_pattern</span> <span class="op">&lt;-</span>  <span class="fu"><a href="../reference/filter_diag.html">filter_diag</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">diag_df</span>,</span>
-<span>                                      pattern_codes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"F45"</span>, <span class="st">"F84"</span><span class="op">)</span>,</span>
-<span>                                      id_col <span class="op">=</span> <span class="st">"id"</span>,</span>
-<span>                                      code_col <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>                                      log_path <span class="op">=</span> <span class="va">log_file</span></span>
-<span>                                      <span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">filtered_diag_pattern</span> <span class="op">&lt;-</span>  <span class="fu"><a href="../reference/filter_diag.html">filter_diag</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">diag_df</span>,</span>
+<span>  pattern_codes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"F45"</span>, <span class="st">"F84"</span><span class="op">)</span>,</span>
+<span>  id_col <span class="op">=</span> <span class="st">"id"</span>,</span>
+<span>  code_col <span class="op">=</span> <span class="st">"code"</span>,</span>
+<span>  log_path <span class="op">=</span> <span class="va">log_file</span> <span class="op">)</span></span>
 <span><span class="co">#&gt; Checking that code exists in ICD-10 or ICPC-2 code list...</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Selected codes are valid: F45, F84</span></span>
 <span><span class="co">#&gt; Filtering data by selected codes...</span></span>
@@ -317,6 +322,7 @@ can keep only individuals (identified by an unique person identifier)
 with at least a minimum number of diagnostic events or only keep
 first-time diagnosis (when a date variable is available). Look at the
 specific function’s documentation for more info. data frame</p>
+<!-- Give concrete example of curate diag -->
 </div>
 <div class="section level3">
 <h3 id="filter-time-varying-and-time-invariant-data">Filter time-varying and time-invariant data<a class="anchor" aria-label="anchor" href="#filter-time-varying-and-time-invariant-data"></a>
@@ -326,12 +332,14 @@ should use <code><a href="../reference/filter_demo.html">filter_demo()</a></code
 dataset to keep only the observations with the relevant
 characteristics.</p>
 <p>For example, to only keep observations where the individuals have
-resided in the municiplality “1146” between the years 2012-2015:</p>
+resided in the municipality “1146” between the years 2012-2015:</p>
+<!-- Need to change example, there are no observations with those codes  -->
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">filtered_var</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_demo.html">filter_demo</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">var_df</span>,</span>
-<span>                            data_type <span class="op">=</span> <span class="st">"t_variant"</span>,</span>
-<span>                            filter_param <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"year_varying"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2012</span><span class="op">:</span><span class="fl">2015</span><span class="op">)</span>, <span class="st">"varying_code"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1146"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>                            log_path <span class="op">=</span> <span class="va">log_file</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">filtered_var</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_demo.html">filter_demo</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">var_df</span>,</span>
+<span>  data_type <span class="op">=</span> <span class="st">"t_variant"</span>,</span>
+<span>  filter_param <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"year_varying"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2012</span><span class="op">:</span><span class="fl">2015</span><span class="op">)</span>, <span class="st">"varying_code"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1146"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  log_path <span class="op">=</span> <span class="va">log_file</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Filtering time-variant dataset...</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Filtered time-variant by 'year_varying and varying_code' column(s)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Filtered <span style="color: #0000BB;">270216</span> rows (<span style="font-weight: bold;">100%</span> removed)</span></span>
