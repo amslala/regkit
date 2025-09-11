@@ -73,22 +73,23 @@
 analysis and visualization of health and population registers and
 capitalize on their characteristics.</p>
 <p>Researchers with access to microdata from health and/or
-administrative registers in Norway can use {regtools} to streamline
-their initial analytical process. The package includes functions for
-data pre-processing, linkage, and the computation of relevant statistics
-and visualizations, such as stratified frequencies, incidence and
-prevalence rates.</p>
-<p>This vignette introduces you to regtool’s main functions and shows
-examples of how to use them with individual-level data.</p>
+administrative registers in Norway can use regtools to streamline their
+initial analytical process. The package includes functions for data
+pre-processing, linkage, and the computation of relevant statistics and
+visualizations, such as stratified frequencies, incidence and prevalence
+rates.</p>
+<p>This vignette introduces regtool’s main functions and shows examples
+of how to use them with individual-level data. The package also includes
+some helper functions that can aid researchers working with registry
+data in Norway address specific problems, more information in the
+<code><a href="../articles/h-functions.html">vignette("h-functions")</a></code> and
+<code><a href="../articles/other-useful-fun.html">vignette("other-useful-fun")</a></code>.</p>
 <div class="section level2">
 <h2 id="example-datasets">Example datasets<a class="anchor" aria-label="anchor" href="#example-datasets"></a>
 </h2>
 <p>To exemplify the main functions of the package, we have included a
 couple of illustrative simulated datasets. These datasets are also used
 in the examples specified in the functions’ documentation.</p>
-<p><em>Note: the included datasets are large in size to parallel the
-size you would normally encounter when working with real
-microdata.</em></p>
 <p>The dataset <code>diag_df</code> is a tibble with simulated
 individual-level diagnostic data. It is documented in
 <code><a href="../reference/diag_df.html">?diag_df</a></code></p>
@@ -121,24 +122,25 @@ individual-level time-invariant data. It is documented in
 <code>synthetic_dataset()</code> function included in this package. The
 exact code used to create them can be found in the folder
 <code>/data-raw</code> in the package’s source code.</p>
-<p>Besides the main diagnostic and sociodemographic datasets included in
-the package, there are also two datasets included to facilitate running
-examples:</p>
-<ul>
-<li><p><code>kommuner_2016</code>: data frame including all municipality
-codes in Norway valid in 2016.</p></li>
-<li><p><code>linked_df</code>: data frame including linked diagnostic,
-time-invariant and time-varying data.</p></li>
-</ul>
 </div>
 <div class="section level2">
-<h2 id="general-features">General features<a class="anchor" aria-label="anchor" href="#general-features"></a>
+<h2 id="logging">Logging<a class="anchor" aria-label="anchor" href="#logging"></a>
 </h2>
-<p>The majority of functions create log files to encourage
-reproducibility and consistency across research projects. Additionally,
-each function provides clear console feedback after it executes
-important operations (filter, select, join, etc)</p>
-<p>For the next examples, we can initialize a temporary log file:</p>
+<p>To facilitate reproducibility and transparency across research
+projects, the majority of functions in regtools create log files that
+document their internal data processing, warnings/errors and
+corresponding outputs. Similarly, each function provides clear console
+feedback after it executes important operations (filter, select, join,
+etc).</p>
+<p>It is possible to either provide the path to an already existing .log
+file or set the argument <code>log_path = NULL</code> (default) to
+create a new /log directory and .log file for each function. For
+instance, the <code><a href="../reference/read_diag_data.html">read_diag_data()</a></code> with a <code>NULL</code>
+log_path will first check in the working directory for a
+<code>/log</code> directory. In case it does not already exist, the
+<code>/log</code> directory is created in the current wd and a
+&lt;read_diag_data_dd_mm_yyyy.log&gt; file is initialized.</p>
+<p>For the next examples, a temporary log file is used:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">log_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Vignette log file"</span>, file <span class="op">=</span> <span class="va">log_file</span><span class="op">)</span></span></code></pre></div>
@@ -146,15 +148,15 @@ important operations (filter, select, join, etc)</p>
 <div class="section level2">
 <h2 id="data-reading-and-validation">Data reading and validation<a class="anchor" aria-label="anchor" href="#data-reading-and-validation"></a>
 </h2>
-<p>Generally, researchers working with individual level registry data
-(in Norway) will find their datasets divided (and delivered) in three
+<p>Generally, researchers working with Norwegian individual-level
+registry data will find their datasets divided and delivered in three
 different categories:</p>
 <ul>
 <li><p><strong>Diagnostic data:</strong> at least including unique
-personal identifier (id), date of diagnostic event, and diagnosis code
+personal identifier (ID), date of diagnostic event, and diagnosis code
 (such as ICD-10 or ICP-2). For instance, datasets from NPR (Norwegian
 Patient Registry) or KUHR.</p></li>
-<li><p><strong>Time-invariandata:</strong> sociodemographic data such as
+<li><p><strong>Time-invariant:</strong> sociodemographic data such as
 date of birth, immigration background, etc.</p></li>
 <li><p><strong>Time-varying data:</strong> sociodemographic data such as
 place of residence or marital status. This type of information usually
@@ -165,10 +167,27 @@ rates for a certain diagnosis, at least they would need a diagnostic
 dataset and a time-invariant dataset (including sex).</p>
 <p>The functions <code><a href="../reference/read_demo_data.html">read_demo_data()</a></code> and
 <code><a href="../reference/read_diag_data.html">read_diag_data()</a></code> check the dataset’s minimum requirements,
-as well as giving a quick summary of the dataset’s structure. You need
-to specify the column names corresponding to the id and date variables
-(see the function documentation for more info).</p>
-<!-- Mention what type of files are supported, and refere to the parquet vignette for more information about it. It is recommended for performance, that large datasets stored as parquet files and then read/filtered -->
+as well as giving a quick summary of the dataset’s structure. For
+example, in the case of <em>time-invariant</em> data, it is assumed that
+each row in the dataset corresponds to a individual identified by a
+unique personal identified. To check this type of minimum requirements,
+it is necessary to specify some of the column names corresponding to the
+id or date variables (see the function documentation for more info).</p>
+<p><strong>Note</strong>: these functions only check for minimum
+requirements, your real datasets can contain additional
+variables/columns. For example, NPR sometimes includes sex and age
+information for each individual in the same diagnostic dataset.</p>
+<p>These functions support common data file formats that researchers
+might realistically encounter in data deliveries, such as CSV, SAV and
+<em>parquet</em> files. Parquet files are specially useful when working
+with very large data, as the storage and data processing is more
+efficient than other types of file formats (e.g. CSV files). As
+explained in the <code>vignette("parquet-files")</code>, it is
+encouraged to use parquet files for large and larger-than-memory data
+within regtools. The vignette also includes general instructions on how
+to write/save parquet datasets.</p>
+<p>To read and validate the minimum requirements of a CSV file
+containing diagnostic data:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">diag_csv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"diag_data.csv"</span>, package <span class="op">=</span> <span class="st">"regtools"</span><span class="op">)</span></span>
 <span></span>
@@ -176,7 +195,8 @@ to specify the column names corresponding to the id and date variables
 <span>  <span class="va">diag_csv</span>,</span>
 <span>  id_col <span class="op">=</span> <span class="st">"id"</span>,</span>
 <span>  date_col <span class="op">=</span> <span class="st">"diag_year"</span>,</span>
-<span>  log_path <span class="op">=</span> <span class="va">log_file</span><span class="op">)</span></span>
+<span>  log_path <span class="op">=</span> <span class="va">log_file</span></span>
+<span><span class="op">)</span></span>
 <span><span class="co">#&gt; Reading /home/runner/.cache/R/renv/library/regtools-66178653/linux-ubuntu-noble/R-4.5/x86_64-pc-linux-gnu/regtools/extdata/diag_data.csv file...</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Succesfully read file: /home/runner/.cache/R/renv/library/regtools-66178653/linux-ubuntu-noble/R-4.5/x86_64-pc-linux-gnu/regtools/extdata/diag_data.csv</span></span>
 <span><span class="co">#&gt; Checking column requirements:</span></span>
@@ -197,14 +217,17 @@ to specify the column names corresponding to the id and date variables
 <span><span class="co">#&gt; $ id        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "P000000704"<span style="color: #949494;">, </span>"P000000704"<span style="color: #949494;">, </span>"P000000704"<span style="color: #949494;">, </span>"P000000704"<span style="color: #949494;">, </span>"P00…</span></span>
 <span><span class="co">#&gt; $ code      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "F4522"<span style="color: #949494;">, </span>"F305"<span style="color: #949494;">, </span>"F65"<span style="color: #949494;">, </span>"F840"<span style="color: #949494;">, </span>"F728"<span style="color: #949494;">, </span>"F450"<span style="color: #949494;">, </span>"F187"<span style="color: #949494;">, </span>"F73…</span></span>
 <span><span class="co">#&gt; $ diag_year <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2016<span style="color: #949494;">, </span>2020<span style="color: #949494;">, </span>2014<span style="color: #949494;">, </span>2017<span style="color: #949494;">, </span>2014<span style="color: #949494;">, </span>2017<span style="color: #949494;">, </span>2018<span style="color: #949494;">, </span>2020<span style="color: #949494;">, </span>2016<span style="color: #949494;">, </span>2013<span style="color: #949494;">, </span>…</span></span></code></pre></div>
+<p>Similarly, to read and validate the minimum requirements of
+time-invariant dataset stored as a CSV file:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">demo_csv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"invar_data.csv"</span>, package <span class="op">=</span> <span class="st">"regtools"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">demo_data_validated</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_demo_data.html">read_demo_data</a></span><span class="op">(</span></span>
-<span>  <span class="va">demo_csv</span>, </span>
+<span>  <span class="va">demo_csv</span>,</span>
 <span>  data_type <span class="op">=</span> <span class="st">"t_invariant"</span>,</span>
-<span>  id_col <span class="op">=</span> <span class="st">"id"</span>, </span>
-<span>  log_path <span class="op">=</span> <span class="va">log_file</span><span class="op">)</span></span>
+<span>  id_col <span class="op">=</span> <span class="st">"id"</span>,</span>
+<span>  log_path <span class="op">=</span> <span class="va">log_file</span></span>
+<span><span class="op">)</span></span>
 <span><span class="co">#&gt; Reading /home/runner/.cache/R/renv/library/regtools-66178653/linux-ubuntu-noble/R-4.5/x86_64-pc-linux-gnu/regtools/extdata/invar_data.csv file...</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Succesfully read file: /home/runner/.cache/R/renv/library/regtools-66178653/linux-ubuntu-noble/R-4.5/x86_64-pc-linux-gnu/regtools/extdata/invar_data.csv</span></span>
 <span><span class="co">#&gt; Checking column requirements:</span></span>
@@ -227,71 +250,94 @@ to specify the column names corresponding to the id and date variables
 <span><span class="co">#&gt; $ sex               <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>1<span style="color: #949494;">, </span>1…</span></span>
 <span><span class="co">#&gt; $ y_birth           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2008<span style="color: #949494;">, </span>2000<span style="color: #949494;">, </span>2007<span style="color: #949494;">, </span>2003<span style="color: #949494;">, </span>2000<span style="color: #949494;">, </span>2003<span style="color: #949494;">, </span>2009<span style="color: #949494;">, </span>2005<span style="color: #949494;">, </span>2004…</span></span>
 <span><span class="co">#&gt; $ innvandringsgrunn <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "FAMM"<span style="color: #949494;">, </span>"FAMM"<span style="color: #949494;">, </span>"FAMM"<span style="color: #949494;">, </span>"FAMM"<span style="color: #949494;">, </span>"UTD"<span style="color: #949494;">, </span>"FAMM"<span style="color: #949494;">, </span>"UTD"…</span></span></code></pre></div>
-<p>Note: the read functions only check for minimum requirements, your
-real datasets can contain additional variables/columns. For example, NPR
-sometimes includes sex and age information for each individual in the
-same diagnostic dataset.</p>
+<p>In the case of CSV, RDS/RDA and SAV files, the resulting output is a
+tibble that can be further passed as input to other functions in the
+package. For parquet files/datasets, the output is an ArrowObject that
+can be used as input in the filtering functions described in the section
+below. For more information about ArrowObject, please consult the
+documentation from the package <code>arrow</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="data-filtering">Data filtering<a class="anchor" aria-label="anchor" href="#data-filtering"></a>
 </h2>
-<p>In most cases, the real microdata you will be working with is very
-large. Therefore, regtools encourages a filter first approach. The
-following functions are useful to keep only relevant cases to your
-analysis.</p>
-<!-- Mention again that parquet files are going to be more efficient when filtering data -->
+<p>Usually, individual-level registry data has a large number of
+observations which makes it cumbersome to manipulate and prepare for
+analysis. For that reason, it is advantageous to follow a filter first
+approach and filter out the non-relevant variables and observations.</p>
+<p>As mentioned in the <code>vignette("parquet-files")</code>, parquet
+files are more efficient than other type of files at performing
+operations on large datasets. Therefore, both the
+<code><a href="../reference/filter_diag.html">filter_diag()</a></code> and <code><a href="../reference/filter_demo.html">filter_demo()</a></code> functions are
+more memory efficient when providing an ArrowObject as an input (see
+section above).</p>
+<p>Regardless of the input’s data type (ArrowObject or tibble), the
+output of these functions are tibbles. It is assumed that after the
+initial filtering of both diagnostic and sociodemographic data, the
+datasets will be smaller and easier for users to manipulate as in-memory
+tibbles.</p>
 <div class="section level3">
 <h3 id="filter-diagnostic-data">Filter diagnostic data<a class="anchor" aria-label="anchor" href="#filter-diagnostic-data"></a>
 </h3>
-<p>To filter the diagnostic dataset, you should use
-<code><a href="../reference/filter_diag.html">filter_diag()</a></code>. This function validates that the ICD-10
-codes you are indeed valid. If they are valid, it filters the given
-diagnostic dataset to keep only the observations with the relevant
-ICD-10 codes.</p>
-<!-- Include that also supports ICP-2 codes in the case of primary care data  -->
+<p>Due to the distinct characteristics of diagnostic and
+time-varying/time-invariant datasets, there are two filtering functions:
+<code><a href="../reference/filter_diag.html">filter_diag()</a></code> and <code><a href="../reference/filter_demo.html">filter_demo()</a></code>. The former
+validates that the ICD-10 or ICPC-2 codes/family or codes are currently
+valid in the desired classification system. If they are valid, it
+filters the given diagnostic dataset to keep only the observations with
+the relevant ICD-10 or ICPC-2 codes. Additionally, it is possible to
+filter by date of the diagnostic event and remove all rows with missing
+data.</p>
 <p>For example, to keep only the observations that either have the
-ICD-10 code <em>F840</em> or <em>F841</em>:</p>
+ICD-10 code <em>F840</em> or <em>F841</em>, between the years of 2016
+and 2017:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">filtered_diag_codes</span> <span class="op">&lt;-</span>  <span class="fu"><a href="../reference/filter_diag.html">filter_diag</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">filtered_diag_codes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_diag.html">filter_diag</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">diag_df</span>,</span>
 <span>  codes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"F840"</span>, <span class="st">"F841"</span><span class="op">)</span>,</span>
+<span>  classification <span class="op">=</span> <span class="st">"icd"</span>,</span>
 <span>  id_col <span class="op">=</span> <span class="st">"id"</span>,</span>
 <span>  code_col <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>  log_path <span class="op">=</span> <span class="va">log_file</span><span class="op">)</span></span>
+<span>  date_col <span class="op">=</span> <span class="st">"diag_year"</span>,</span>
+<span>  diag_dates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2016"</span>, <span class="st">"2017"</span><span class="op">)</span>,</span>
+<span>  log_path <span class="op">=</span> <span class="va">log_file</span></span>
+<span><span class="op">)</span></span>
 <span><span class="co">#&gt; Checking that code exists in ICD-10 or ICPC-2 code list...</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Selected codes are valid: F840, F841</span></span>
 <span><span class="co">#&gt; Filtering data by selected codes...</span></span>
+<span><span class="co">#&gt; Filtering observations by date of diagnosis...</span></span>
 <span><span class="co">#&gt; Removing observations containing NAs in any column...</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed <span style="color: #0000BB;">225</span> rows with NAs.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed <span style="color: #0000BB;">47</span> rows with NAs.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">────────────────────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00; font-weight: bold;">Diagnostic dataset succesfully filtered</span></span></span>
 <span><span class="co"><span style="color: #00BB00; font-weight: bold;">#&gt; </span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Filtered <span style="color: #0000BB;">120031</span> rows (<span style="font-weight: bold;">99.8%</span> removed)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Filtered <span style="color: #0000BB;">120209</span> rows (<span style="font-weight: bold;">100%</span> removed)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Data Summary</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── After filtering:</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Remaining number of rows: <span style="color: #0000BB;">225</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Remaining number of rows: <span style="color: #0000BB;">47</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Remaining number of columns: <span style="color: #0000BB;">3</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Unique IDs in dataset: <span style="color: #0000BB;">225</span>.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Unique IDs in dataset: <span style="color: #0000BB;">47</span>.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> ICD-10 codes in dataset: <span style="color: #0000BB;">2</span></span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Rows: 225</span></span>
+<span><span class="co">#&gt; Rows: 47</span></span>
 <span><span class="co">#&gt; Columns: 3</span></span>
-<span><span class="co">#&gt; $ id        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "P000000704"<span style="color: #949494;">, </span>"P000010070"<span style="color: #949494;">, </span>"P000010584"<span style="color: #949494;">, </span>"P000044255"<span style="color: #949494;">, </span>"P00…</span></span>
+<span><span class="co">#&gt; $ id        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "P000000704"<span style="color: #949494;">, </span>"P000010584"<span style="color: #949494;">, </span>"P000244118"<span style="color: #949494;">, </span>"P000296001"<span style="color: #949494;">, </span>"P00…</span></span>
 <span><span class="co">#&gt; $ code      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "F840"<span style="color: #949494;">, </span>"F840"<span style="color: #949494;">, </span>"F840"<span style="color: #949494;">, </span>"F840"<span style="color: #949494;">, </span>"F840"<span style="color: #949494;">, </span>"F841"<span style="color: #949494;">, </span>"F840"<span style="color: #949494;">, </span>"F84…</span></span>
-<span><span class="co">#&gt; $ diag_year <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2017<span style="color: #949494;">, </span>2019<span style="color: #949494;">, </span>2016<span style="color: #949494;">, </span>2019<span style="color: #949494;">, </span>2015<span style="color: #949494;">, </span>2013<span style="color: #949494;">, </span>2015<span style="color: #949494;">, </span>2015<span style="color: #949494;">, </span>2015<span style="color: #949494;">, </span>2019<span style="color: #949494;">, </span>…</span></span></code></pre></div>
+<span><span class="co">#&gt; $ diag_year <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "2017"<span style="color: #949494;">, </span>"2016"<span style="color: #949494;">, </span>"2016"<span style="color: #949494;">, </span>"2017"<span style="color: #949494;">, </span>"2017"<span style="color: #949494;">, </span>"2016"<span style="color: #949494;">, </span>"2017"<span style="color: #949494;">, </span>"201…</span></span></code></pre></div>
 <p>Alternatively, it is also possible to filter by pattern/family of
-codes. For example, to keep the observations with all codes starting
-with <em>F45</em> or <em>F84</em>:</p>
+codes. For example, to keep the observations with all valid ICD-10 codes
+starting with <em>F45</em> or <em>F84</em>:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">filtered_diag_pattern</span> <span class="op">&lt;-</span>  <span class="fu"><a href="../reference/filter_diag.html">filter_diag</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">filtered_diag_pattern</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_diag.html">filter_diag</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">diag_df</span>,</span>
 <span>  pattern_codes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"F45"</span>, <span class="st">"F84"</span><span class="op">)</span>,</span>
+<span>  classification <span class="op">=</span> <span class="st">"icd"</span>,</span>
 <span>  id_col <span class="op">=</span> <span class="st">"id"</span>,</span>
 <span>  code_col <span class="op">=</span> <span class="st">"code"</span>,</span>
-<span>  log_path <span class="op">=</span> <span class="va">log_file</span> <span class="op">)</span></span>
+<span>  log_path <span class="op">=</span> <span class="va">log_file</span></span>
+<span><span class="op">)</span></span>
 <span><span class="co">#&gt; Checking that code exists in ICD-10 or ICPC-2 code list...</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Selected codes are valid: F45, F84</span></span>
 <span><span class="co">#&gt; Filtering data by selected codes...</span></span>
@@ -317,33 +363,65 @@ with <em>F45</em> or <em>F84</em>:</p>
 <span><span class="co">#&gt; $ code      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "F4522"<span style="color: #949494;">, </span>"F840"<span style="color: #949494;">, </span>"F450"<span style="color: #949494;">, </span>"F845"<span style="color: #949494;">, </span>"F4520"<span style="color: #949494;">, </span>"F455"<span style="color: #949494;">, </span>"F457"<span style="color: #949494;">, </span>"F…</span></span>
 <span><span class="co">#&gt; $ diag_year <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2016<span style="color: #949494;">, </span>2017<span style="color: #949494;">, </span>2017<span style="color: #949494;">, </span>2020<span style="color: #949494;">, </span>2019<span style="color: #949494;">, </span>2016<span style="color: #949494;">, </span>2019<span style="color: #949494;">, </span>2020<span style="color: #949494;">, </span>2013<span style="color: #949494;">, </span>2019<span style="color: #949494;">, </span>…</span></span></code></pre></div>
 <p>To further refine the filter of a diagnostic dataset, the
-<code><a href="../reference/curate_diag.html">curate_diag()</a></code> provides additional options. For example, you
-can keep only individuals (identified by an unique person identifier)
-with at least a minimum number of diagnostic events or only keep
-first-time diagnosis (when a date variable is available). Look at the
-specific function’s documentation for more info. data frame</p>
-<!-- Give concrete example of curate diag -->
+<code><a href="../reference/curate_diag.html">curate_diag()</a></code> provides some additional options. It is
+important to highlight that this function only supports data frames
+(preferably tibbles) as input.</p>
+<p>To keep only cases (identified by an unique person identifier) with
+at least 1 diagnostic events, and summarizing information by their
+first-time diagnosis:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">curated_diag</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/curate_diag.html">curate_diag</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">filtered_diag_pattern</span>,</span>
+<span>  min_diag <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  first_diag <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  id_col <span class="op">=</span> <span class="st">"id"</span>,</span>
+<span>  code_col <span class="op">=</span> <span class="st">"code"</span>,</span>
+<span>  date_col <span class="op">=</span> <span class="st">"diag_year"</span>,</span>
+<span>  log_path <span class="op">=</span> <span class="va">log_file</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Filtered observations that do not have at least 1 diagnostic event</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Summarized first diagnostic event information</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">────────────────────────────────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00; font-weight: bold;">Diagnostic dataset succesfully curated and summarized</span></span></span>
+<span><span class="co"><span style="color: #00BB00; font-weight: bold;">#&gt; </span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Filtered <span style="color: #0000BB;">75</span> rows (<span style="font-weight: bold;">3%</span> removed)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Data Summary</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── After filtering:</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Remaining number of rows: <span style="color: #0000BB;">2464</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Remaining number of columns: <span style="color: #0000BB;">4</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Unique IDs in dataset: <span style="color: #0000BB;">2464</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> ICD-10 codes in dataset: <span style="color: #0000BB;">F4520</span>, <span style="color: #0000BB;">F454</span>, <span style="color: #0000BB;">F845</span>, <span style="color: #0000BB;">F4529</span>, <span style="color: #0000BB;">F456</span>, <span style="color: #0000BB;">F844</span>, <span style="color: #0000BB;">F842</span>, <span style="color: #0000BB;">F841</span>, <span style="color: #0000BB;">F849</span>, <span style="color: #0000BB;">F455</span>, <span style="color: #0000BB;">F4541</span>, <span style="color: #0000BB;">F45</span>, <span style="color: #0000BB;">F4522</span>, <span style="color: #0000BB;">F457</span>, <span style="color: #0000BB;">F847</span>, <span style="color: #0000BB;">F848</span>, <span style="color: #0000BB;">F840</span>, <span style="color: #0000BB;">F451</span>, …, <span style="color: #0000BB;">F846</span>, and <span style="color: #0000BB;">F843</span></span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; tibble [2,464 × 4] (S3: tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;  $ id               : chr [1:2464] "P000000704" "P000000882" "P000000886" "P000001615" ...</span></span>
+<span><span class="co">#&gt;  $ code             : chr [1:2464] "F4522" "F454" "F450" "F845" ...</span></span>
+<span><span class="co">#&gt;  $ y_diagnosis_first: int [1:2464] 2016 2014 2017 2020 2017 2020 2017 2020 2020 2019 ...</span></span>
+<span><span class="co">#&gt;  $ diagnosis_count  : int [1:2464] 2 1 1 1 1 1 1 1 1 1 ...</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="filter-time-varying-and-time-invariant-data">Filter time-varying and time-invariant data<a class="anchor" aria-label="anchor" href="#filter-time-varying-and-time-invariant-data"></a>
 </h3>
-<p>To filter both the time-varying and time-invariant datasets, you
-should use <code><a href="../reference/filter_demo.html">filter_demo()</a></code>. This function filters the given
-dataset to keep only the observations with the relevant
-characteristics.</p>
+<p>Similar to the filtering of diagnostic data,
+<code><a href="../reference/filter_demo.html">filter_demo()</a></code> aids with the filtering of both time-varying
+and time-invariant datasets. As previously mentioned, this function also
+supports ArrowObject as input data.</p>
 <p>For example, to only keep observations where the individuals have
-resided in the municipality “1146” between the years 2012-2015:</p>
-<!-- Need to change example, there are no observations with those codes  -->
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+resided in the municipality “0815” between the years 2012 and 2015:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">filtered_var</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_demo.html">filter_demo</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">var_df</span>,</span>
 <span>  data_type <span class="op">=</span> <span class="st">"t_variant"</span>,</span>
-<span>  filter_param <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"year_varying"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2012</span><span class="op">:</span><span class="fl">2015</span><span class="op">)</span>, <span class="st">"varying_code"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1146"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  log_path <span class="op">=</span> <span class="va">log_file</span><span class="op">)</span></span>
+<span>  filter_param <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"year_varying"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2012</span><span class="op">:</span><span class="fl">2015</span><span class="op">)</span>, <span class="st">"varying_code"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0815"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  log_path <span class="op">=</span> <span class="va">log_file</span></span>
+<span><span class="op">)</span></span>
 <span><span class="co">#&gt; Filtering time-variant dataset...</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Filtered time-variant by 'year_varying and varying_code' column(s)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Filtered <span style="color: #0000BB;">270216</span> rows (<span style="font-weight: bold;">100%</span> removed)</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> The dataset has no NAs or they are coded in a different format.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Filtered <span style="color: #0000BB;">269594</span> rows (<span style="font-weight: bold;">99.8%</span> removed)</span></span>
+<span><span class="co">#&gt; Removing observations containing NAs in any column...</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed <span style="color: #0000BB;">622</span> rows with NAs.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">────────────────────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00; font-weight: bold;">Demographic dataset succesfully filtered</span></span></span>
@@ -352,22 +430,24 @@ resided in the municipality “1146” between the years 2012-2015:</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Data Summary</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── After filtering:</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Remaining number of rows: <span style="color: #0000BB;">0</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Remaining number of rows: <span style="color: #0000BB;">622</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Remaining number of columns: <span style="color: #0000BB;">3</span></span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Rows: 0</span></span>
+<span><span class="co">#&gt; Rows: 622</span></span>
 <span><span class="co">#&gt; Columns: 3</span></span>
-<span><span class="co">#&gt; $ id           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
-<span><span class="co">#&gt; $ year_varying <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> </span></span>
-<span><span class="co">#&gt; $ varying_code <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span></code></pre></div>
+<span><span class="co">#&gt; $ id           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "P000000037"<span style="color: #949494;">, </span>"P000000037"<span style="color: #949494;">, </span>"P000000037"<span style="color: #949494;">, </span>"P000000037"<span style="color: #949494;">, </span>"…</span></span>
+<span><span class="co">#&gt; $ year_varying <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2012<span style="color: #949494;">, </span>2013<span style="color: #949494;">, </span>2014<span style="color: #949494;">, </span>2015<span style="color: #949494;">, </span>2012<span style="color: #949494;">, </span>2013<span style="color: #949494;">, </span>2014<span style="color: #949494;">, </span>2015<span style="color: #949494;">, </span>2012<span style="color: #949494;">, </span>201…</span></span>
+<span><span class="co">#&gt; $ varying_code <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "0815"<span style="color: #949494;">, </span>"0815"<span style="color: #949494;">, </span>"0815"<span style="color: #949494;">, </span>"0815"<span style="color: #949494;">, </span>"0815"<span style="color: #949494;">, </span>"0815"<span style="color: #949494;">, </span>"0815"<span style="color: #949494;">, </span>"…</span></span></code></pre></div>
 <p>In the case of time-invariant data, to keep only individuals with
-year of birth between 2006-2008 and reason of immigration “FAMM” or
-“UTD”:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">filtered_invar</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_demo.html">filter_demo</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">invar_df</span>, data_type <span class="op">=</span> <span class="st">"t_invariant"</span>,</span>
-<span>                              filter_param <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"y_birth"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2010</span><span class="op">:</span><span class="fl">2018</span><span class="op">)</span>, <span class="st">"innvandringsgrunn"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ARB"</span>,<span class="st">"NRD"</span>, <span class="st">"UKJ"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>                              rm_na <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>                              log_path <span class="op">=</span> <span class="va">log_file</span><span class="op">)</span></span>
+year of birth between 2010-2018 and reason of immigration “ARB”, “NRD”
+or “UKJ”:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">filtered_invar</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_demo.html">filter_demo</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">invar_df</span>, data_type <span class="op">=</span> <span class="st">"t_invariant"</span>,</span>
+<span>  filter_param <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"y_birth"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2010</span><span class="op">:</span><span class="fl">2018</span><span class="op">)</span>, <span class="st">"innvandringsgrunn"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ARB"</span>, <span class="st">"NRD"</span>, <span class="st">"UKJ"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  rm_na <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  log_path <span class="op">=</span> <span class="va">log_file</span></span>
+<span><span class="op">)</span></span>
 <span><span class="co">#&gt; Filtering time-invariant dataset...</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Filtered time-invariant dataset by 'y_birth and innvandringsgrunn' column(s)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Filtered <span style="color: #0000BB;">29333</span> rows (<span style="font-weight: bold;">97.7%</span> removed)</span></span>
@@ -393,32 +473,208 @@ year of birth between 2006-2008 and reason of immigration “FAMM” or
 <div class="section level2">
 <h2 id="linkage">Linkage<a class="anchor" aria-label="anchor" href="#linkage"></a>
 </h2>
-<p>After filtering the datasets, we can link them using the individuals
-unique personal identifier. Depending on the type of analysis and
-relevant variables, it might not be necessary to link any datasets.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">linked_diag_inv</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/link_diag_demo.html">link_diag_demo</a></span><span class="op">(</span>data_diag <span class="op">=</span> <span class="va">filtered_diag_pattern</span>,</span>
-<span>                                  data_demo_inv <span class="op">=</span> <span class="va">filtered_invar</span>,</span>
-<span>                                  id_col <span class="op">=</span> <span class="st">"id"</span>,</span>
-<span>                                  log_path <span class="op">=</span> <span class="va">log_file</span><span class="op">)</span></span>
+<p>Many of the analyses typically done with registry data require the
+linkage of different registers to access both health and
+sociodemographic information (e.g. stratified prevalence rates). After
+filtering the datasets to keep only relevant observations, it is easier
+to then link them using the individuals unique personal identifier
+present in each dataset. Depending on the type of analysis and relevant
+variables, it might not be necessary to link any datasets.</p>
+<p>The <code><a href="../reference/link_diag_demo.html">link_diag_demo()</a></code> function can aid with the linkage
+process conditioned that all datasets share the same IDs to uniquely
+identify individuals. To link both the already filtered diagnostic and
+time-invariant datasets:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linked_diag_inv</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/link_diag_demo.html">link_diag_demo</a></span><span class="op">(</span></span>
+<span>  data_diag <span class="op">=</span> <span class="va">curated_diag</span>,</span>
+<span>  data_demo_inv <span class="op">=</span> <span class="va">filtered_invar</span>,</span>
+<span>  id_col <span class="op">=</span> <span class="st">"id"</span>,</span>
+<span>  log_path <span class="op">=</span> <span class="va">log_file</span></span>
+<span><span class="op">)</span></span>
 <span><span class="co">#&gt; Joining diagnostic data with time-invariant demographic data...</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Datasets succesfully linked: filtered_diag_pattern, filtered_invar</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Datasets succesfully linked: curated_diag, filtered_invar</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Data Summary</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────────────</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> After joining added <span style="color: #0000BB;">3</span> columns to 'filtered_diag_pattern': sex, y_birth, and innvandringsgrunn</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Rows in 'filtered_diag_pattern': <span style="color: #0000BB;">2539</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> After joining added <span style="color: #0000BB;">3</span> columns to 'curated_diag': sex, y_birth, and innvandringsgrunn</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Rows in 'curated_diag': <span style="color: #0000BB;">2464</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Rows in 'filtered_invar': <span style="color: #0000BB;">691</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Total matched rows: <span style="color: #0000BB;">725</span></span></span></code></pre></div>
-<p>The resulting dataset from <code><a href="../reference/link_diag_demo.html">link_diag_demo()</a></code>is a minimal
-tidy dataset that you can then use to run other functions.</p>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Total matched rows: <span style="color: #0000BB;">691</span></span></span></code></pre></div>
+<p>As part of the linking process, the function provides some useful
+information about the number of matched cases (individuals) and summary
+information of the new linked dataset. The resulting dataset from
+<code><a href="../reference/link_diag_demo.html">link_diag_demo()</a></code> is a minimal dataset that contains all
+relevant observations to perform further analyses.</p>
 </div>
 <div class="section level2">
 <h2 id="analysis">Analysis<a class="anchor" aria-label="anchor" href="#analysis"></a>
 </h2>
+<p>Until this point, all the functions described are concerned with
+general data preparation and manipulation that researchers working with
+this type of individual-level data have to perform to some degree.
+Considering that Norwegian registry health data is often use for
+epidemiology research, the functions described in the next section are
+specific to descriptive epidemiology and public health monitoring.</p>
+<p>Two of the most common measures in descriptive epidemiology are
+incidence and prevalence rates. Consequently, regtools includes the
+functions <code><a href="../reference/calculate_prevalence.html">calculate_prevalence()</a></code> and
+<code><a href="../reference/calculate_incidence.html">calculate_incidence()</a></code> to aid with these analyses. Both
+functions require as input a filtered linked dataset with relevant
+observations (output from <code>link_diag_demo</code>), and the
+population counts stored in a different dataset.</p>
+<p>As diagnoses under F84 and F45 are considered to be chronic or
+persistent, it is assumed for the next examples that once an individual
+is diagnosed, then they will always be part of the case group. Then, to
+compute the prevalence of F84 and F45 (and subcodes) given in the time
+period 2012-2020 to individuals born between 2010-2018 and with reason
+of immigration “ARB”, “NRD” or “UKJ”:</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">pop_df</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>year <span class="op">=</span> <span class="st">"2012-2020"</span>, population <span class="op">=</span> <span class="fl">30024</span><span class="op">)</span></span>
+<span><span class="va">linked_diag_inv</span> <span class="op">&lt;-</span> <span class="va">linked_diag_inv</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span><span class="st">"year"</span><span class="op">=</span> <span class="st">"y_diagnosis_first"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">prevalence_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calculate_prevalence.html">calculate_prevalence</a></span><span class="op">(</span><span class="va">linked_diag_inv</span>,</span>
+<span>  id_col <span class="op">=</span> <span class="st">"id"</span>,</span>
+<span>  date_col <span class="op">=</span> <span class="st">"year"</span>,</span>
+<span>  pop_data <span class="op">=</span> <span class="va">pop_df</span>,</span>
+<span>  pop_col <span class="op">=</span> <span class="st">"population"</span>,</span>
+<span>  time_p <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2012</span>,<span class="fl">2020</span><span class="op">)</span>,</span>
+<span>  CI <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  CI_level <span class="op">=</span> <span class="fl">0.95</span>,</span>
+<span>  only_counts <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  suppression <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  suppression_threshold <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  log_path <span class="op">=</span> <span class="va">log_file</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Computing prevalence rates/counts...</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Suppressed counts using <span style="font-weight: bold;">10</span> threshold</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Removed <span style="color: #0000BB;">0</span> cells out of 1</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #00BB00;">Prevalence rates ready!</span></span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Summary</span> <span style="color: #00BBBB;">─────────────────────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Diagnostic and demographic data: <span style="color: #0000BB;">linked_diag_inv</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Population data: <span style="color: #0000BB;">pop_df</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Grouped by variables:</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> For time point/period:  <span style="color: #0000BB;">2012</span> and <span style="color: #0000BB;">2020</span></span></span>
+<span></span>
+<span><span class="va">prevalence_df</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 9</span></span></span>
+<span><span class="co">#&gt;   year      unique_id total_events population prev_rate ci_results_method</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 2012-2020       691          691      <span style="text-decoration: underline;">30</span>024    0.023<span style="text-decoration: underline;">0</span> exact            </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 3 more variables: ci_results_mean &lt;dbl&gt;, ci_results_lower &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ci_results_upper &lt;dbl&gt;</span></span></span></code></pre></div>
+<p>Besides computing prevalence rates based on the provided linked
+dataset, <code><a href="../reference/calculate_prevalence.html">calculate_prevalence()</a></code> can also provide confidence
+intervals and suppression of low counts to adhere to confidentiality
+rules. Furthermore, there is an option to output only the case counts
+which can be useful for other type of statistical analyses (e.g. chi
+square tests).</p>
+<p>In a lot of cases, it is relevant to compute counts or rates
+stratified by certain groupings. It is also possible to specify this, as
+long as the population dataset includes the necessary information
+(warning if it does not have a one-to-one match):</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pop_df</span> <span class="op">&lt;-</span> <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/expand_grid.html" class="external-link">expand_grid</a></span><span class="op">(</span>year <span class="op">=</span> <span class="st">"2012-2020"</span>,</span>
+<span>                               sex <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                               innvandringsgrunn <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ARB"</span>, <span class="st">"UKJ"</span>, <span class="st">"NRD"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>population <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">floor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span>, min <span class="op">=</span> <span class="fl">3000</span>, max <span class="op">=</span> <span class="fl">4000</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">prevalence_df_strat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calculate_prevalence.html">calculate_prevalence</a></span><span class="op">(</span><span class="va">linked_diag_inv</span>,</span>
+<span>  id_col <span class="op">=</span> <span class="st">"id"</span>,</span>
+<span>  date_col <span class="op">=</span> <span class="st">"year"</span>,</span>
+<span>  pop_data <span class="op">=</span> <span class="va">pop_df</span>,</span>
+<span>  pop_col <span class="op">=</span> <span class="st">"population"</span>,</span>
+<span>  grouping_vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sex"</span>,<span class="st">"innvandringsgrunn"</span><span class="op">)</span>,</span>
+<span>  time_p <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2012</span>,<span class="fl">2020</span><span class="op">)</span>,</span>
+<span>  CI <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  CI_level <span class="op">=</span> <span class="fl">0.95</span>,</span>
+<span>  only_counts <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  suppression <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  suppression_threshold <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  log_path <span class="op">=</span> <span class="va">log_file</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Computing prevalence rates/counts...</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Suppressed counts using <span style="font-weight: bold;">10</span> threshold</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Removed <span style="color: #0000BB;">0</span> cells out of 6</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #00BB00;">Prevalence rates ready!</span></span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Summary</span> <span style="color: #00BBBB;">─────────────────────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Diagnostic and demographic data: <span style="color: #0000BB;">linked_diag_inv</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Population data: <span style="color: #0000BB;">pop_df</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Grouped by variables: <span style="color: #0000BB;">sex</span> and <span style="color: #0000BB;">innvandringsgrunn</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> For time point/period:  <span style="color: #0000BB;">2012</span> and <span style="color: #0000BB;">2020</span></span></span>
+<span></span>
+<span><span class="va">prevalence_df_strat</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 11</span></span></span>
+<span><span class="co">#&gt;   sex   innvandringsgrunn year      unique_id total_events population prev_rate</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 0     ARB               2012-2020       113          113       <span style="text-decoration: underline;">3</span>080    0.036<span style="text-decoration: underline;">7</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 0     NRD               2012-2020       108          108       <span style="text-decoration: underline;">3</span>600    0.03  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 0     UKJ               2012-2020       122          122       <span style="text-decoration: underline;">3</span>834    0.031<span style="text-decoration: underline;">8</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 1     ARB               2012-2020       112          112       <span style="text-decoration: underline;">3</span>157    0.035<span style="text-decoration: underline;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 1     NRD               2012-2020       119          119       <span style="text-decoration: underline;">3</span>466    0.034<span style="text-decoration: underline;">3</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 1     UKJ               2012-2020       117          117       <span style="text-decoration: underline;">3</span>007    0.038<span style="text-decoration: underline;">9</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 4 more variables: ci_results_method &lt;chr&gt;, ci_results_mean &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ci_results_lower &lt;dbl&gt;, ci_results_upper &lt;dbl&gt;</span></span></span></code></pre></div>
+<p>Often in descriptive epidemiology, researchers are interested in the
+evolution of prevalence of a certain disease through time. For that
+purpose, the <code>compute_prevalence_series()</code> can compute
+prevalence rates for a series of periods of time:</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># Silenced CLI output for example </span></span>
+<span></span>
+<span><span class="va">pop_df</span> <span class="op">&lt;-</span> <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/expand_grid.html" class="external-link">expand_grid</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2012-2014"</span>, <span class="st">"2015-2017"</span>, <span class="st">"2018-2020"</span><span class="op">)</span>,</span>
+<span>                             sex <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                             innvandringsgrunn <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ARB"</span>, <span class="st">"UKJ"</span>, <span class="st">"NRD"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>population <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">floor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span>, min <span class="op">=</span> <span class="fl">2000</span>, max <span class="op">=</span> <span class="fl">4000</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">prevalence_df_series</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calculate_prevalence_series.html">calculate_prevalence_series</a></span><span class="op">(</span><span class="va">linked_diag_inv</span>,</span>
+<span>  time_points <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2012</span>,<span class="fl">2014</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2015</span>,<span class="fl">2017</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2018</span>,<span class="fl">2020</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  id_col <span class="op">=</span> <span class="st">"id"</span>,</span>
+<span>  date_col <span class="op">=</span> <span class="st">"year"</span>,</span>
+<span>  pop_data <span class="op">=</span> <span class="va">pop_df</span>,</span>
+<span>  pop_col <span class="op">=</span> <span class="st">"population"</span>,</span>
+<span>  grouping_vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sex"</span>, <span class="st">"innvandringsgrunn"</span><span class="op">)</span>,</span>
+<span>  only_counts <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  suppression <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  suppression_threshold <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  CI <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  CI_level <span class="op">=</span> <span class="fl">0.95</span>,</span>
+<span>  log_path <span class="op">=</span> <span class="va">log_file</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">prevalence_df_series</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="visualize">Visualize<a class="anchor" aria-label="anchor" href="#visualize"></a>
 </h2>
+<p>In the case of comparison between different groups or changes through
+time, it is useful to visualize the prevalence/incidence rates. For that
+purpose, the function <code><a href="../reference/plot_rates.html">plot_rates()</a></code> can create some
+ready-to-use plots with a consistent visual theme:</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">plot_line</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_rates.html">plot_rates</a></span><span class="op">(</span><span class="va">prevalence_df_series</span>,</span>
+<span>                        date_col <span class="op">=</span> <span class="st">"year"</span>,</span>
+<span>                        rate_col <span class="op">=</span> <span class="st">"prev_rate"</span>,</span>
+<span>                        plot_type <span class="op">=</span> <span class="st">"line"</span>,</span>
+<span>                        grouping_var <span class="op">=</span> <span class="st">"sex"</span>,</span>
+<span>                        facet_var <span class="op">=</span> <span class="st">"innvandringsgrunn"</span>,</span>
+<span>                        palette <span class="op">=</span> <span class="st">"fhi_colors"</span>,</span>
+<span>                        CI_lower <span class="op">=</span> <span class="st">"ci_results_lower"</span>,</span>
+<span>                        CI_upper <span class="op">=</span> <span class="st">"ci_results_upper"</span>,</span>
+<span>                        annotated_line <span class="op">=</span> <span class="st">"2015-2017"</span>,</span>
+<span>                        plot_title <span class="op">=</span> <span class="st">"Prevalence by sex and reason of immigration"</span>,</span>
+<span>                        x_name <span class="op">=</span> <span class="st">"Year"</span>,</span>
+<span>                        start_end_points <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">plot_line</span></span></code></pre></div>
+<p><img src="regtools_files/figure-html/plot-rates-1.png" width="528"></p>
+<p>As the output of this function is a ggplot object, you can further
+modify using the <code>ggplot2</code> suite of functions.</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">plot_line</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>subtitle <span class="op">=</span> <span class="st">"Norway, individuals born between 2010-2018"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="regtools_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
