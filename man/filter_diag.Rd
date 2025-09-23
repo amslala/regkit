@@ -14,6 +14,7 @@ filter_diag(
   date_col = NULL,
   diag_dates = NULL,
   rm_na = TRUE,
+  add_description = FALSE,
   log_path = NULL
 )
 }
@@ -34,10 +35,9 @@ filter_diag(
 
 \item{diag_dates}{A character vector. Dates (years, months, etc) that you want to filter the diagnostic data by.}
 
-\item{rm_na}{Logical. Should rows with NA in the non-filtered columns be removed? Default is \code{FALSE}
-\itemize{
-\item If \code{TRUE}, removes observations that have NA in any of the non-filtered columns.
-}}
+\item{rm_na}{Logical. Should rows with NA in the non-filtered columns be removed? Default is \code{FALSE}}
+
+\item{add_description}{Logical. If \code{TRUE} new column will be added with description of ICD-10 or ICPC-2 code. Note: not all code descriptions are available.}
 
 \item{log_path}{A character string. Path to the log file to append function logs. Default is \code{NULL}.
 \itemize{

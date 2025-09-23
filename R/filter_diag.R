@@ -9,7 +9,7 @@
 #' @param date_col A character string. Name of the column containing the date of the diagnostic event. Only needed i if you want to filter by diagnosis date. Default is `NULL`.
 #' @param diag_dates A character vector. Dates (years, months, etc) that you want to filter the diagnostic data by.
 #' @param rm_na Logical. Should rows with NA in the non-filtered columns be removed? Default is `FALSE`
-#' * If `TRUE`, removes observations that have NA in any of the non-filtered columns.
+#' @param add_description Logical. If `TRUE` new column will be added with description of ICD-10 or ICPC-2 code. Note: not all code descriptions are available.
 #' @param log_path A character string. Path to the log file to append function logs. Default is `NULL`.
 #' * If `NULL`, a new directory `/log` and file is created in the current working directory.
 #'
@@ -34,7 +34,7 @@
 #' @import logger
 #' @importFrom rlang .data
 
-filter_diag <- function(data, codes = NULL, pattern_codes = NULL, classification = "icd", id_col = "id", code_col = "code", date_col = NULL, diag_dates = NULL, rm_na = TRUE, log_path = NULL){
+filter_diag <- function(data, codes = NULL, pattern_codes = NULL, classification = "icd", id_col = "id", code_col = "code", date_col = NULL, diag_dates = NULL, rm_na = TRUE, add_description = FALSE, log_path = NULL){
 
 # Set up logging ----------------------------------------------------------
 
@@ -83,7 +83,7 @@ filter_diag <- function(data, codes = NULL, pattern_codes = NULL, classification
 # Remove NAs helper -------------------------------------------------------
 
   remove_na <- function(data){
-    n_missing <- length(which(stats::complete.cases(data)))
+    n_missing <- length(which(!stats::complete.cases(data)))
 
     if(sum(n_missing) > 0){
       cat("\n")
@@ -116,7 +116,7 @@ if (inherits(data, what = c("ArrowObject"))){
     type_code <- "pattern"
     codes_found <- switch(classification,
                           icd = purrr::map_lgl(pattern_codes, function(code) {
-                            any(purrr::map_lgl(npr[,1:4], ~ any(startsWith(as.character(.x), code))))
+                            any(purrr::map_lgl(npr[,1], ~ any(startsWith(as.character(.x), code))))
                           }),
                           icpc = purrr::map_lgl(pattern_codes, function(code) {
                             any(purrr::map_lgl(icpc_2[,1], ~ any(startsWith(as.character(.x), code))))
@@ -127,7 +127,7 @@ if (inherits(data, what = c("ArrowObject"))){
     type_code <- "exact"
     codes_found <- switch(classification,
                           icd = purrr::map_lgl(codes, function(code){
-                            any(purrr::map_lgl(npr[,1:4], ~ code %in% .x))}),
+                            any(purrr::map_lgl(npr[,1], ~ code %in% .x))}),
                           icpc = purrr::map_lgl(codes, function(code){
                             any(purrr::map_lgl(icpc_2[,1], ~ code %in% .x))}),
                           stop("unknown classification type"))
@@ -139,8 +139,8 @@ if (inherits(data, what = c("ArrowObject"))){
       type_code,
       "pattern" = pattern_codes[!codes_found],
       "exact"   = codes[!codes_found])
-    log_error("{paste(missing_codes, collapse = ', ')} code(s) not valid")
-    stop(paste0(paste0(missing_codes, collapse = ", "), " code(s) not valid"))
+    log_warn("{paste(missing_codes, collapse = ', ')} code(s) not valid")
+    warning(paste0(paste0(missing_codes, collapse = ", "), " code(s) not valid or not mandated to be reported in NPR"))
     } else {
       valid_codes <- switch(
         type_code,
@@ -208,6 +208,15 @@ if (inherits(data, what = c("ArrowObject"))){
     filtered_data <- remove_na(filtered_data)
   }
 
+# Add description  --------------------------------------------------------
+
+  if(add_description == TRUE){
+    filtered_data <- switch(classification,
+                            icd = dplyr::left_join(filtered_data, npr, dplyr::join_by({{code_col}} == "Kode")),
+                            icpc = dplyr::left_join(filtered_data, icpc_2, dplyr::join_by({{code_col}} == "Kode")),
+                            stop("unknown classification type"))
+  }
+
 # Summary data: CLI  -------------------------------------------------------
 
 
@@ -244,7 +253,7 @@ if (inherits(data, what = c("ArrowObject"))){
   log_info("Remaining number of rows: {nrow(filtered_data)}")
   log_info("Remaining number of columns: {ncol(filtered_data)}")
   log_info("Unique IDs in dataset: {dplyr::n_distinct(filtered_data[[id_col]])}")
-  log_info("ICD-10 codes in dataset: {paste(unique(filtered_data$code, fromLast = T), collapse = ', ')}")
+  log_info("ICD-10 codes in dataset: {paste(unique(filtered_data[[code_col]], fromLast = T), collapse = ', ')}")
 
   return(filtered_data)
 }
