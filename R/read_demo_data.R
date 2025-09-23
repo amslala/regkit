@@ -65,6 +65,12 @@ read_demo_data <- function(file_path, data_type = c("t_variant", "t_invariant"),
     stop("File does not exist in the specified path.")
   }
 
+  if(file_extension == ""){
+    recursive_files <- list.files(file_path, recursive = TRUE, pattern = "\\.parquet$")
+    if(length(recursive_files > 0)){
+      file_extension <- "parquet"
+    }
+  }
 
   if(!file_extension %in% supported_types){
     log_error("{file_extension}. File type not supported. Please provide a .csv, .rds, .parquet or .sav file.")

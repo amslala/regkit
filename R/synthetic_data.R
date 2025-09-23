@@ -131,7 +131,7 @@ synthetic_data <- function(
     pattern <- paste0("^(", paste(family, collapse = "|"), ")")
 
     if(code_type == "icd"){
-      matching_codes <- purrr::map(npr[, 1:4], function(x){
+      matching_codes <- purrr::map(npr[, 1], function(x){
         x[grepl(pattern, x, ignore.case = TRUE)]
       })
     } else if (code_type == "icpc"){
