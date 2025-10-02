@@ -19,7 +19,9 @@ knitr::opts_chunk$set(
 [![Codecov test coverage](https://codecov.io/gh/amslala/regtools/graph/badge.svg)](https://app.codecov.io/gh/amslala/regtools)
 <!-- badges: end -->
 
-The goal of regtools is to aid researchers working with individual-level data in Norway to perform prevalence and incidence analysis. 
+The goal of regtools is to assist researchers in performing efficient and well-documented manipulation, analysis and visualization of data from Norwegian health and population registers. The package includes functions for data pre-processing, linkage, and the computation of relevant statistics and visualizations, such as stratified frequencies, incidence and prevalence rates.
+
+The regtools package will be of most use to you if you are a researcher with access to microdata from health and/or administrative registers in Norway. However, the package also includes simulated registry datasets, as well as functionality simulate your own datasets with custom characteristics. As such, it can also be used to explore the possibilities associated with analyses of data from Norwegian health and population registries prior to accessing real data.
 
 ## Installation
 
