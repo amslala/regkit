@@ -1,7 +1,7 @@
 ## code to prepare `kommuner` dataset
 
 library(readxl)
-data <- read_excel("harmonize/kommuner-1994-2024.xlsx")
+data <- read_excel("./kommuner-1994-2024.xlsx")
 
 data$validity <- gsub(".*\\(([^\\)]+)\\).*", "\\1", data$TEKST)
 
@@ -52,11 +52,8 @@ data <- data |> dplyr::select(harmonized_code, harmonized_name, original_code, o
 data$harmonized_code_clean <- gsub("K.", "", data$harmonized_code)
 
 
-fylker <- get_klass(131, correspond = 104, date = "2024-01-01") |> dplyr::select(sourceCode, targetCode, targetName)
+fylker <- klassR::get_klass(131, correspond = 104, date = "2024-01-01") |> dplyr::select(sourceCode, targetCode, targetName)
 
 data <- data |> dplyr::left_join(fylker, by=c("harmonized_code_clean" = "sourceCode"))
 
 kommuner <- data |> dplyr::rename("fylke_code"="targetCode", "fylke_name" = "targetName")
-
-
-usethis::use_data(kommuner, overwrite = TRUE)

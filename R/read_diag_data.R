@@ -64,6 +64,13 @@ read_diag_data <- function(file_path, id_col = "id", date_col = "date", code_col
   }
 
 
+  if(file_extension == ""){
+    recursive_files <- list.files(file_path, recursive = TRUE, pattern = "\\.parquet$")
+    if(length(recursive_files > 0)){
+      file_extension <- "parquet"
+    }
+  }
+
   if(!file_extension %in% supported_types){
     logger::log_error("{file_extension}. File type not supported. Please provide a .csv, .rds, .parquet or .sav file.")
     stop("File type not supported. Please provide a .csv, .rds, .parquet or .sav file.")

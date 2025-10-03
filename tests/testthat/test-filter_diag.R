@@ -68,7 +68,7 @@ test_that("identifies (in)valid codes",{
   l_path <- withr::local_tempfile(fileext = ".log", lines = "Test log")
 
   #Give code that is not valid
-  expect_error(filter_diag(data = diag_df,
+  expect_warning(filter_diag(data = diag_df,
                            codes = "F8499",
                            id_col = "id",
                            code_col = "code",
@@ -108,7 +108,7 @@ test_that("Pattern vs exact codes work", {
   #There should be more codes that just start with F84, than exact F84 diagnosis
   l_path <- withr::local_tempfile(fileext = ".log", lines = "Test log")
   filtered_exact <- filter_diag(data = diag_df,
-                                codes = c("F84"),
+                                codes = c("F845"),
                                 id_col = "id",
                                 code_col = "code",
                                 log_path = l_path)

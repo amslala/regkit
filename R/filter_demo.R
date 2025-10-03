@@ -74,7 +74,7 @@ filter_demo <- function(data, data_type = c("t_variant", "t_invariant"), filter_
 
 
   remove_na <- function(data){
-    n_missing <- length(which(stats::complete.cases(data)))
+    n_missing <- length(which(!stats::complete.cases(data)))
 
     if(sum(n_missing) > 0){
       cat("\n")
