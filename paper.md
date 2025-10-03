@@ -74,3 +74,5 @@ AMS was supported by the Research Council of Norway (#336085). LJH was supported
 <!--Funding from other (Helga, Alex and Johanne). 
 
 I would also suggest thinking about whether Guido/others from the TSD project in which you were working need to be acknowledged here -->
+
+# References
