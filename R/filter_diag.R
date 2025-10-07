@@ -22,7 +22,7 @@
 #' log_file <- tempfile()
 #' cat("Example log file", file = log_file)
 #'
-#' filtered_diag_df <-  filter_diag(data = diag_df,
+#' filtered_diag_df <-  filter_diag_data(data = diag_df,
 #'                                  pattern_codes = c("F45", "F84"),
 #'                                  id_col = "id",
 #'                                  code_col = "code",
@@ -34,7 +34,7 @@
 #' @import logger
 #' @importFrom rlang .data
 
-filter_diag <- function(data, codes = NULL, pattern_codes = NULL, classification = "icd", id_col = "id", code_col = "code", date_col = NULL, diag_dates = NULL, rm_na = TRUE, add_description = FALSE, log_path = NULL){
+filter_diag_data <- function(data, codes = NULL, pattern_codes = NULL, classification = "icd", id_col = "id", code_col = "code", date_col = NULL, diag_dates = NULL, rm_na = TRUE, add_description = FALSE, log_path = NULL){
 
 # Set up logging ----------------------------------------------------------
 
@@ -47,7 +47,7 @@ filter_diag <- function(data, codes = NULL, pattern_codes = NULL, classification
       dir.create("log")
     }
     formatted_date <- format(Sys.Date(), "%d_%m_%Y")
-    log_appender(appender_file(glue::glue("log/filter_diag_{formatted_date}.log")))
+    log_appender(appender_file(glue::glue("log/filter_diag_data_{formatted_date}.log")))
     log_info("Log file does not exist in specified path: {log_path}. Created file in log directory")
     cli::cli_alert_warning("Log file does not exist in specified path. Creating .log file in log directory")
     cat("\n")
@@ -221,7 +221,7 @@ if (inherits(data, what = c("ArrowObject"))){
 
 
   cli::cli_h1("")
-  cat(crayon::green$bold("Diagnostic dataset succesfully filtered\n"))
+  cat(crayon::green$bold("Diagnostic dataset successfully filtered\n"))
   cat("\n")
   cli::cli_alert_info("Filtered {.val {nrow(data) - nrow(filtered_data)}} rows ({.strong {round((nrow(data) - nrow(filtered_data)) / nrow(data) * 100, 1)}%} removed)")
   cli::cli_h1("Data Summary")
@@ -249,7 +249,7 @@ if (inherits(data, what = c("ArrowObject"))){
   dplyr::glimpse(filtered_data)
 
   # Logs
-  log_with_separator("Diagnostic dataset '{substitute(data)}' succesfully filtered")
+  log_with_separator("Diagnostic dataset '{substitute(data)}' successfully filtered")
   log_info("Remaining number of rows: {nrow(filtered_data)}")
   log_info("Remaining number of columns: {ncol(filtered_data)}")
   log_info("Unique IDs in dataset: {dplyr::n_distinct(filtered_data[[id_col]])}")

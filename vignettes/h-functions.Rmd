@@ -104,13 +104,13 @@ Let's say you are researcher looking into the co-occurrence of two particular fa
 dates <- as.character(c(2012:2018))
 
 diag_df_first <- dummy_diag_df |> 
-  regtools::curate_diag(
+  regtools::curate_diag_data(
     code_col = "code", 
     date_col = "diag_year", 
     log_path = l_file)
 
 diag_f8_year <- dates |> 
-  purrr::map(\(x) regtools::filter_diag(
+  purrr::map(\(x) regtools::filter_diag_data(
     diag_df_first, 
     pattern_codes = "F8", 
     code_col = "code", 
@@ -121,7 +121,7 @@ diag_f8_year <- dates |>
 
 
 diag_f7 <- dummy_diag_df |> 
-  regtools::filter_diag(
+  regtools::filter_diag_data(
     pattern_codes = "F7", 
     code_col = "code", 
     log_path = l_file)

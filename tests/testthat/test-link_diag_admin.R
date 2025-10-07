@@ -1,7 +1,7 @@
 test_that("writes to log", {
   l_path <- withr::local_tempfile(fileext = ".log", lines = "Test log")
-  linked_diag_inv <- link_diag_demo(data_diag = diag_df,
-                                    data_demo_inv = invar_df,
+  linked_diag_inv <- link_diag_admin(data_diag = diag_df,
+                                    data_admin_inv = invar_df,
                                     id_col = "id",
                                     log_path = l_path)
 
@@ -16,8 +16,8 @@ test_that("writes to log", {
 test_that("creates dir and file log", {
   td <- withr::local_tempdir()
   withr::local_dir(td)
-  link_diag_demo(data_diag = diag_df,
-                 data_demo_inv = invar_df,
+  link_diag_admin(data_diag = diag_df,
+                 data_admin_inv = invar_df,
                  id_col = "id",
                  log_path = NULL)
   expect_true("log" %in% list.files(td))
@@ -29,22 +29,22 @@ test_that("input validation works", {
   l_path <- withr::local_tempfile(fileext = ".log", lines = "Test log")
 
   # Test at least one demo dataset is given
-  expect_error(link_diag_demo(data_diag = diag_df,
+  expect_error(link_diag_admin(data_diag = diag_df,
                               id_col = "id",
-                              log_path = l_path), "At least one of data_demo_inv or data_demo_var must be provided")
+                              log_path = l_path), "At least one of data_admin_inv or data_admin_var must be provided")
 
   # Test date and id in demo dataset
-  expect_error(link_diag_demo(data_diag = diag_df,
-                              data_demo_var = var_df,
+  expect_error(link_diag_admin(data_diag = diag_df,
+                              data_admin_var = var_df,
                               id_col = "id",
                               date_col = "diag_year",
-                              log_path = l_path), "data_demo_var must contain the specified 'date' and 'id' columns")
+                              log_path = l_path), "data_admin_var must contain the specified 'date' and 'id' columns")
 
   # Test id in invar demo dataset
-  expect_error(link_diag_demo(data_diag = diag_df,
-                              data_demo_inv = invar_df,
+  expect_error(link_diag_admin(data_diag = diag_df,
+                              data_admin_inv = invar_df,
                               id_col = "ids",
-                              log_path = l_path), "data_demo_inv must contain specified 'id' column")
+                              log_path = l_path), "data_admin_inv must contain specified 'id' column")
 
   names(var_df)[names(var_df) == 'year_varying'] <- 'year'
   names(diag_df)[names(diag_df) == 'diag_year'] <- 'year'
@@ -59,8 +59,8 @@ test_that("link invar with diag works", {
 
   # Using the sample datasets, we know that these linkages work
 
-  linked_diag_inv <- link_diag_demo(data_diag = diag_df,
-                                    data_demo_inv = invar_df,
+  linked_diag_inv <- link_diag_admin(data_diag = diag_df,
+                                    data_admin_inv = invar_df,
                                     id_col = "id",
                                     log_path = l_path)
 
@@ -70,8 +70,8 @@ test_that("link invar with diag works", {
   names(var_df)[names(var_df) == 'year_varying'] <- 'year'
   names(diag_df)[names(diag_df) == 'diag_year'] <- 'year'
 
-  linked_diag_var <- link_diag_demo(data_diag = diag_df,
-                                    data_demo_var = var_df,
+  linked_diag_var <- link_diag_admin(data_diag = diag_df,
+                                    data_admin_var = var_df,
                                     id_col = "id",
                                     date_col = "year",
                                     log_path = l_path)
@@ -80,9 +80,9 @@ test_that("link invar with diag works", {
 
 
   # Link diagnostic, time invariant and variant datasets
-  linked_diag_inv_var <- link_diag_demo(data_diag = diag_df,
-                                        data_demo_var = var_df,
-                                        data_demo_inv = invar_df,
+  linked_diag_inv_var <- link_diag_admin(data_diag = diag_df,
+                                        data_admin_var = var_df,
+                                        data_admin_inv = invar_df,
                                         id_col = "id",
                                         date_col = "year",
                                         log_path = l_path)

@@ -1,32 +1,32 @@
 
-#' Read and validate the structure of demographic individual-level data
+#' Read and validate the structure of administrative (sociodemographic) individual-level data
 #'
 #' @description
-#'`read_demo_data()` validates the general structure and minimum column requirements for demographic individual-level data.
+#'`read_admin_data()` validates the general structure and minimum column requirements for administrative (sociodemographic) individual-level data.
 #' The input data sets must be CSV, RDS, RDA or .SAV files.
 #' @param file_path A character string. File path to the demographic data to read. Supports CSV, RDS, RDA, SAV and parquet (dataset) files.
-#' @param data_type A character string. Demographic data can either be of type "t_variant" or "t_invariant", necessary to check correct data structure characteristics.
+#' @param data_type A character string. Administrative (sociodemographic) data can either be of type "t_variant" or "t_invariant", necessary to check correct data structure characteristics.
 #' @param id_col A character string. Name of ID column in data set. Default is "id".
 #' @param date_col A character string. Name of date column in data set, default is "date".
 #' @param log_path A character string. Path to the log file to append function logs. Default is `NULL`.
 #' * If `NULL`, a new directory `/log` and file is created in the current working directory.
 #' @param ... Additional arguments passed to methods or underlying functions.
 #'
-#' @return A data frame with the validated minimum requirements for demographic data.
+#' @return A data frame with the validated minimum requirements for administrative (sociodemographic) data.
 #' @examples
-#' # Read and validate CSV file for varying individual level demographic data
-#' demo_csv <- system.file("extdata", "invar_data.csv", package = "regtools")
+#' # Read and validate CSV file for varying individual level administrative (sociodemographic) data
+#' admin_csv <- system.file("extdata", "invar_data.csv", package = "regtools")
 #' log_file <- tempfile()
 #' cat("Example log file", file = log_file)
 #'
-#' demo_data_validated <- read_demo_data(demo_csv, data_type = "t_invariant",
+#' admin_data_validated <- read_admin_data(admin_csv, data_type = "t_invariant",
 #' id_col = "id", log_path = log_file)
 #'
 #' @export
 #' @import logger
 #'
 
-read_demo_data <- function(file_path, data_type = c("t_variant", "t_invariant"), id_col = "id", date_col = "date", log_path = NULL, ...) {
+read_admin_data <- function(file_path, data_type = c("t_variant", "t_invariant"), id_col = "id", date_col = "date", log_path = NULL, ...) {
 
 # Logging -----------------------------------------------------------------
   log_threshold(DEBUG)
@@ -37,7 +37,7 @@ read_demo_data <- function(file_path, data_type = c("t_variant", "t_invariant"),
       dir.create("log")
     }
     formatted_date <- format(Sys.Date(), "%d_%m_%Y")
-    log_appender(appender_file(glue::glue("log/read_demo_data_{formatted_date}.log")))
+    log_appender(appender_file(glue::glue("log/read_admin_data_{formatted_date}.log")))
     log_info("Log file does not exist in specified path: {log_path}. Created file in log directory")
     cli::cli_alert_warning("Log file does not exist in specified path. Creating .log file in log directory")
   } else {
@@ -61,7 +61,7 @@ read_demo_data <- function(file_path, data_type = c("t_variant", "t_invariant"),
 # Check file existence and type -------------------------------------------
 
   if(!file.exists(file_path)){
-    log_error("Diagnositc file does not exist in the specified path: {file_path}")
+    log_error("Diagnostic file does not exist in the specified path: {file_path}")
     stop("File does not exist in the specified path.")
   }
 
@@ -97,8 +97,8 @@ read_demo_data <- function(file_path, data_type = c("t_variant", "t_invariant"),
                  parquet = arrow::open_dataset(file_path),
                  stop("Unsupported file type"))
 
-  cli::cli_alert_success("Succesfully read file: {file_path}")
-  log_info("Succesfully read file: {file_path}")
+  cli::cli_alert_success("Successfully read file: {file_path}")
+  log_info("Successfully read file: {file_path}")
 
   # Check columns id  -------------------------------------------------------
 
@@ -153,13 +153,13 @@ read_demo_data <- function(file_path, data_type = c("t_variant", "t_invariant"),
         dplyr::collect()
 
       if (nrow(dupes) > 0) {
-        stop("The dataset contains duplicate IDs. Verify that this dataset only containts persistent characteristics.")
+        stop("The dataset contains duplicate IDs. Verify that this dataset only contains persistent characteristics.")
       }
 
     } else {
       if (any(duplicated(data[[id_column]]))) {
-        log_error("The dataset contains duplicate IDs. Verify that this dataset only containts persistent characteristics.")
-        stop("The dataset contains duplicate IDs. Verify that this dataset only containts persistent characteristics.")
+        log_error("The dataset contains duplicate IDs. Verify that this dataset only contains persistent characteristics.")
+        stop("The dataset contains duplicate IDs. Verify that this dataset only contains persistent characteristics.")
       }
     }
     log_info("No duplicate IDs \u2713")
@@ -175,9 +175,9 @@ read_demo_data <- function(file_path, data_type = c("t_variant", "t_invariant"),
     data <- dplyr::as_tibble(data)
   }
 
-  log_with_separator(glue::glue("Demographic dataset '{file_path}' succesfully read and columns validated"))
+  log_with_separator(glue::glue("Administrative (sociodemographic) dataset '{file_path}' successfully read and columns validated"))
   cli::cli_h1("")
-  cat(crayon::green$bold("Demographic dataset succesfully read and columns validated\n"))
+  cat(crayon::green$bold("Administrative (sociodemographic) dataset successfully read and columns validated\n"))
   cli::cli_h1("Data Summary")
   cat("\n")
   cli::cli_alert_info("Number of rows: {.val {nrow(data)}}. Number of columns: {.val {ncol(data)}}.")

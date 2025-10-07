@@ -7,7 +7,7 @@ test_that("reads a supported format into the same reference .rds and log file",{
             test_csv <- system.file("extdata", "invar_data.csv", package = "regtools")
 
             # Test CSV reading and validation
-            output_csv <- read_demo_data(
+            output_csv <- read_admin_data(
               file_path = test_csv,
               data_type = "t_invariant",
               id_col = "id",
@@ -30,7 +30,7 @@ test_that("creates dir and file log", {
   test_csv <- system.file("extdata", "invar_data.csv", package = "regtools")
 
   # Test CSV reading and validation
-  output_csv <- read_demo_data(
+  output_csv <- read_admin_data(
     file_path = test_csv,
     data_type = "t_invariant",
     id_col = "id",
@@ -59,7 +59,7 @@ test_that("Error when missing required columns", {
   utils::write.csv(wrong_csv, wrong_path, row.names = FALSE)
 
   expect_error(
-    read_demo_data(
+    read_admin_data(
       wrong_path,
       data_type = "t_variant",
       id_col = "id",
@@ -77,7 +77,7 @@ test_that("Error when missing required columns", {
   utils::write.csv(wrong_csv_date, wrong_path_date, row.names = FALSE)
 
   expect_error(
-    read_demo_data(
+    read_admin_data(
       wrong_path_date,
       data_type = "t_variant",
       id_col = "id",
@@ -102,7 +102,7 @@ test_that("Error when unsupported file extensions and nonexistent files", {
   file.create(tp)
 
   expect_error(
-    read_demo_data(
+    read_admin_data(
       tp,
       data_type = "t_invariant",
       id_col = "id",
@@ -115,7 +115,7 @@ test_that("Error when unsupported file extensions and nonexistent files", {
   tp_empty <- file.path(td, "empty.csv")
 
   expect_error(
-    read_demo_data(
+    read_admin_data(
       tp_empty,
       data_type = "t_invariant",
       id_col = "id",
@@ -137,7 +137,7 @@ test_that("Error when not valid data type given", {
   test_csv <- system.file("extdata", "invar_data.csv", package = "regtools") #Read example csv
 
   expect_error(
-    read_demo_data(
+    read_admin_data(
       test_csv,
       data_type = "demographic",
       id_col = "id",
@@ -148,7 +148,7 @@ test_that("Error when not valid data type given", {
   )
 
   expect_error(
-    read_demo_data(
+    read_admin_data(
       test_csv,
       data_type,
       id_col = "id",
@@ -169,14 +169,14 @@ test_that("Error duplicated ids when invariant type", {
   utils::write.csv(sample_var_df, t_path, row.names = FALSE)
 
   expect_error(
-    read_demo_data(
+    read_admin_data(
       t_path,
       data_type = "t_invariant",
       id_col = "id",
       date_col = "year_varying",
       log_path = l_path
     ),
-    "The dataset contains duplicate IDs. Verify that this dataset only containts persistent characteristics."
+    "The dataset contains duplicate IDs. Verify that this dataset only contains persistent characteristics."
   )
 })
 
@@ -190,7 +190,7 @@ test_that("Error duplicated ids when invariant type", {
 #   test_csv <- system.file("extdata", "invar_data.csv", package = "regtools")
 #   expect_snapshot({
 #     invisible(
-#       read_demo_data(
+#       read_admin_data(
 #         file_path = test_csv,
 #         data_type = "t_invariant",
 #         id_col = "id",

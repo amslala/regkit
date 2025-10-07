@@ -1,7 +1,7 @@
-#' Filter demographic data by selected filtering parameters
+#' Filter administrative (sociodemographic) data by selected filtering parameters
 #'
-#' @param data A data frame containing pre-processed demographic data.
-#' @param data_type A character string. Type of demographic data: "t_variant" or "t_invariant"
+#' @param data A data frame containing pre-processed administrative (sociodemographic) data.
+#' @param data_type A character string. Type of administrative (sociodemographic) data: "t_variant" or "t_invariant"
 #' @param filter_param A named list containing filtering parameters. The names in the list are the column names and the values are vectors of values to keep.
 #' @param id_col A character string. Name of ID column in data set.
 #' * Optional, necessary only when `any = TRUE`
@@ -11,20 +11,20 @@
 #' @param log_path A character string. Path to the log file to append function logs. Default is `NULL`
 #' * If `NULL`, a new directory `/log` and file is created in the current working directory.
 #'
-#' @return Filtered demographic dataframe containing only relevant observations based on the filtering parameters.
+#' @return Filtered administrative (sociodemographic) dataframe containing only relevant observations based on the filtering parameters.
 #' @examples
 #' # Filter varying and unvarying datasets
 #'
 #' log_file <- tempfile()
 #' cat("Example log file", file = log_file)
 #'
-#' filtered_var <- filter_demo(data = var_df,
+#' filtered_var <- filter_admin_data(data = var_df,
 #' data_type = "t_variant",
 #' filter_param = list("year_varying" = c(2012:2015), "varying_code" = c("1146")),
 #' log_path = log_file)
 #'
 #'
-#' filtered_invar <- filter_demo(data = invar_df, data_type = "t_invariant",
+#' filtered_invar <- filter_admin_data(data = invar_df, data_type = "t_invariant",
 #' filter_param = list("y_birth" = c(2006:2008),
 #' "innvandringsgrunn" = c("FAMM", "UTD")),
 #' rm_na = FALSE,
@@ -33,7 +33,7 @@
 #' @export
 #' @import logger
 
-filter_demo <- function(data, data_type = c("t_variant", "t_invariant"), filter_param, id_col = NULL, any = FALSE, rm_na = TRUE, log_path = NULL){
+filter_admin_data <- function(data, data_type = c("t_variant", "t_invariant"), filter_param, id_col = NULL, any = FALSE, rm_na = TRUE, log_path = NULL){
 
 # Set up logging ----------------------------------------------------------
   log_threshold(DEBUG)
@@ -44,7 +44,7 @@ filter_demo <- function(data, data_type = c("t_variant", "t_invariant"), filter_
       dir.create("log")
     }
     formatted_date <- format(Sys.Date(), "%d_%m_%Y")
-    log_appender(appender_file(glue::glue("log/filter_demo_{formatted_date}.log")))
+    log_appender(appender_file(glue::glue("log/filter_admin_data_{formatted_date}.log")))
     log_info("Log file does not exist in specified path: {log_path}. Created file in log directory")
     cli::cli_alert_warning("Log file does not exist in specified path. Creating .log file in log directory")
     cat("\n")
@@ -142,7 +142,7 @@ filter_demo <- function(data, data_type = c("t_variant", "t_invariant"), filter_
 # Data summary  -----------------------------------------------------------
 
   cli::cli_h1("")
-  cat(crayon::green$bold("Demographic dataset succesfully filtered\n"))
+  cat(crayon::green$bold("administrative (sociodemographic) dataset successfully filtered\n"))
   cat("\n")
   cli::cli_h1("Data Summary")
   cli::cli_h3("After filtering:")
@@ -152,7 +152,7 @@ filter_demo <- function(data, data_type = c("t_variant", "t_invariant"), filter_
   dplyr::glimpse(filtered_data)
 
   # Logs
-  log_with_separator(glue::glue("Diagnostic dataset '{substitute(data)}' succesfully filtered"))
+  log_with_separator(glue::glue("Diagnostic dataset '{substitute(data)}' successfully filtered"))
   log_info("Remaining number of rows: {nrow(filtered_data)}")
   log_info("Remaining number of columns: {ncol(filtered_data)}")
 

@@ -209,13 +209,13 @@ calculate_prevalence <- function(linked_data,
 
   # Check mapping, in case some missing data in pop
 
-  missing_in_pop <- dplyr::anti_join(count_data_suppressed, pop_data, by =  c(grouping_vars, date_col))
-
-  if(nrow(missing_in_pop) > 0) {
-    cat("\n")
-    log_warn("There are {nrow(missing_in_pop)} cells missing from {substitute(pop_data)}")
-    cli::cli_alert_warning("Warning: there are {nrow(missing_in_pop)} cells missing from {substitute(pop_data)}. Join with population dataset doesn't have a 'one-to-one' relationship")
-    }
+  # missing_in_pop <- dplyr::anti_join(count_data_suppressed, pop_data, by =  c(grouping_vars, date_col))
+  #
+  # if(nrow(missing_in_pop) > 0) {
+  #   cat("\n")
+  #   log_warn("There are {nrow(missing_in_pop)} cells missing from {substitute(pop_data)}")
+  #   cli::cli_alert_warning("Warning: there are {nrow(missing_in_pop)} cells missing from {substitute(pop_data)}. Join with population dataset doesn't have a 'one-to-one' relationship")
+  #   }
 
 
   prevalence <- tryCatch({

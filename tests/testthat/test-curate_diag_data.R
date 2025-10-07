@@ -1,6 +1,6 @@
 test_that("writes to log", {
   l_path <- withr::local_tempfile(fileext = ".log", lines = "Test log")
-  curated_diag_df <- curate_diag(data = diag_df,
+  curated_diag_df <- curate_diag_data(data = diag_df,
                                  min_diag = 1,
                                  first_diag = TRUE,
                                  id_col = "id",
@@ -18,7 +18,7 @@ test_that("writes to log", {
 test_that("creates dir and file log", {
   td <- withr::local_tempdir()
   withr::local_dir(td)
-  curated_diag_df <- curate_diag(data = diag_df,
+  curated_diag_df <- curate_diag_data(data = diag_df,
                                  min_diag = 1,
                                  first_diag = TRUE,
                                  id_col = "id",
@@ -36,7 +36,7 @@ test_that("input validation works", {
   l_path <- withr::local_tempfile(fileext = ".log", lines = "Test log")
 
   # Test id col
-  expect_error(curate_diag(data = diag_df,
+  expect_error(curate_diag_data(data = diag_df,
                            min_diag = 1,
                            first_diag = TRUE,
                            id_col = "ids",
@@ -44,7 +44,7 @@ test_that("input validation works", {
                            date_col = "diag_year",
                            log_path = l_path), "The specified id column does not exist in the dataset")
   # Test code col
-  expect_error(curate_diag(data = diag_df,
+  expect_error(curate_diag_data(data = diag_df,
                            min_diag = 1,
                            first_diag = TRUE,
                            id_col = "id",
@@ -53,7 +53,7 @@ test_that("input validation works", {
                            log_path = l_path),  "The specified code column does not exist in the dataset")
 
   # Test date col
-  expect_error(curate_diag(data = diag_df,
+  expect_error(curate_diag_data(data = diag_df,
                            min_diag = 1,
                            first_diag = TRUE,
                            id_col = "id",
@@ -67,7 +67,7 @@ test_that("Keeps only cases with min diagnostic observations", {
   l_path <- withr::local_tempfile(fileext = ".log", lines = "Test log")
 
   #In the sample dataset, we know there are not individuals that have more than 10 rep diagnosis
-  expect_error(curate_diag(data = diag_df,
+  expect_error(curate_diag_data(data = diag_df,
               min_diag = 10,
               first_diag = TRUE,
               id_col = "id",
@@ -77,7 +77,7 @@ test_that("Keeps only cases with min diagnostic observations", {
 
 
   # We know that there are at least 1 individual with reapeated diagnosis in sample dataset
-  expect_gt(nrow(curate_diag(data = diag_df,
+  expect_gt(nrow(curate_diag_data(data = diag_df,
                                 min_diag = 2,
                                 first_diag = TRUE,
                                 id_col = "id",
@@ -98,7 +98,7 @@ test_that("Summarized by first diagnosis", {
 
   repeated_diag <- rbind(new_diag, diag_df)
 
-  curated_diag <- curate_diag(data = repeated_diag,
+  curated_diag <- curate_diag_data(data = repeated_diag,
                               min_diag = 2,
                               first_diag = TRUE,
                               id_col = "id",

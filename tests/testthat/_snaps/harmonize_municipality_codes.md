@@ -5,7 +5,7 @@
     Message
       ! NAs in municipality code column in kommuner_2016: 0
       --------------------------------------------------------------------------------
-      v Succesfully matched old municipality codes with harmonized municipality codes
+      v Successfully matched old municipality codes with harmonized municipality codes
       i Total matched rows: 429
     Output
           code                               name harmonized_code

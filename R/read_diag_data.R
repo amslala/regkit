@@ -59,7 +59,7 @@ read_diag_data <- function(file_path, id_col = "id", date_col = "date", code_col
   supported_types <- c("csv", "rds", "rda", "sav", "parquet")
 
   if(!file.exists(file_path)){
-    logger::log_error("Diagnositc file does not exist in the specified path: {file_path}")
+    logger::log_error("Diagnostic file does not exist in the specified path: {file_path}")
     stop("File does not exist in the specified path.")
   }
 
@@ -97,7 +97,7 @@ read_diag_data <- function(file_path, id_col = "id", date_col = "date", code_col
                  parquet = arrow::open_dataset(file_path),
                  stop("Unsupported file type"))
 
-  cli::cli_alert_success("Succesfully read file: {file_path}")
+  cli::cli_alert_success("Successfully read file: {file_path}")
   cat("\n")
 
 
@@ -184,9 +184,9 @@ read_diag_data <- function(file_path, id_col = "id", date_col = "date", code_col
     data <- dplyr::as_tibble(data)
   }
 
-  logger::log_with_separator(glue::glue("Diagnostic dataset '{file_path}' succesfully read and columns validated"))
+  logger::log_with_separator(glue::glue("Diagnostic dataset '{file_path}' successfully read and columns validated"))
   cli::cli_h1("")
-  cat(crayon::green$bold("Diagnostic dataset succesfully read and columns validated\n"))
+  cat(crayon::green$bold("Diagnostic dataset successfully read and columns validated\n"))
   cli::cli_h1("Data Summary")
   cat("\n")
   cli::cli_alert_info("Number of rows: {.val {nrow(data)}}. Number of columns: {.val {ncol(data)}}.")
@@ -195,7 +195,7 @@ read_diag_data <- function(file_path, id_col = "id", date_col = "date", code_col
   dplyr::glimpse(data)
   logger::log_info("Data Summary: ")
   logger::log_info("Number of rows: {nrow(data)}")
-  logger::log_info("Numner of columns: {ncol(data)}")
+  logger::log_info("Number of columns: {ncol(data)}")
   return(data)
 }
 

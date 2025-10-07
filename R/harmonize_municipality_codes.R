@@ -31,7 +31,7 @@ harmonize_municipality_codes <- function(data, municipality_col = "code", fylke 
     data_harmonized <- data_harmonized |> dplyr::select(!c("fylke_code", "fylke_name"))
   }
   cli::cli_rule("")
-  cli::cli_alert_success("Succesfully matched old municipality codes with harmonized municipality codes")
+  cli::cli_alert_success("Successfully matched old municipality codes with harmonized municipality codes")
 
   #Check not matched rows
   no_na <- stats::na.omit(data)

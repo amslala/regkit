@@ -17,7 +17,7 @@
 #' log_file <- tempfile()
 #' cat("Example log file", file = log_file)
 #'
-#' curated_diag_df <- curate_diag(data = diag_df,
+#' curated_diag_df <- curate_diag_data(data = diag_df,
 #'                                min_diag = 1,
 #'                                first_diag = TRUE,
 #'                                id_col = "id",
@@ -27,7 +27,7 @@
 #' @export
 #' @import logger
 #'
-curate_diag <- function(data, min_diag = 1, first_diag = TRUE, id_col = "id", code_col = "icd_code", date_col = "date", log_path = NULL){
+curate_diag_data <- function(data, min_diag = 1, first_diag = TRUE, id_col = "id", code_col = "icd_code", date_col = "date", log_path = NULL){
 
   ##### Set up logging #####
   log_threshold(DEBUG)
@@ -38,7 +38,7 @@ curate_diag <- function(data, min_diag = 1, first_diag = TRUE, id_col = "id", co
       dir.create("log")
     }
     formatted_date <- format(Sys.Date(), "%d_%m_%Y")
-    log_appender(appender_file(glue::glue("log/curate_diag_{formatted_date}.log")))
+    log_appender(appender_file(glue::glue("log/curate_diag_data_{formatted_date}.log")))
     log_info("Log file does not exist in specified path: {log_path}. Created file in log directory")
     cli::cli_alert_warning("Log file does not exist in specified path. Creating .log file in log directory")
     cat("\n")
@@ -97,7 +97,7 @@ curate_diag <- function(data, min_diag = 1, first_diag = TRUE, id_col = "id", co
 
   ###### Summary data #####
   cli::cli_h1("")
-  cat(crayon::green$bold("Diagnostic dataset succesfully curated and summarized\n"))
+  cat(crayon::green$bold("Diagnostic dataset successfully curated and summarized\n"))
   cat("\n")
   cli::cli_alert_info("Filtered {.val {nrow(data) - nrow(filtered_data_min)}} rows ({.strong {round((nrow(data) - nrow(filtered_data_min)) / nrow(data) * 100, 1)}%} removed)")
   cli::cli_h1("Data Summary")
@@ -110,7 +110,7 @@ curate_diag <- function(data, min_diag = 1, first_diag = TRUE, id_col = "id", co
   cat(utils::str(filtered_data_min))
 
   # Logs
-  log_with_separator(glue::glue("Diagnostic dataset '{substitute(data)}' succesfully curated and summarized"))
+  log_with_separator(glue::glue("Diagnostic dataset '{substitute(data)}' successfully curated and summarized"))
   log_info("Remaining number of rows: {nrow(filtered_data_min)}")
   log_info("Remaining number of columns: {ncol(filtered_data_min)}")
   log_info("Unique IDs in dataset: {dplyr::n_distinct(filtered_data_min[[id_col]])}")
