@@ -41,7 +41,7 @@ affiliations:
  - name: PROMENTA Research Center, Department of Psychology, University of Oslo
    index: 4
    ror: 01xtthb56
-date: 16 September 2025
+date: 7 October 2025
 bibliography: paper.bib
 ---
 
@@ -69,10 +69,15 @@ In addition to helping solve practical challenges associated with processing, ma
 
 This work was performed on the TSD (Tjeneste for Sensitive Data) facilities, owned by the University of Oslo, operated and developed by the TSD service group at the University of Oslo, IT Department (USIT). (tsd-drift@usit.uio.no).
 
-AMS was supported by the Research Council of Norway (#336085). LJH was supported by the South-Eastern Norway Regional Health Authority (#2922083). 
+AMS was supported by the Research Council of Norway (#336085). 
 
-<!--Funding from other (Helga, Alex and Johanne). 
+HA was supported by the Research Council of Norway (#324620), and NordForsk(#156298).
 
-I would also suggest thinking about whether Guido/others from the TSD project in which you were working need to be acknowledged here -->
+LJH was supported by the South-Eastern Norway Regional Health Authority (#2922083).  
+
+AH was supported by the Research Council of Norway (#336085), the South Eastern Norway Regional Health Authority (#2020022), and the European Union’s Horizon Europe Research and Innovation programme (FAMILY #101057529). 
+
+Thanks to Guido Biele and Lasse Bang for their assistance during the early stages of this project.
+
 
 # References

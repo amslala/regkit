@@ -1,9 +1,9 @@
 Package: regtools
 Type: Package
-Title: regtools: Trend/prevalence analysis and visualization tool for mental health diagnoses in Norwegian health registers 
+Title: regtools: facilitating manipulation, analysis and visualization of data from Norwegian health and population registers.
 Version: 0.1.0
 Author: Alejandra Martinez Sanchez
-Description: R package to support research activities utilizing Norwegian health records for prevalence and trend analysis of mental health diagnoses in Norway.
+Description: R package to facilitate the manipulation, analysis and visualization of data from Norwegian health and population registers
 Maintainer: Alejandra Martinez Sanchez <alejandra.martinez.sanchez@fhi.no>
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -42,8 +42,7 @@ Depends:
 Suggests: 
     knitr,
     rmarkdown,
-    testthat (>= 3.0.0),
-    vdiffr
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Config/Needs/website: rmarkdown

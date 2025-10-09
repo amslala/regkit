@@ -36,3 +36,13 @@ pak::pak("amslala/regtools")
 # install.packages("devtools")
 devtools::install_github("amslala/regtools")
 ```
+
+### TSD 
+
+Researchers working with sensitive individual-level data in Norway will most likely have their projects (and data) set up in [TSD](https://www.uio.no/english/services/it/research/sensitive-data/access/) with no internet access. Although all the main function in `regtools` work inside of TSD, it is not possible to install R packages directly from GitHub without internet access. Instead, you can download the binary for the latest working version from the [Releases section](https://github.com/amslala/regtools/releases) and import it to TSD. You can then install it specifying the path of the binary within TSD: 
+
+``` r
+install.packages(path =, 
+                 repos = NULL,
+                 type = "binary")
+```
