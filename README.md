@@ -53,7 +53,7 @@ TSD. You can then install it specifying the path of the binary within
 TSD:
 
 ``` r
-install.packages(path =, 
+install.packages(path, 
                  repos = NULL,
                  type = "binary")
 ```
