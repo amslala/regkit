@@ -17,7 +17,7 @@ Apache Parquet is an open-source data storage format that efficiently handles la
 
 Efficiently storing and processing large individual-level data is one important challenge that researchers commonly face. Although parquet files (or other column-oriented tabular data) are becoming more popular in the data-analysis world, they are not as commonly used in research. For instance, it is still common for Norwegian register microdata (e.g. NPR) to be delivered as chunked CSVs. 
 
-To enable users to work with larger-than-memory data within `regtools`, the functions `read_diag_data()` `read_demo_data()` `filter_diag()` `filter_demo()` support parquet files. This is particularly helpful to speed-up the filtering steps in very large data sets. In the next example, it is shown how to write/read parquet datasets and use them as part of the `regtools` analytical pipeline. 
+To enable users to work with larger-than-memory data within `regtools`, the functions `read_diag_data()` `read_demo_data()` `filter_diag_data()` `filter_demo_data()` support parquet files. This is particularly helpful to speed-up the filtering steps in very large data sets. In the next example, it is shown how to write/read parquet datasets and use them as part of the `regtools` analytical pipeline. 
 
 ### Writing parquet files 
 
@@ -103,7 +103,7 @@ As an output from `read_diag_data()` will be ArrowObject (Dataset) that you can 
 
 ```{r filter-parquet}
 
-filtered_parquet <- filter_diag(
+filtered_parquet <- filter_diag_data(
   diag_parquet, 
   pattern_codes = c("F84", "F45"), 
   classification = "icd", 
@@ -135,7 +135,7 @@ diag_tibble <- read_diag_data(
 
 mb_filter <- microbenchmark::microbenchmark(
   parquet = 
-    filter_diag(
+    filter_diag_data(
       diag_parquet, 
       pattern_codes = c("F84", "F45"), 
       classification = "icd", 
@@ -146,7 +146,7 @@ mb_filter <- microbenchmark::microbenchmark(
       rm_na = TRUE, 
       log_path = l_path), 
   tibble = 
-    filter_diag(
+    filter_diag_data(
       diag_tibble, 
       pattern_codes = c("F84", "F45"), 
       classification = "icd", 

@@ -24,11 +24,11 @@ This vignette describes the aim and potential use cases of the function `synthet
 
 ### Why?
 
-In most research fields, individual-level data is regulated by strict confidentiality agreements. In Norway, sensitive health and sociodemographic individual-level data cannot be shared or used outside of secure platforms, such as TSD (Services for sensitive data). While this type of disclosure control protects the privacy of study participants, it can also pose a significant challenge to reproducibility and transparency practices in research. Although code sharing has gained popularity, code cannot be appropriately evaluated (and potentially reused) if the original analytic data is unavailable.
+In most research fields, individual-level data is regulated by strict confidentiality agreements. In Norway, sensitive health and administrative individual-level data cannot be shared or used outside of secure platforms, such as TSD (Services for sensitive data). While this type of disclosure control protects the privacy of study participants, it can also pose a significant challenge to reproducibility and transparency practices in research. Although code sharing has gained popularity, code cannot be appropriately evaluated (and potentially reused) if the original analytic data is unavailable.
 
 One possible solution to the challenges associated with using confidential data is to create synthetic or simulated data that have similar structure and statistical characteristics as the original data. There are a number of excellent R packages dedicated to creating synthetic datasets from existing data, such as `synthpop`, `faux` and `simpop`. The resulting synthetic data are high-fidelity and aim to maintain the internal statistical characteristics and relationships between variables. However, many features of these packages rely on having full access to the original individual-based data. Additionally, it is crucial to remember that synthetic data based on existing datasets is not inherently private (source , Alan Turing Institute) and can be vulnerable to data leaks and attacks.
 
-In line with the overarching objectives of `regtools`, the `synthetic_data()` function aims to help researchers navigate some of the challenges associated with working with confidential individual-level data in Norway by creating synthetic datasets without the need of pre-existing data. As this function does not require the use of pre-existing data, it also does not attempt to capture the internal statistical characteristics and relationships between variables. However, `synthetic_data()` is still particularly useful for researchers working with Norwegian health and sociodemographic datasets, as it produces synthetic datasets with a structure and semantics resembling those found in actual individual-level data (e.g NPR, KUHR, SSB).
+In line with the overarching objectives of `regtools`, the `synthetic_data()` function aims to help researchers navigate some of the challenges associated with working with confidential individual-level data in Norway by creating synthetic datasets without the need of pre-existing data. As this function does not require the use of pre-existing data, it also does not attempt to capture the internal statistical characteristics and relationships between variables. However, `synthetic_data()` is still particularly useful for researchers working with Norwegian health and sociodemographic datasets, as it produces synthetic datasets with a structure and semantics resembling those found in actual individual-level data (e.g NPR, KPR, SSB).
 
 Consider the features the `synthetic_data()` function, we have identified three main use cases:
 
@@ -42,7 +42,7 @@ Consider the features the `synthetic_data()` function, we have identified three 
 
 Broadly speaking, the `synthetic_data()` function has the ability to create three different types of datasets that meet certain minimum characteristics:
 
--   **Diagnostic (health) data:** This includes at least a unique personal identifier (ID), date of diagnostic event, and diagnosis code (such as ICD-10 or ICP-2). For instance, datasets from NPR (Norwegian Patient Registry) or KUHR (Norwegian Control and Payment of Health Reimbursements Database).
+-   **Diagnostic (health) data:** This includes at least a unique personal identifier (ID), date of diagnostic event, and diagnosis code (such as ICD-10 or ICP-2). For instance, datasets from NPR (Norwegian Patient Registry) or  KPR (Kommunalt pasient- og brukerregister).
 
 -   **Time-invariant data:** Including at least a unique personal identifier (ID) and sociodemographic variables such as date of birth, immigration background, etc.
 
@@ -54,27 +54,27 @@ Considering the complexity and variability of registry data, the datasets create
 
 To successfully generate the three different synthetic datasets describe in the section above, you will need to provide some information about the population size and classifications you want to include in the different datasets. For the whole description of each argument please consult the `synthetic_data()` function's documentation.
 
-The `population_size` parameter will be used to ensure that the size of the datasets is similar to the one you will encounter working with real data, while also generating the necessary number of diagnostic cases for the given prevalence or incidence rate. In the code below, the population size is specified as 15,000 with a period prevalence of .06 (6%). Therefore, there will be 900 relevant cases in the data.
+The `population_size` parameter will be used to ensure that the size of the datasets is similar to the one you will encounter working with real data, while also generating the necessary number of diagnostic cases for the given prevalence or incidence rate. In the code below, the population size is specified as 25,000 with a period prevalence of .06 (6%). Therefore, there will be 1500 relevant cases in the data.
 
 With the purpose of making the synthetic datasets as realistic as possible, they all include an additional number of non-relevant cases (to complete the specified population size). Additionally, all the individuals in the diagnostic dataset can have a random number of repeated diagnostic events either in the same year or different years.
 
-The arguments `family_codes`, `pattern`, `diag_years`, `sex_vector`, `y_birth`, `invariant_codes`, `varying_query` are all used to populate the diagnostic, time-invariant and time-varying information of the relevant 900 cases. The remainder arguments are used to generate the filler non-relevant cases.
+The arguments `family_codes`, `pattern`, `diag_years`, `sex_vector`, `y_birth`, `invariant_codes`, `varying_query` are all used to populate the diagnostic, time-invariant and time-varying information of the relevant 1500 cases. The remainder arguments are used to generate the filler non-relevant cases.
 
 In most cases you will want to specify your own column names and codes for the invariant and time-varying variables (`invariant_codes`, `invariant_codes_filler`, `varying_codes`, `varying_codes_filler`), however the function also supports looking for classification codes in SSB's Statistical Classifications and Codelists (Klass). Both `varying_query` and `invariant_queries` options require an internet connection to retrieve the specified classifications and codelists from SSB.
 
 ```{r synthetic-data}
 
 dummy_data <- regtools::synthetic_data(
-  population_size = 15000,
+  population_size = 25000,
   prefix_ids = "P000",
   length_ids = 6,
-  family_codes = c("F84"),
+  family_codes = c("F8"),
   pattern = "increase",
   prevalence = .060,
   diag_years  = c(2012:2020),
   sex_vector = c(0, 1),
   y_birth = c(2010:2018),
-  filler_codes = "F",
+  filler_codes = c("F4", "F7"),
   filler_y_birth = c(2000:2009),
   invariant_codes = list("innvandringsgrunn" = c("ARB", "NRD", "UKJ")),
   invariant_codes_filler = list("innvandringsgrunn" = c("FAMM", "UTD")),
