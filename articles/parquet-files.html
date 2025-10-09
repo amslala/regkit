@@ -8,7 +8,7 @@
 <title>Working with parquet datasets • regtools</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Atkinson_Hyperlegible-0.4.10/font.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Merriweather_Sans-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
@@ -84,11 +84,12 @@ For instance, it is still common for Norwegian register microdata
 (e.g. NPR) to be delivered as chunked CSVs.</p>
 <p>To enable users to work with larger-than-memory data within
 <code>regtools</code>, the functions <code><a href="../reference/read_diag_data.html">read_diag_data()</a></code>
-<code><a href="../reference/read_demo_data.html">read_demo_data()</a></code> <code><a href="../reference/filter_diag.html">filter_diag()</a></code>
-<code><a href="../reference/filter_demo.html">filter_demo()</a></code> support parquet files. This is particularly
-helpful to speed-up the filtering steps in very large data sets. In the
-next example, it is shown how to write/read parquet datasets and use
-them as part of the <code>regtools</code> analytical pipeline.</p>
+<code>read_demo_data()</code> <code><a href="../reference/filter_diag_data.html">filter_diag_data()</a></code>
+<code>filter_demo_data()</code> support parquet files. This is
+particularly helpful to speed-up the filtering steps in very large data
+sets. In the next example, it is shown how to write/read parquet
+datasets and use them as part of the <code>regtools</code> analytical
+pipeline.</p>
 <div class="section level3">
 <h3 id="writing-parquet-files">Writing parquet files<a class="anchor" aria-label="anchor" href="#writing-parquet-files"></a>
 </h3>
@@ -129,7 +130,7 @@ rows:</p>
 <span><span class="co">#&gt; • Filler years of birth = 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008,</span></span>
 <span><span class="co">#&gt; and 2009</span></span>
 <span><span class="co">#&gt; • Pattern for filler incidence = 'random'</span></span>
-<span><span class="co">#&gt; • Number of filler cases to generate = 1907105</span></span>
+<span><span class="co">#&gt; • Number of filler cases to generate = 1907227</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> This process can take some minutes...</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Succesfully generated diagnostic and time-invariant datasets!</span></span>
 <span></span>
@@ -156,7 +157,7 @@ type of data and structure you have. As a general rule, it is
 recommended to avoid creating very small (&lt;20MB) and very large
 partitions (&gt;2GB). Additionally, it is a good idea to try to
 partition by any variable you will use to filter by.</p>
-<p>If we are planning to later use the <code><a href="../reference/filter_diag.html">filter_diag()</a></code>
+<p>If we are planning to later use the <code>filter_diag()</code>
 function to filter only the diagnosis given in the years 2012 and 2013,
 we could partition by grouping our data by the variable
 <code>diag_year</code>:</p>
@@ -185,37 +186,37 @@ files:</p>
 <span>  code_col <span class="op">=</span> <span class="st">"code"</span>,</span>
 <span>  log_path <span class="op">=</span> <span class="va">l_path</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You have provided a parquet file or database. Due to the characteristics of these data objects, the console output and logging will provide minimal information.</span></span>
-<span><span class="co">#&gt; Reading /tmp/RtmpW65vvf/file719a6f4c4ab3/new_df.parquet file...</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Succesfully read file: /tmp/RtmpW65vvf/file719a6f4c4ab3/new_df.parquet</span></span>
+<span><span class="co">#&gt; Reading /tmp/RtmpPuPqph/file71bc6d9be588/new_df.parquet file...</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Successfully read file: /tmp/RtmpPuPqph/file71bc6d9be588/new_df.parquet</span></span>
 <span><span class="co">#&gt; Checking column requirements:</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> ID column</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Code column</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Date column</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">────────────────────────────────────────────────────────────────────────────────</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00; font-weight: bold;">Diagnostic dataset succesfully read and columns validated</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00; font-weight: bold;">Diagnostic dataset successfully read and columns validated</span></span></span>
 <span><span class="co"><span style="color: #00BB00; font-weight: bold;">#&gt; </span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Data Summary</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────────────</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Number of rows: <span style="color: #0000BB;">8391947</span>. Number of columns: <span style="color: #0000BB;">3</span>.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Number of rows: <span style="color: #0000BB;">8391376</span>. Number of columns: <span style="color: #0000BB;">3</span>.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; FileSystemDataset with 1 Parquet file</span></span>
-<span><span class="co">#&gt; 8,391,947 rows x 3 columns</span></span>
-<span><span class="co">#&gt; $ id       <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "P000000669", "P000000669", "P000000669", "P000000669", "P00…</span></span>
-<span><span class="co">#&gt; $ code     <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "F840", "F905", "F712", "F2089", "F457", "F616", "F406", "F4…</span></span>
-<span><span class="co">#&gt; $ diag_year <span style="color: #949494; font-style: italic;">&lt;int32&gt;</span> 2012, 2012, 2012, 2012, 2014, 2013, 2012, 2014, 2014, 2014, …</span></span></code></pre></div>
+<span><span class="co">#&gt; 8,391,376 rows x 3 columns</span></span>
+<span><span class="co">#&gt; $ id       <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "P010462517", "P010462517", "P010462517", "P010462613", "P01…</span></span>
+<span><span class="co">#&gt; $ code     <span style="color: #949494; font-style: italic;">&lt;string&gt;</span> "F1171", "F6698", "F522", "F2053", "F4324", "F1730", "F1870"…</span></span>
+<span><span class="co">#&gt; $ diag_year <span style="color: #949494; font-style: italic;">&lt;int32&gt;</span> 2014, 2013, 2012, 2012, 2012, 2012, 2013, 2015, 2012, 2014, …</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="filtering">Filtering<a class="anchor" aria-label="anchor" href="#filtering"></a>
 </h3>
 <p>As an output from <code><a href="../reference/read_diag_data.html">read_diag_data()</a></code> will be ArrowObject
 (Dataset) that you can then pass to the function
-<code><a href="../reference/filter_diag.html">filter_diag()</a></code> to efficiently filter any relevant
+<code>filter_diag()</code> to efficiently filter any relevant
 observations:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="va">filtered_parquet</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_diag.html">filter_diag</a></span><span class="op">(</span></span>
+<span><span class="va">filtered_parquet</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_diag_data.html">filter_diag_data</a></span><span class="op">(</span></span>
 <span>  <span class="va">diag_parquet</span>, </span>
 <span>  pattern_codes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"F84"</span>, <span class="st">"F45"</span><span class="op">)</span>, </span>
 <span>  classification <span class="op">=</span> <span class="st">"icd"</span>, </span>
@@ -230,26 +231,25 @@ observations:</p>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Selected codes are valid: F84, F45</span></span>
 <span><span class="co">#&gt; Filtering data by selected codes...</span></span>
 <span><span class="co">#&gt; Filtering observations by date of diagnosis...</span></span>
-<span><span class="co">#&gt; Removing observations containing NAs in any column...</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Removed <span style="color: #0000BB;">37658</span> rows with NAs.</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> The dataset has no NAs or they are coded in a different format.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">────────────────────────────────────────────────────────────────────────────────</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00; font-weight: bold;">Diagnostic dataset succesfully filtered</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00; font-weight: bold;">Diagnostic dataset successfully filtered</span></span></span>
 <span><span class="co"><span style="color: #00BB00; font-weight: bold;">#&gt; </span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Filtered <span style="color: #0000BB;">8354289</span> rows (<span style="font-weight: bold;">99.6%</span> removed)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Filtered <span style="color: #0000BB;">8352662</span> rows (<span style="font-weight: bold;">99.5%</span> removed)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Data Summary</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── After filtering:</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Remaining number of rows: <span style="color: #0000BB;">37658</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Remaining number of rows: <span style="color: #0000BB;">38714</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Remaining number of columns: <span style="color: #0000BB;">3</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Unique IDs in dataset: <span style="color: #0000BB;">37383</span>.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> ICD-10 codes in dataset: <span style="color: #0000BB;">28</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Unique IDs in dataset: <span style="color: #0000BB;">38459</span>.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> ICD-10 codes in dataset: <span style="color: #0000BB;">21</span></span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Rows: 37,658</span></span>
+<span><span class="co">#&gt; Rows: 38,714</span></span>
 <span><span class="co">#&gt; Columns: 3</span></span>
-<span><span class="co">#&gt; $ id        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "P010466895"<span style="color: #949494;">, </span>"P010473313"<span style="color: #949494;">, </span>"P010473440"<span style="color: #949494;">, </span>"P010474631"<span style="color: #949494;">, </span>"P01…</span></span>
-<span><span class="co">#&gt; $ code      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "F459"<span style="color: #949494;">, </span>"F4542"<span style="color: #949494;">, </span>"F451"<span style="color: #949494;">, </span>"F843"<span style="color: #949494;">, </span>"F847"<span style="color: #949494;">, </span>"F45"<span style="color: #949494;">, </span>"F840"<span style="color: #949494;">, </span>"F45…</span></span>
+<span><span class="co">#&gt; $ id        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "P010467145"<span style="color: #949494;">, </span>"P010467716"<span style="color: #949494;">, </span>"P010470463"<span style="color: #949494;">, </span>"P010471759"<span style="color: #949494;">, </span>"P01…</span></span>
+<span><span class="co">#&gt; $ code      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "F458"<span style="color: #949494;">, </span>"F844"<span style="color: #949494;">, </span>"F4531"<span style="color: #949494;">, </span>"F452"<span style="color: #949494;">, </span>"F844"<span style="color: #949494;">, </span>"F848"<span style="color: #949494;">, </span>"F4533"<span style="color: #949494;">, </span>"F…</span></span>
 <span><span class="co">#&gt; $ diag_year <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2012<span style="color: #949494;">, </span>2012<span style="color: #949494;">, </span>2012<span style="color: #949494;">, </span>2012<span style="color: #949494;">, </span>2012<span style="color: #949494;">, </span>2012<span style="color: #949494;">, </span>2012<span style="color: #949494;">, </span>2012<span style="color: #949494;">, </span>2012<span style="color: #949494;">, </span>2012<span style="color: #949494;">, </span>…</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -271,7 +271,7 @@ data frame object:</p>
 <span></span>
 <span><span class="va">mb_filter</span> <span class="op">&lt;-</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/microbenchmark/man/microbenchmark.html" class="external-link">microbenchmark</a></span><span class="op">(</span></span>
 <span>  parquet <span class="op">=</span> </span>
-<span>    <span class="fu"><a href="../reference/filter_diag.html">filter_diag</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="../reference/filter_diag_data.html">filter_diag_data</a></span><span class="op">(</span></span>
 <span>      <span class="va">diag_parquet</span>, </span>
 <span>      pattern_codes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"F84"</span>, <span class="st">"F45"</span><span class="op">)</span>, </span>
 <span>      classification <span class="op">=</span> <span class="st">"icd"</span>, </span>
@@ -282,7 +282,7 @@ data frame object:</p>
 <span>      rm_na <span class="op">=</span> <span class="cn">TRUE</span>, </span>
 <span>      log_path <span class="op">=</span> <span class="va">l_path</span><span class="op">)</span>, </span>
 <span>  tibble <span class="op">=</span> </span>
-<span>    <span class="fu"><a href="../reference/filter_diag.html">filter_diag</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="../reference/filter_diag_data.html">filter_diag_data</a></span><span class="op">(</span></span>
 <span>      <span class="va">diag_tibble</span>, </span>
 <span>      pattern_codes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"F84"</span>, <span class="st">"F45"</span><span class="op">)</span>, </span>
 <span>      classification <span class="op">=</span> <span class="st">"icd"</span>, </span>
@@ -296,8 +296,8 @@ data frame object:</p>
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">#&gt; Unit: milliseconds</span></span>
 <span><span class="co">#&gt;     expr       min        lq      mean    median        uq       max neval</span></span>
-<span><span class="co">#&gt;  parquet  598.6591  603.0201  618.7167  605.4283  609.5907  719.0637   100</span></span>
-<span><span class="co">#&gt;   tibble 1250.6501 1292.7133 1308.5539 1298.8026 1305.1923 1416.6040   100</span></span>
+<span><span class="co">#&gt;  parquet  590.2173  597.4643  608.1324  599.2223  602.5929  702.0844   100</span></span>
+<span><span class="co">#&gt;   tibble 1242.0550 1255.0054 1280.8745 1258.6252 1266.7721 2001.4812   100</span></span>
 <span><span class="co">#&gt; Warning: `aes_string()` was deprecated in ggplot2 3.0.0.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use tidy evaluation idioms with `aes()`.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> See also `vignette("ggplot2-in-packages")` for more information.</span></span>

@@ -8,7 +8,7 @@
 <title>Simulate individual-level data • regtools</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Atkinson_Hyperlegible-0.4.10/font.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Merriweather_Sans-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/JetBrains_Mono-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
@@ -78,14 +78,13 @@ internet connection.</p>
 </h3>
 <p>In most research fields, individual-level data is regulated by strict
 confidentiality agreements. In Norway, sensitive health and
-sociodemographic individual-level data cannot be shared or used outside
-of secure platforms, such as TSD (Services for sensitive data). While
-this type of disclosure control protects the privacy of study
-participants, it can also pose a significant challenge to
-reproducibility and transparency practices in research. Although code
-sharing has gained popularity, code cannot be appropriately evaluated
-(and potentially reused) if the original analytic data is
-unavailable.</p>
+administrative individual-level data cannot be shared or used outside of
+secure platforms, such as TSD (Services for sensitive data). While this
+type of disclosure control protects the privacy of study participants,
+it can also pose a significant challenge to reproducibility and
+transparency practices in research. Although code sharing has gained
+popularity, code cannot be appropriately evaluated (and potentially
+reused) if the original analytic data is unavailable.</p>
 <p>One possible solution to the challenges associated with using
 confidential data is to create synthetic or simulated data that have
 similar structure and statistical characteristics as the original data.
@@ -109,7 +108,7 @@ statistical characteristics and relationships between variables.
 However, <code><a href="../reference/synthetic_data.html">synthetic_data()</a></code> is still particularly useful for
 researchers working with Norwegian health and sociodemographic datasets,
 as it produces synthetic datasets with a structure and semantics
-resembling those found in actual individual-level data (e.g NPR, KUHR,
+resembling those found in actual individual-level data (e.g NPR, KPR,
 SSB).</p>
 <p>Consider the features the <code><a href="../reference/synthetic_data.html">synthetic_data()</a></code> function, we
 have identified three main use cases:</p>
@@ -139,8 +138,8 @@ minimum characteristics:</p>
 <li><p><strong>Diagnostic (health) data:</strong> This includes at least
 a unique personal identifier (ID), date of diagnostic event, and
 diagnosis code (such as ICD-10 or ICP-2). For instance, datasets from
-NPR (Norwegian Patient Registry) or KUHR (Norwegian Control and Payment
-of Health Reimbursements Database).</p></li>
+NPR (Norwegian Patient Registry) or KPR (Kommunalt pasient- og
+brukerregister).</p></li>
 <li><p><strong>Time-invariant data:</strong> Including at least a unique
 personal identifier (ID) and sociodemographic variables such as date of
 birth, immigration background, etc.</p></li>
@@ -172,8 +171,8 @@ consult the <code><a href="../reference/synthetic_data.html">synthetic_data()</a
 that the size of the datasets is similar to the one you will encounter
 working with real data, while also generating the necessary number of
 diagnostic cases for the given prevalence or incidence rate. In the code
-below, the population size is specified as 15,000 with a period
-prevalence of .06 (6%). Therefore, there will be 900 relevant cases in
+below, the population size is specified as 25,000 with a period
+prevalence of .06 (6%). Therefore, there will be 1500 relevant cases in
 the data.</p>
 <p>With the purpose of making the synthetic datasets as realistic as
 possible, they all include an additional number of non-relevant cases
@@ -185,8 +184,8 @@ years.</p>
 <code>diag_years</code>, <code>sex_vector</code>, <code>y_birth</code>,
 <code>invariant_codes</code>, <code>varying_query</code> are all used to
 populate the diagnostic, time-invariant and time-varying information of
-the relevant 900 cases. The remainder arguments are used to generate the
-filler non-relevant cases.</p>
+the relevant 1500 cases. The remainder arguments are used to generate
+the filler non-relevant cases.</p>
 <p>In most cases you will want to specify your own column names and
 codes for the invariant and time-varying variables
 (<code>invariant_codes</code>, <code>invariant_codes_filler</code>,
@@ -199,26 +198,26 @@ and codelists from SSB.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">dummy_data</span> <span class="op">&lt;-</span> <span class="fu">regtools</span><span class="fu">::</span><span class="fu"><a href="../reference/synthetic_data.html">synthetic_data</a></span><span class="op">(</span></span>
-<span>  population_size <span class="op">=</span> <span class="fl">15000</span>,</span>
+<span>  population_size <span class="op">=</span> <span class="fl">25000</span>,</span>
 <span>  prefix_ids <span class="op">=</span> <span class="st">"P000"</span>,</span>
 <span>  length_ids <span class="op">=</span> <span class="fl">6</span>,</span>
-<span>  family_codes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"F84"</span><span class="op">)</span>,</span>
+<span>  family_codes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"F8"</span><span class="op">)</span>,</span>
 <span>  pattern <span class="op">=</span> <span class="st">"increase"</span>,</span>
 <span>  prevalence <span class="op">=</span> <span class="fl">.060</span>,</span>
 <span>  diag_years  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2012</span><span class="op">:</span><span class="fl">2020</span><span class="op">)</span>,</span>
 <span>  sex_vector <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>,</span>
 <span>  y_birth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2010</span><span class="op">:</span><span class="fl">2018</span><span class="op">)</span>,</span>
-<span>  filler_codes <span class="op">=</span> <span class="st">"F"</span>,</span>
+<span>  filler_codes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"F4"</span>, <span class="st">"F7"</span><span class="op">)</span>,</span>
 <span>  filler_y_birth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2000</span><span class="op">:</span><span class="fl">2009</span><span class="op">)</span>,</span>
 <span>  invariant_codes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"innvandringsgrunn"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ARB"</span>, <span class="st">"NRD"</span>, <span class="st">"UKJ"</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  invariant_codes_filler <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"innvandringsgrunn"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"FAMM"</span>, <span class="st">"UTD"</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  varying_query <span class="op">=</span> <span class="st">"fylke"</span>,</span>
 <span>  seed <span class="op">=</span> <span class="fl">123</span><span class="op">)</span> </span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Creating relevant cases with the following characteristics:</span></span>
-<span><span class="co">#&gt; • Population size = 15000</span></span>
+<span><span class="co">#&gt; • Population size = 25000</span></span>
 <span><span class="co">#&gt; • Prefix IDs = P000</span></span>
 <span><span class="co">#&gt; • Length IDs = 6</span></span>
-<span><span class="co">#&gt; • Diagnostic relevant codes = F84</span></span>
+<span><span class="co">#&gt; • Diagnostic relevant codes = F8</span></span>
 <span><span class="co">#&gt; • Pattern of incidence = increase</span></span>
 <span><span class="co">#&gt; • Prevalence = 0.06</span></span>
 <span><span class="co">#&gt; • Diagnostic years = 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, and 2020</span></span>
@@ -227,11 +226,11 @@ and codelists from SSB.</p>
 <span><span class="co">#&gt; • Relevant years of birth = 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, and</span></span>
 <span><span class="co">#&gt; 2018</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Creating filler cases with the following characteristics:</span></span>
-<span><span class="co">#&gt; • Filler diagnostic codes = F</span></span>
+<span><span class="co">#&gt; • Filler diagnostic codes = F4 and F7</span></span>
 <span><span class="co">#&gt; • Filler years of birth = 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008,</span></span>
 <span><span class="co">#&gt; and 2009</span></span>
 <span><span class="co">#&gt; • Pattern for filler incidence = 'random'</span></span>
-<span><span class="co">#&gt; • Number of filler cases to generate = 14100</span></span>
+<span><span class="co">#&gt; • Number of filler cases to generate = 23500</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> This process can take some minutes...</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Succesfully generated diagnostic, time-varying and time-invariant datasets!</span></span></code></pre></div>
 <p>With the purpose of facilitating transparency and reproducibility,
@@ -242,19 +241,19 @@ separate data frames.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">dummy_data</span><span class="op">$</span><span class="va">datasets</span><span class="op">)</span></span>
 <span><span class="co">#&gt; List of 3</span></span>
-<span><span class="co">#&gt;  $ invar_df: tibble [15,000 × 4] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ id               : chr [1:15000] "P000000037" "P000000183" "P000000395" "P000000431" ...</span></span>
-<span><span class="co">#&gt;   ..$ sex              : Factor w/ 2 levels "0","1": 2 2 1 1 2 2 2 2 1 2 ...</span></span>
-<span><span class="co">#&gt;   ..$ y_birth          : int [1:15000] 2002 2002 2005 2000 2003 2007 2012 2009 2008 2004 ...</span></span>
-<span><span class="co">#&gt;   ..$ innvandringsgrunn: chr [1:15000] "FAMM" "UTD" "UTD" "UTD" ...</span></span>
-<span><span class="co">#&gt;  $ var_df  : tibble [135,000 × 3] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ id          : chr [1:135000] "P000000037" "P000000037" "P000000037" "P000000037" ...</span></span>
-<span><span class="co">#&gt;   ..$ year_varying: int [1:135000] 2012 2013 2014 2015 2016 2017 2018 2019 2020 2012 ...</span></span>
-<span><span class="co">#&gt;   ..$ varying_code: chr [1:135000] "34" "34" "34" "34" ...</span></span>
-<span><span class="co">#&gt;  $ diag_df : tibble [60,104 × 3] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;   ..$ id       : chr [1:60104] "P000000651" "P000000651" "P000000651" "P000000651" ...</span></span>
-<span><span class="co">#&gt;   ..$ code     : chr [1:60104] "F842" "F928" "F492" "F393" ...</span></span>
-<span><span class="co">#&gt;   ..$ diag_year: int [1:60104] 2019 2012 2014 2014 2017 2019 2016 2012 2018 2017 ...</span></span>
+<span><span class="co">#&gt;  $ invar_df: tibble [25,000 × 4] (S3: tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ id               : chr [1:25000] "P000000037" "P000000052" "P000000059" "P000000111" ...</span></span>
+<span><span class="co">#&gt;   ..$ sex              : Factor w/ 2 levels "0","1": 2 2 2 1 2 1 1 2 1 2 ...</span></span>
+<span><span class="co">#&gt;   ..$ y_birth          : int [1:25000] 2002 2001 2011 2009 2007 2006 2009 2004 2007 2001 ...</span></span>
+<span><span class="co">#&gt;   ..$ innvandringsgrunn: chr [1:25000] "FAMM" "FAMM" "NRD" "FAMM" ...</span></span>
+<span><span class="co">#&gt;  $ var_df  : tibble [225,000 × 3] (S3: tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ id          : chr [1:225000] "P000000037" "P000000037" "P000000037" "P000000037" ...</span></span>
+<span><span class="co">#&gt;   ..$ year_varying: int [1:225000] 2012 2013 2014 2015 2016 2017 2018 2019 2020 2012 ...</span></span>
+<span><span class="co">#&gt;   ..$ varying_code: chr [1:225000] "03" "03" "03" "03" ...</span></span>
+<span><span class="co">#&gt;  $ diag_df : tibble [99,731 × 3] (S3: tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ id       : chr [1:99731] "P000000059" "P000000059" "P000000059" "P000001221" ...</span></span>
+<span><span class="co">#&gt;   ..$ code     : chr [1:99731] "F801" "F419" "F480" "F848" ...</span></span>
+<span><span class="co">#&gt;   ..$ diag_year: int [1:99731] 2015 2017 2018 2020 2019 2017 2014 2019 2020 2020 ...</span></span>
 <span><span class="va">dummy_diag_df</span> <span class="op">&lt;-</span> <span class="va">dummy_data</span><span class="op">$</span><span class="va">datasets</span><span class="op">$</span><span class="va">diag_df</span> </span></code></pre></div>
 <p>The second list (“metadata”) includes useful metadata like the exact
 call used to generate the datasets, as well as the values of each
@@ -262,19 +261,19 @@ argument used in the function call.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">dummy_data</span><span class="op">$</span><span class="va">metadata</span><span class="op">)</span></span>
 <span><span class="co">#&gt; List of 2</span></span>
-<span><span class="co">#&gt;  $ call     : language regtools::synthetic_data(population_size = 15000, prefix_ids = "P000",      length_ids = 6, seed = 123, family_co| __truncated__ ...</span></span>
+<span><span class="co">#&gt;  $ call     : language regtools::synthetic_data(population_size = 25000, prefix_ids = "P000",      length_ids = 6, seed = 123, family_co| __truncated__ ...</span></span>
 <span><span class="co">#&gt;  $ arguments:List of 15</span></span>
-<span><span class="co">#&gt;   ..$ population_size       : num 15000</span></span>
+<span><span class="co">#&gt;   ..$ population_size       : num 25000</span></span>
 <span><span class="co">#&gt;   ..$ prefix_ids            : chr "P000"</span></span>
 <span><span class="co">#&gt;   ..$ length_ids            : num 6</span></span>
 <span><span class="co">#&gt;   ..$ seed                  : num 123</span></span>
-<span><span class="co">#&gt;   ..$ family_codes          : language c("F84")</span></span>
+<span><span class="co">#&gt;   ..$ family_codes          : language c("F8")</span></span>
 <span><span class="co">#&gt;   ..$ pattern               : chr "increase"</span></span>
 <span><span class="co">#&gt;   ..$ prevalence            : num 0.06</span></span>
 <span><span class="co">#&gt;   ..$ diag_years            : language c(2012:2020)</span></span>
 <span><span class="co">#&gt;   ..$ sex_vector            : language c(0, 1)</span></span>
 <span><span class="co">#&gt;   ..$ y_birth               : language c(2010:2018)</span></span>
-<span><span class="co">#&gt;   ..$ filler_codes          : chr "F"</span></span>
+<span><span class="co">#&gt;   ..$ filler_codes          : language c("F4", "F7")</span></span>
 <span><span class="co">#&gt;   ..$ filler_y_birth        : language c(2000:2009)</span></span>
 <span><span class="co">#&gt;   ..$ invariant_codes       : language list(innvandringsgrunn = c("ARB", "NRD", "UKJ"))</span></span>
 <span><span class="co">#&gt;   ..$ invariant_codes_filler: language list(innvandringsgrunn = c("FAMM", "UTD"))</span></span>
@@ -292,13 +291,13 @@ project.</p>
 <span><span class="va">dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2012</span><span class="op">:</span><span class="fl">2018</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">diag_df_first</span> <span class="op">&lt;-</span> <span class="va">dummy_diag_df</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">regtools</span><span class="fu">::</span><span class="fu"><a href="../reference/curate_diag.html">curate_diag</a></span><span class="op">(</span></span>
+<span>  <span class="fu">regtools</span><span class="fu">::</span><span class="fu"><a href="../reference/curate_diag_data.html">curate_diag_data</a></span><span class="op">(</span></span>
 <span>    code_col <span class="op">=</span> <span class="st">"code"</span>, </span>
 <span>    date_col <span class="op">=</span> <span class="st">"diag_year"</span>, </span>
 <span>    log_path <span class="op">=</span> <span class="va">l_file</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">diag_f8_year</span> <span class="op">&lt;-</span> <span class="va">dates</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">regtools</span><span class="fu">::</span><span class="fu"><a href="../reference/filter_diag.html">filter_diag</a></span><span class="op">(</span></span>
+<span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">regtools</span><span class="fu">::</span><span class="fu"><a href="../reference/filter_diag_data.html">filter_diag_data</a></span><span class="op">(</span></span>
 <span>    <span class="va">diag_df_first</span>, </span>
 <span>    pattern_codes <span class="op">=</span> <span class="st">"F8"</span>, </span>
 <span>    code_col <span class="op">=</span> <span class="st">"code"</span>, </span>
@@ -309,7 +308,7 @@ project.</p>
 <span></span>
 <span></span>
 <span><span class="va">diag_f7</span> <span class="op">&lt;-</span> <span class="va">dummy_diag_df</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">regtools</span><span class="fu">::</span><span class="fu"><a href="../reference/filter_diag.html">filter_diag</a></span><span class="op">(</span></span>
+<span>  <span class="fu">regtools</span><span class="fu">::</span><span class="fu"><a href="../reference/filter_diag_data.html">filter_diag_data</a></span><span class="op">(</span></span>
 <span>    pattern_codes <span class="op">=</span> <span class="st">"F7"</span>, </span>
 <span>    code_col <span class="op">=</span> <span class="st">"code"</span>, </span>
 <span>    log_path <span class="op">=</span> <span class="va">l_file</span><span class="op">)</span></span>
