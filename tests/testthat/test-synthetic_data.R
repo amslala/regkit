@@ -301,10 +301,6 @@ test_that("Year of birth", {
 })
 
 
-#Test that invariant codes are ok (and queries)
-
-#Test that varying codes are ok (and queries)
-
 #Test that prevalence is correct
 
 #Test that incidence is correct

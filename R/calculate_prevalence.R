@@ -46,7 +46,6 @@
 #'   log_path = log_file)
 #'
 #' @export
-#' @import logger
 
 calculate_prevalence <- function(linked_data,
                                  id_col = "id",
@@ -64,25 +63,25 @@ calculate_prevalence <- function(linked_data,
 
 
 
-  ##### Set up logging #####
-  log_threshold(DEBUG)
-  log_formatter(formatter_glue)
+  # Set up logging ----------------------------------------------------------
+  logger::log_threshold(DEBUG)
+  logger::log_formatter(formatter_glue)
 
   if (is.null(log_path) || !file.exists(log_path)){
     if(!dir.exists("log")){
       dir.create("log")
     }
     formatted_date <- format(Sys.Date(), "%d_%m_%Y")
-    log_appender(appender_file(glue::glue("log/calculate_prevalence_{formatted_date}.log")))
-    log_info("Log file does not exist in specified path: {log_path}. Created file in log directory")
+    logger::log_appender(appender_file(glue::glue("log/calculate_prevalence_{formatted_date}.log")))
+    logger::log_info("Log file does not exist in specified path: {log_path}. Created file in log directory")
     cli::cli_alert_warning("Log file does not exist in specified path. Creating .log file in log directory")
     cat("\n")
   } else {
-    log_appender(appender_file(log_path))
+    logger::log_appender(appender_file(log_path))
   }
 
 
-  ## Input validation ####
+  # Validate Input ----------------------------------------------------------
 
   if(!all(grouping_vars %in% names(linked_data))) {
     log_error("The linked dataset must contain the specified 'grouping variables': {paste(grouping_vars, collapse = ', ')}")
@@ -99,7 +98,9 @@ calculate_prevalence <- function(linked_data,
     cli::cli_abort("The population and linked data must include the same specified 'date' column: {date_col}")
   }
 
-  #### Suppression helper function ####
+
+# Suppression helper function ---------------------------------------------
+
   suppress_values <- function(data, columns, threshold) {
     data <- data |>
       dplyr::mutate(dplyr::across(tidyselect::all_of(columns), ~ ifelse(. <= threshold, NA, .)))
@@ -112,7 +113,9 @@ calculate_prevalence <- function(linked_data,
     return(data)
   }
 
-  #### Confidence interval helper function ###
+
+# Confidence interval helper function -------------------------------------
+
 
   calculate_ci <- function(data, method = "exact", conf_level, n_col){
     ci_row <- function(x, n, row_num){
@@ -146,9 +149,27 @@ calculate_prevalence <- function(linked_data,
 }
 
 
+# Column type normalizer helper -------------------------------------------
 
-  ##### Check for time-point or period and filter ####
-  message("Computing prevalence rates/counts...")
+  # Character as default, it is safer to use
+  normalize_cols <- function(df1, df2){
+    common_cols <- intersect(names(df1), names(df2))
+
+    for (col in common_cols) {
+      if(is.character(df1[[col]]) || is.character(df2[[col]])){
+        df1[[col]] <- as.character(df1[[col]])
+        df2[[col]] <- as.character(df2[[col]])
+      } else if (is.numeric(df1[[col]]) || is.numeric(df2[[col]])){
+        df1[[col]] <- as.numeric(df1[[col]])
+        df2[[col]] <- as.numeric(df2[[col]])
+      }
+    }
+    return(list(df1, df2))
+  }
+
+# Check for time-point or period and filter -------------------------------
+
+message("Computing prevalence rates/counts...")
 
   if (length(time_p) == 1){
     filtered_data <- linked_data |>
@@ -158,12 +179,14 @@ calculate_prevalence <- function(linked_data,
       dplyr::filter(.data[[date_col]] >= time_p[1],
                     .data[[date_col]] <= time_p[2])
   } else {
-    log_error("Time input should be either a single year or a vector of two years for a range")
+    logger::log_error("Time input should be either a single year or a vector of two years for a range")
     cli::cli_abort("Time input should be either a single year or a vector of two years for a range")
   }
 
 
-  ## Group by specified grouping variables ####
+# Group by specified grouping variables -----------------------------------
+
+
   if (!is.null(grouping_vars)) {
     data_grouped <- filtered_data |>
       dplyr::group_by(dplyr::across(tidyselect::all_of(grouping_vars)))
@@ -171,7 +194,10 @@ calculate_prevalence <- function(linked_data,
     data_grouped <- filtered_data
   }
 
-  ## Calculate counts ####
+
+# Calculate counts --------------------------------------------------------
+
+
   id_col_sym <- rlang::sym(id_col)
   count_data <- data_grouped |>
     dplyr::summarise(year = paste(as.character(time_p), collapse = '-'),
@@ -181,59 +207,51 @@ calculate_prevalence <- function(linked_data,
 
 
 
+# Suppression -------------------------------------------------------------
 
-  ## Suppression ####
   if (suppression){
     count_data_suppressed <- suppress_values(data = count_data, columns = c("unique_id", "total_events"), threshold = suppression_threshold)
   } else {
     count_data_suppressed <- count_data
-    log_warn("No suppression. Confidentiality cannot be assured.")
+    logger::log_warn("No suppression. Confidentiality cannot be assured.")
     cli::cli_alert_warning("No suppression. Confidentiality cannot be assured.")
   }
 
   ## Intermediate results: only diagnostic counts ####
   if (only_counts){
     cat("\n")
-    log_info("Prevalence counts ready")
+    logger::log_info("Prevalence counts ready")
     cli::cli_alert_success(crayon::green("Prevalence counts ready!"))
     return(count_data_suppressed)
   }
 
-  ## Join with population and calculate rates ####
+
+# Join with population and calculate rates  -------------------------------
 
   # Check data type of date_col and transform for successful joining
-  if(!is.character(pop_data[[date_col]])){
-    pop_data[[date_col]] <- as.character(pop_data[[date_col]])
-  }
+  list_normal <- normalize_cols(count_data_suppressed, pop_data)
+  count_data_suppressed_normal <- list_normal[[1]]
+  pop_data_normal <- list_normal[[2]]
 
 
   # Check mapping, in case some missing data in pop
 
-  # missing_in_pop <- dplyr::anti_join(count_data_suppressed, pop_data, by =  c(grouping_vars, date_col))
-  #
-  # if(nrow(missing_in_pop) > 0) {
-  #   cat("\n")
-  #   log_warn("There are {nrow(missing_in_pop)} cells missing from {substitute(pop_data)}")
-  #   cli::cli_alert_warning("Warning: there are {nrow(missing_in_pop)} cells missing from {substitute(pop_data)}. Join with population dataset doesn't have a 'one-to-one' relationship")
-  #   }
+  if(!all(grouping_vars %in% names(pop_data_normal))){
+    log_warn("There are some cells missing from {substitute(pop_data)}")
+    cli::cli_alert_warning("Warning: there are some cells missing from {substitute(pop_data)}. Join with population dataset will not have a 'one-to-one' relationship")
+  }
 
-
-  prevalence <- tryCatch({
-    count_data_suppressed |>
-      dplyr::left_join(pop_data, by = c(grouping_vars, date_col), relationship = "one-to-one") |>
-      dplyr::mutate(prev_rate = unique_id/.data[[pop_col]])
-      },
-    error = function(e){
-      logger::log_warn("Relationship between population dataset and counts is not one-to-one")
-      cli::cli_alert_danger("Relationship between population dataset and counts is not one-to-one")
-      count_data_suppressed |>
-        dplyr::left_join(pop_data, by = c(grouping_vars, date_col)) |>
-        dplyr::mutate(prev_rate = unique_id/.data[[pop_col]])
-    })
+  prevalence <- count_data_suppressed_normal |>
+    dplyr::left_join(pop_data_normal) |>
+    dplyr::mutate(prev_rate = unique_id/.data[[pop_col]])
 
   cat("\n")
   cli::cli_alert_success(crayon::green("Prevalence rates ready!"))
-  log_info("Prevalence rates ready")
+  logger::log_info("Prevalence rates ready")
+
+
+
+# CIs ---------------------------------------------------------------------
 
 
   if (CI == TRUE){
@@ -242,7 +260,8 @@ calculate_prevalence <- function(linked_data,
   }
 
 
-  ###### Summary #####
+# Summary CLI -------------------------------------------------------------
+
   cli::cli_h1("Summary")
   cli::cli_alert_info("Diagnostic and demographic data: {.pkg {substitute(linked_data)}}")
   cli::cli_alert_info("Population data: {.pkg {substitute(pop_data)}}")
@@ -251,11 +270,11 @@ calculate_prevalence <- function(linked_data,
 
 
   # Logs
-  log_with_separator("Summary")
-  log_info("Diagnostic and demographic data: {substitute(linked_data)}")
-  log_info("Population data: {substitute(pop_data)}")
-  log_info("Grouped by variables: {paste(grouping_vars, collapse = ', ')}")
-  log_info("For time point/period: {time_p}")
+  logger::log_with_separator("Summary")
+  logger::log_info("Diagnostic and demographic data: {substitute(linked_data)}")
+  logger::log_info("Population data: {substitute(pop_data)}")
+  logger::log_info("Grouped by variables: {paste(grouping_vars, collapse = ', ')}")
+  logger::log_info("For time point/period: {time_p}")
 
   return(prevalence)
 }

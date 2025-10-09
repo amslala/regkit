@@ -150,7 +150,7 @@ test_that("Rate vs cumulative specific requirements", {
                                    only_counts = FALSE,
                                    suppression = TRUE,
                                    suppression_threshold = 10,
-                                   log_path = l_path), "No time-period has been provided.")
+                                   log_path = l_path), "Time input should be either a single year or a vector of two years for a range")
 
 })
 
@@ -318,7 +318,7 @@ test_that("Population mapping", {
   linked_df <- linked_df |> dplyr::rename("year"= "y_diagnosis_first")
 
 
-  expect_error(calculate_incidence(linked_df,
+  expect_message(calculate_incidence(linked_df,
                                    type = "cumulative",
                                    id_col = "id",
                                    date_col = "year",
@@ -326,33 +326,14 @@ test_that("Population mapping", {
                                    pop_data = pop_df,
                                    pop_col = "population",
                                    time_p = c(2012,2013),
-                                   only_counts = TRUE,
+                                   only_counts = FALSE,
                                    suppression = TRUE,
                                    suppression_threshold = 10,
                                    CI = FALSE,
                                    CI_level = 0.95,
                                    log_path = l_path),
-               "The population dataset must contain the specified 'grouping variables': sex"
+               "Warning: there are some cells missing from pop_data. Join with population dataset will not have a 'one-to-one' relationship"
     )
-
-  pop_df <- tibble::tibble(year = "2012-2013", population = 4500, sex = as.factor(1))
-  expect_message(calculate_incidence(linked_df,
-                                     type = "cumulative",
-                                     id_col = "id",
-                                     date_col = "year",
-                                     grouping_vars = "sex",
-                                     pop_data = pop_df,
-                                     pop_col = "population",
-                                     time_p = c(2012,2013),
-                                     only_counts = FALSE,
-                                     suppression = TRUE,
-                                     suppression_threshold = 10,
-                                     CI = FALSE,
-                                     CI_level = 0.95,
-                                     log_path = l_path),
-                 "Warning: there are 1 cells missing from pop_data. Join with population dataset doesn't have a 'one-to-one' relationship")
-
-
 })
 
 

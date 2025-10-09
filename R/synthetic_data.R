@@ -218,7 +218,7 @@ synthetic_data <- function(
       if(queries == "kommune"){
         search <- klassR::search_klass("kommuneinndeling")
         class_code <- search$klass_nr[1]
-        codes_ssb <- klassR::GetKlass(klass = class_code,
+        codes_ssb <- klassR::get_klass(classification = class_code,
                                       language = "en",
                                       date = date) |>
           dplyr::select(c("code", "name"))
@@ -226,7 +226,7 @@ synthetic_data <- function(
       } else if (queries == "fylke"){
         search <- klassR::search_klass("fylkesinndeling")
         class_code <- search$klass_nr[1]
-        codes_ssb <- klassR::GetKlass(klass = class_code,
+        codes_ssb <- klassR::get_klass(classification = class_code,
                                       language = "en",
                                       date = date) |>
           dplyr::select(c("code", "name"))
@@ -234,7 +234,7 @@ synthetic_data <- function(
       } else {
         search <- klassR::search_klass(queries)
         class_code <- search$klass_nr[1]
-        codes_ssb <- klassR::GetKlass(klass = class_code,
+        codes_ssb <- klassR::get_klass(classification = class_code,
                                       language = "en",
                                       date = date) |>
           dplyr::select(c("code", "name"))
@@ -246,7 +246,7 @@ synthetic_data <- function(
     result_list <- purrr::map(queries, function(query) {
       search <- klassR::search_klass(query)
       class_code <- search$klass_nr[1]
-      codes_ssb <- klassR::GetKlass(klass = class_code,
+      codes_ssb <- klassR::get_klass(classification = class_code,
                                     language = "en",
                                     date = date) |>
         dplyr::select(c("code", "name"))

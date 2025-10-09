@@ -9,6 +9,7 @@
       Computing prevalence rates/counts...
       v Suppressed counts using 10 threshold
       i Removed 0 cells out of 1
+      Joining with `by = join_by(year)`
     Output
       
     Message

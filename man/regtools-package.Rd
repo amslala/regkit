@@ -4,9 +4,9 @@
 \name{regtools-package}
 \alias{regtools}
 \alias{regtools-package}
-\title{regtools: regtools: Trend/prevalence analysis and visualization tool for mental health diagnoses in Norwegian health registers}
+\title{regtools: regtools: facilitating manipulation, analysis and visualization of data from Norwegian health and population registers.}
 \description{
-R package to support research activities utilizing Norwegian health records for prevalence and trend analysis of mental health diagnoses in Norway.
+R package to facilitate the manipulation, analysis and visualization of data from Norwegian health and population registers.
 }
 \seealso{
 Useful links:

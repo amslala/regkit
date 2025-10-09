@@ -6,8 +6,6 @@
 #'
 #' @param linked_data A data frame containing linked relevant diagnostic and demographic information. Should include only first time diagnosis, see 'curate_diag'
 #' @param type Character string. Valid options are "cumulative" or "rate".
-#' * If "cumulative",
-#' * If "rate",
 #' @param id_col A character string. Name of ID (unique personal identifier) column in `linked_data`. Default is "id".
 #' @param date_col A character string. Name  of the date column in `linked_data`. Default is "date".
 #' @param pop_data A data frame containing corresponding population at risk information.
@@ -51,8 +49,7 @@
 #'
 #'
 #' @export
-#' @import logger
-#'
+
 calculate_incidence <- function(linked_data,
                                 type = c("cumulative", "rate"),
                                 id_col = "id",
@@ -75,92 +72,132 @@ calculate_incidence <- function(linked_data,
 
 
 
-  ##### Set up logging #####
-  log_threshold(DEBUG)
-  log_formatter(formatter_glue)
+  # Set up logging ----------------------------------------------------------
+  logger::log_threshold(DEBUG)
+  logger::log_formatter(formatter_glue)
 
   if (is.null(log_path) || !file.exists(log_path)){
     if(!dir.exists("log")){
       dir.create("log")
     }
     formatted_date <- format(Sys.Date(), "%d_%m_%Y")
-    log_appender(appender_file(glue::glue("log/calculate_incidence_{formatted_date}.log")))
-    log_info("Log file does not exist in specified path: {log_path}. Created file in log directory")
+    logger::log_appender(appender_file(glue::glue("log/calculate_incidence_{formatted_date}.log")))
+    logger::log_info("Log file does not exist in specified path: {log_path}. Created file in log directory")
     cli::cli_alert_warning("Log file does not exist in specified path. Creating .log file in log directory")
     cat("\n")
   } else {
-    log_appender(appender_file(log_path))
+    logger::log_appender(appender_file(log_path))
   }
 
-  ## Input validation ####
+  # Validate Input ----------------------------------------------------------
 
   if(!all(grouping_vars %in% names(linked_data))) {
-    log_error("The linked dataset must contain the specified 'grouping variables': {paste(grouping_vars, collapse = ', ')}")
+    logger::log_error("The linked dataset must contain the specified 'grouping variables': {paste(grouping_vars, collapse = ', ')}")
     cli::cli_abort("The linked dataset must contain the specified 'grouping variables': {grouping_vars}")
   }
 
-  if(!all(grouping_vars %in% names(pop_data))) {
-    log_error("The population dataset must contain the specified 'grouping variables': {paste(grouping_vars, collapse = ', ')}")
-    cli::cli_abort("The population dataset must contain the specified 'grouping variables': {grouping_vars}")
-  }
+  # if(!all(grouping_vars %in% names(pop_data))) {
+  #   logger::log_error("The population dataset must contain the specified 'grouping variables': {paste(grouping_vars, collapse = ', ')}")
+  #   cli::cli_abort("The population dataset must contain the specified 'grouping variables': {grouping_vars}")
+  # }
 
   if(!id_col %in% names(linked_data)) {
-    log_error("The linked dataset must contain the specified 'id' column: {id_col}")
+    logger::log_error("The linked dataset must contain the specified 'id' column: {id_col}")
     cli::cli_abort("The linked dataset must contain the specified 'id' column: {id_col}")
   }
 
   if(!date_col %in% names(linked_data)) {
-    log_error("The linked dataset must contain the specified 'date' column: {date_col}")
+    logger::log_error("The linked dataset must contain the specified 'date' column: {date_col}")
     cli::cli_abort("The linked dataset must contain the specified 'date' column: {date_col}")
   }
 
 
   supported_types <- c("cumulative", "rate")
   if(!type %in% supported_types){
-    log_error("{type} not supported. Please specify 'cumulative' for computing cumulative incidence, or 'rate' for incidence rate.")
+    logger::log_error("{type} not supported. Please specify 'cumulative' for computing cumulative incidence, or 'rate' for incidence rate.")
     cli::cli_abort("{type} not supported. Please specify 'cumulative' for computing cumulative incidence, or 'rate' for incidence rate.")
   }
 
   ## Dataset should only contain new cases for correct computation of incidence statistics
+  cat("\n")
   cli::cli_alert_warning("To correctly calculate incidence rates, the provided dataset should only contain new/first time diagnoses.")
-
-  ##Person-time need to be numeric
+  cat("\n")
+  ##Person-time
   if(type == "rate" && is.null(person_time_data)){
-    log_error("To compute incidence rates it is necessary to provide person-time values")
+    logger::log_error("To compute incidence rates it is necessary to provide person-time values")
     cli::cli_abort("To compute incidence rates it is necessary to provide person-time values")
   }
 
-  if(type == "rate"){
-    linked_data <- linked_data |>
+
+
+
+# Parse time period and point ---------------------------------------------
+
+  if (length(time_p) == 1){
+    filtered_data <- linked_data |>
       dplyr::filter(.data[[date_col]] == time_p)
+  } else if (length(time_p) ==2){
+    filtered_data <- linked_data |>
+      dplyr::filter(.data[[date_col]] >= time_p[1],
+                    .data[[date_col]] <= time_p[2])
+  } else {
+    logger::log_error("Time input should be either a single year or a vector of two years for a range")
+    cli::cli_abort("Time input should be either a single year or a vector of two years for a range")
   }
 
-  ##### If cumulative type is specified, then require time_p. Otherwise consider that all the dates in the dataset are the period of interest ####
+# Suppression helper ------------------------------------------------------
 
-  if(type == "cumulative"){
-    if(!is.null(time_p)){
-      linked_data <- linked_data |>
-        dplyr::filter(.data[[date_col]] >= time_p[1],
-                      .data[[date_col]] <= time_p[2])
-      } else {
-        log_error("No time-period has been provided.")
-        cli::cli_abort("No time-period has been provided.")
-      }
-  }
-
-  #### Suppression helper function ####
   suppress_values <- function(data, columns, threshold) {
     data <- data |>
       dplyr::mutate(dplyr::across(tidyselect::all_of(columns), ~ ifelse(. <= threshold, NA, .)))
     n_removed <- data |>
       dplyr::filter(dplyr::if_any(tidyselect::all_of(columns), ~ is.na(.))) |>
       nrow()
+    cat("\n")
     cli::cli_alert_success("Suppressed counts using {.strong {suppression_threshold}} threshold")
     cli::cli_alert_info("Removed {.val {n_removed}} cells out of {nrow(data)}")
-    log_info("Suppressed counts using {suppression_threshold} threshold Removed {n_removed} cells out of {nrow(data)}")
+    cat("\n")
+    logger::log_info("Suppressed counts using {suppression_threshold} threshold Removed {n_removed} cells out of {nrow(data)}")
     return(data)
   }
-  #### Confidence interval helper function ###
+
+
+
+# Column type normalizer helper -------------------------------------------
+
+  # Character as default, it is safer to use
+  normalize_cols <- function(df1, df2){
+    common_cols <- intersect(names(df1), names(df2))
+
+    for (col in common_cols) {
+      if(is.character(df1[[col]]) || is.character(df2[[col]])){
+        df1[[col]] <- as.character(df1[[col]])
+        df2[[col]] <- as.character(df2[[col]])
+      } else if (is.numeric(df1[[col]]) || is.numeric(df2[[col]])){
+        df1[[col]] <- as.numeric(df1[[col]])
+        df2[[col]] <- as.numeric(df2[[col]])
+        }
+    }
+    return(list(df1, df2))
+  }
+
+
+
+
+# Helper mapping ----------------------------------------------------------
+
+
+  check_mapping <- function(df1, by_cols){
+    if(!all(by_cols %in% names(df1))){
+      log_warn("There are some cells missing from {substitute(df1)}")
+      cli::cli_alert_warning("Warning: there are some cells missing from {substitute(df1)}. Join with population dataset will not have a 'one-to-one' relationship")
+    }
+  }
+
+
+
+# CI helper ---------------------------------------------------------------
+
 
   calculate_ci <- function(data, method = "exact", conf_level, n_col){
     ci_row <- function(x, n, row_num){
@@ -194,15 +231,19 @@ calculate_incidence <- function(linked_data,
   }
 
 
-  ##Group by specified grouping variables ####
+# Group -------------------------------------------------------------------
+
   if (!is.null(grouping_vars)) {
-    data_grouped <- linked_data |>
+    data_grouped <- filtered_data |>
       dplyr::group_by(dplyr::across(tidyselect::all_of(grouping_vars)))
   } else {
-    data_grouped <- linked_data
+    data_grouped <- filtered_data
   }
 
-  ##Calculate counts ####
+
+# Counts ------------------------------------------------------------------
+
+
   id_col_sym <- rlang::sym(id_col)
 
   count_data <- data_grouped |>
@@ -210,46 +251,36 @@ calculate_incidence <- function(linked_data,
                      incidence_cases = dplyr::n_distinct(!!id_col_sym),
                      .groups = 'drop')
 
-  ## Suppression ####
+
+# Suppression -------------------------------------------------------------
+
+
   if (suppression){
     count_data_suppressed <- suppress_values(data = count_data, columns = c("incidence_cases"), threshold = suppression_threshold)
   } else {
     count_data_suppressed <- count_data
-    log_warn("No suppression. Confidentiality cannot be assured.")
+    logger::log_warn("No suppression. Confidentiality cannot be assured.")
     cli::cli_alert_warning("No suppression. Confidentiality cannot be assured.")
   }
 
-  ## Intermediate results: only diagnostic counts ####
+
+# Only counts -------------------------------------------------------------
+
   if (only_counts){
     return(count_data_suppressed)
   }
 
 
 
-  # Check mapping, in case some missing data in pop
-
-  check_mapping <- function(df1, df2, by_cols){
-    missing_in_df2 <- dplyr::anti_join(df1, df2, by =  by_cols)
-    if(nrow(missing_in_df2) > 0) {
-      cat("\n")
-      log_warn("here are {nrow(missing_in_df2)} cells missing from {substitute(df2)}")
-      cli::cli_alert_warning("Warning: there are {nrow(missing_in_df2)} cells missing from {substitute(df2)}. Join with population dataset doesn't have a 'one-to-one' relationship")
-      }
-  }
-
-
-
-
-  #For cumulative incidence:####
-  #new cases in a period/ population at risk at start of the period (only disease free population)
-
-  #For incidence rate:####
-  #number of new diagnoses/total person-time at risk (need to account for left-truncation and censoring etc...)
+# Rates and proportions ---------------------------------------------------
 
   if(type == "cumulative"){
-    check_mapping(count_data_suppressed, pop_data, by_cols = c(grouping_vars, date_col))
+    list_normal <- normalize_cols(count_data_suppressed, pop_data)
+    count_data_suppressed <- list_normal[[1]]
+    pop_data <- list_normal[[2]]
+    check_mapping(pop_data, by_cols = c(grouping_vars, date_col))
     incidence <- count_data_suppressed |>
-      dplyr::left_join(pop_data, by = c(grouping_vars, date_col)) |>
+      dplyr::left_join(pop_data) |>
       dplyr::mutate(cum_incidence = incidence_cases/.data[[pop_col]])
     if(CI == TRUE){
       incidence <- incidence |>
@@ -259,12 +290,15 @@ calculate_incidence <- function(linked_data,
     }
     cat("\n")
     cli::cli_alert_success(crayon::green("Cumulative incidence ready"))
-    log_info("Cumulative incidence ready")
+    logger::log_info("Cumulative incidence ready")
     return(incidence)
   } else if (type == "rate"){
-    check_mapping(count_data_suppressed, person_time_data, by_cols = c(grouping_vars, date_col))
+    list_normal <- normalize_cols(count_data_suppressed, person_time_data)
+    count_data_suppressed <- list_normal[[1]]
+    person_time_data <- list_normal[[2]]
+    check_mapping(person_time_data, by_cols = c(grouping_vars, date_col))
     incidence <- count_data_suppressed |>
-      dplyr::left_join(person_time_data, by = c(grouping_vars, date_col)) |>
+      dplyr::left_join(person_time_data) |>
       dplyr::mutate(incidence_rate = incidence_cases/.data[[person_time_col]])
     if(CI == TRUE){
       incidence <- incidence |>
@@ -274,11 +308,13 @@ calculate_incidence <- function(linked_data,
     }
     cat("\n")
     cli::cli_alert_success(crayon::green("Incidence rates ready"))
-    log_info("Incidence rates ready")
+    logger::log_info("Incidence rates ready")
     return(incidence)
   }
 
-  ###### Summary #####
+
+# Summary -----------------------------------------------------------------
+
   cli::cli_h1("Summary")
   cli::cli_alert_info("Diagnostic and demographic data: {.pkg {substitute(linked_data)}}")
   cli::cli_alert_info("Population data: {.pkg {substitute(pop_data)}}")
@@ -287,11 +323,11 @@ calculate_incidence <- function(linked_data,
 
 
   # Logs
-  log_with_separator("Summary")
-  log_info("Diagnostic and demographic data: {substitute(linked_data)}")
-  log_info("Population data: {substitute(pop_data)}")
-  log_info("Grouped by variables: {paste(grouping_vars, collapse = ', ')}")
-  log_info("For time point/period: {time_p}")
+  logger::log_with_separator("Summary")
+  logger::log_info("Diagnostic and demographic data: {substitute(linked_data)}")
+  logger::log_info("Population data: {substitute(pop_data)}")
+  logger::log_info("Grouped by variables: {paste(grouping_vars, collapse = ', ')}")
+  logger::log_info("For time point/period: {time_p}")
 
   return(incidence)
 

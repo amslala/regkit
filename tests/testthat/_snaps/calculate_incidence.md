@@ -5,10 +5,20 @@
         pop_data = pop_df, pop_col = "population", time_p = c(2012, 2013),
         only_counts = FALSE, suppression = TRUE, suppression_threshold = 10, CI = TRUE,
         CI_level = 0.95, log_path = l_path)
+    Output
+      
     Message
       ! To correctly calculate incidence rates, the provided dataset should only contain new/first time diagnoses.
+    Output
+      
+      
+    Message
       v Suppressed counts using 10 threshold
       i Removed 0 cells out of 1
+    Output
+      
+    Message
+      Joining with `by = join_by(year)`
     Output
       
     Message
