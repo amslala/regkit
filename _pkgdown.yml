@@ -3,8 +3,8 @@ template:
   bootstrap: 5
   theme: kate
   bslib:
-    base_font: {google: "Atkinson Hyperlegible"}
-    heading_font: {google: "Atkinson Hyperlegible"}
+    base_font: {google: "Merriweather Sans"}
+    heading_font: {google: "Merriweather Sans"}
     code_font: {google: "JetBrains Mono"}
     primary: "#393c61"
 navbar:
@@ -20,14 +20,15 @@ reference:
 - title: "Main functions"
   contents:
   - read_diag_data
-  - read_demo_data
-  - filter_diag
-  - filter_demo
-  - curate_diag
-  - link_diag_demo
+  - read_admin_data
+  - filter_diag_data
+  - filter_admin_data
+  - curate_diag_data
+  - link_diag_admin
   - calculate_incidence
   - calculate_prevalence
   - calculate_prevalence_series
+  - calculate_incidence_series
   - plot_rates
 - title: "Helper functions"
   contents:
