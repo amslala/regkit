@@ -1,9 +1,9 @@
 Package: regtools
 Type: Package
-Title: regtools: facilitating manipulation, analysis and visualization of data from Norwegian health and population registers.
+Title: regtools: facilitating manipulation, analysis and visualization of data from Norwegian health and population registers
 Version: 0.1.0.9000
 Author: Alejandra Martinez Sanchez
-Description: R package to facilitate the manipulation, analysis and visualization of data from Norwegian health and population registers
+Description: R package to facilitate the manipulation, analysis and visualization of data from Norwegian health and population registers.
 Maintainer: Alejandra Martinez Sanchez <alejandra.martinez.sanchez@fhi.no>
 License: MIT + file LICENSE
 Encoding: UTF-8

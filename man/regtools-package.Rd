@@ -6,7 +6,7 @@
 \alias{regtools-package}
 \title{regtools: regtools: facilitating manipulation, analysis and visualization of data from Norwegian health and population registers.}
 \description{
-R package to facilitate the manipulation, analysis and visualization of data from Norwegian health and population registers.
+R package to facilitate the manipulation, analysis and visualization of data from Norwegian health and population registers
 }
 \seealso{
 Useful links:
