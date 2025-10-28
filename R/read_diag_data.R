@@ -52,6 +52,9 @@ read_diag_data <- function(file_path, id_col = "id", date_col = "date", code_col
     logger::log_appender(appender_file(log_path))
   }
 
+  function_call <- deparse(match.call())
+  logger::log_info("Call : {function_call}")
+
 
 # Check file existence and type -------------------------------------------
 

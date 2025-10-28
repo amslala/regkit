@@ -46,6 +46,9 @@ curate_diag_data <- function(data, min_diag = 1, first_diag = TRUE, id_col = "id
     log_appender(appender_file(log_path))
   }
 
+  function_call <- deparse(match.call())
+  logger::log_info("Call : {function_call}")
+
   ##### Validate input #####
 
   if(!code_col %in% colnames(data)){

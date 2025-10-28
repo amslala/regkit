@@ -55,6 +55,9 @@ filter_diag_data <- function(data, codes = NULL, pattern_codes = NULL, classific
     log_appender(appender_file(log_path))
   }
 
+  function_call <- deparse(match.call())
+  logger::log_info("Call : {function_call}")
+
 
 # Validate Input ----------------------------------------------------------
 

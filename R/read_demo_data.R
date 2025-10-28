@@ -44,6 +44,8 @@ read_admin_data <- function(file_path, data_type = c("t_variant", "t_invariant")
     log_appender(appender_file(log_path))
   }
 
+  function_call <- deparse(match.call())
+  logger::log_info("Call : {function_call}")
 
 
 # Data type and extension -------------------------------------------------

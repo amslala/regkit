@@ -52,6 +52,9 @@ filter_admin_data <- function(data, data_type = c("t_variant", "t_invariant"), f
     log_appender(appender_file(log_path))
   }
 
+  function_call <- deparse(match.call())
+  logger::log_info("Call : {function_call}")
+
 # Validate Input ----------------------------------------------------------
 
   if(any(!names(filter_param) %in% colnames(data))){

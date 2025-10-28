@@ -58,6 +58,8 @@ link_diag_admin <- function(data_diag, data_admin_inv = NULL, data_admin_var = N
     log_appender(appender_file(log_path))
   }
 
+  function_call <- deparse(match.call())
+  logger::log_info("Call : {function_call}")
 
   ###Input validation#####
   # include diag validation s
