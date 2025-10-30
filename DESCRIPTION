@@ -19,19 +19,12 @@ Imports:
     crayon,
     dplyr,
     ggplot2,
-    ggrepel,
     ggthemes,
     glue,
-    haven,
-    janitor,
     klassR,
     logger,
-    openxlsx,
-    plotly,
     purrr,
-    PxWebApiData,
     rlang,
-    scales,
     stringr,
     tibble,
     tidyr,
@@ -40,6 +33,12 @@ Imports:
 Depends: 
     R (>= 3.5)
 Suggests: 
+    haven,
+    PxWebApiData,
+    openxlsx,
+    plotly,
+    ggrepel,
+    scales,
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)

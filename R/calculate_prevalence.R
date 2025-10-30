@@ -64,20 +64,20 @@ calculate_prevalence <- function(linked_data,
 
 
   # Set up logging ----------------------------------------------------------
-  logger::log_threshold(DEBUG)
-  logger::log_formatter(formatter_glue)
+  logger::log_threshold(logger::DEBUG)
+  logger::log_formatter(logger::formatter_glue)
 
   if (is.null(log_path) || !file.exists(log_path)){
     if(!dir.exists("log")){
       dir.create("log")
     }
     formatted_date <- format(Sys.Date(), "%d_%m_%Y")
-    logger::log_appender(appender_file(glue::glue("log/calculate_prevalence_{formatted_date}.log")))
+    logger::log_appender(logger::appender_file(glue::glue("log/calculate_prevalence_{formatted_date}.log")))
     logger::log_info("Log file does not exist in specified path: {log_path}. Created file in log directory")
     cli::cli_alert_warning("Log file does not exist in specified path. Creating .log file in log directory")
     cat("\n")
   } else {
-    logger::log_appender(appender_file(log_path))
+    logger::log_appender(logger::appender_file(log_path))
   }
 
   function_call <- deparse(match.call())
@@ -86,17 +86,17 @@ calculate_prevalence <- function(linked_data,
   # Validate Input ----------------------------------------------------------
 
   if(!all(grouping_vars %in% names(linked_data))) {
-    log_error("The linked dataset must contain the specified 'grouping variables': {paste(grouping_vars, collapse = ', ')}")
+    logger::log_error("The linked dataset must contain the specified 'grouping variables': {paste(grouping_vars, collapse = ', ')}")
     cli::cli_abort("The linked dataset must contain the specified 'grouping variables': {grouping_vars}")
   }
 
   if(!id_col %in% names(linked_data)) {
-    log_error("The linked dataset must contain the specified 'id' column: {id_col}")
+    logger::log_error("The linked dataset must contain the specified 'id' column: {id_col}")
     cli::cli_abort("The linked dataset must contain the specified 'id' column: {id_col}")
   }
 
   if(!date_col %in% names(linked_data) & !date_col %in% names(pop_data)){
-    log_error("The population and linked data must include the same specified 'date' column: {date_col}")
+    logger::log_error("The population and linked data must include the same specified 'date' column: {date_col}")
     cli::cli_abort("The population and linked data must include the same specified 'date' column: {date_col}")
   }
 
@@ -111,7 +111,7 @@ calculate_prevalence <- function(linked_data,
       nrow()
     cli::cli_alert_success("Suppressed counts using {.strong {suppression_threshold}} threshold")
     cli::cli_alert_info("Removed {.val {n_removed}} cells out of {nrow(data)}")
-    log_info("Suppressed counts using {suppression_threshold} threshold. Removed {n_removed} cells out of {nrow(data)}")
+    logger::log_info("Suppressed counts using {suppression_threshold} threshold. Removed {n_removed} cells out of {nrow(data)}")
     return(data)
   }
 
@@ -239,7 +239,7 @@ message("Computing prevalence rates/counts...")
   # Check mapping, in case some missing data in pop
 
   if(!all(grouping_vars %in% names(pop_data_normal))){
-    log_warn("There are some cells missing from {substitute(pop_data)}")
+    logger::log_warn("There are some cells missing from {substitute(pop_data)}")
     cli::cli_alert_warning("Warning: there are some cells missing from {substitute(pop_data)}. Join with population dataset will not have a 'one-to-one' relationship")
   }
 

@@ -23,25 +23,24 @@
 #' id_col = "id", log_path = log_file)
 #'
 #' @export
-#' @import logger
 #'
 
 read_admin_data <- function(file_path, data_type = c("t_variant", "t_invariant"), id_col = "id", date_col = "date", log_path = NULL, ...) {
 
 # Logging -----------------------------------------------------------------
-  log_threshold(DEBUG)
-  log_formatter(formatter_glue)
+  logger::log_threshold(logger::DEBUG)
+  logger::log_formatter(logger::formatter_glue)
 
   if (is.null(log_path) || !file.exists(log_path)){
     if(!dir.exists("log")){
       dir.create("log")
     }
     formatted_date <- format(Sys.Date(), "%d_%m_%Y")
-    log_appender(appender_file(glue::glue("log/read_admin_data_{formatted_date}.log")))
-    log_info("Log file does not exist in specified path: {log_path}. Created file in log directory")
+    logger::log_appender(logger::appender_file(glue::glue("log/read_admin_data_{formatted_date}.log")))
+    logger::log_info("Log file does not exist in specified path: {log_path}. Created file in log directory")
     cli::cli_alert_warning("Log file does not exist in specified path. Creating .log file in log directory")
   } else {
-    log_appender(appender_file(log_path))
+    logger::log_appender(logger::appender_file(log_path))
   }
 
   function_call <- deparse(match.call())
@@ -53,7 +52,7 @@ read_admin_data <- function(file_path, data_type = c("t_variant", "t_invariant")
 
 
   if(!data_type %in% c("t_variant", "t_invariant")){
-    log_error("{data_type} not supported.")
+    logger::log_error("{data_type} not supported.")
     stop(glue::glue("{data_type} not supported."))
   }
 
@@ -63,7 +62,7 @@ read_admin_data <- function(file_path, data_type = c("t_variant", "t_invariant")
 # Check file existence and type -------------------------------------------
 
   if(!file.exists(file_path)){
-    log_error("Diagnostic file does not exist in the specified path: {file_path}")
+    logger::log_error("Diagnostic file does not exist in the specified path: {file_path}")
     stop("File does not exist in the specified path.")
   }
 
@@ -75,10 +74,20 @@ read_admin_data <- function(file_path, data_type = c("t_variant", "t_invariant")
   }
 
   if(!file_extension %in% supported_types){
-    log_error("{file_extension}. File type not supported. Please provide a .csv, .rds, .parquet or .sav file.")
+    logger::log_error("{file_extension}. File type not supported. Please provide a .csv, .rds, .parquet or .sav file.")
     stop("File type not supported. Please provide a .csv, .rds, .parquet or .sav file.")
   }
 
+  # SAV file package --------------------------------------------------------
+
+  if(file_extension == "sav"){
+    if(!requireNamespace("haven", quietly = TRUE)){
+      stop(
+        "Package \"haven\" must be installed to read .sav files",
+        call. = FALSE
+      )
+    }
+  }
 
   # Parquet warning ---------------------------------------------------------
 
@@ -100,17 +109,17 @@ read_admin_data <- function(file_path, data_type = c("t_variant", "t_invariant")
                  stop("Unsupported file type"))
 
   cli::cli_alert_success("Successfully read file: {file_path}")
-  log_info("Successfully read file: {file_path}")
+  logger::log_info("Successfully read file: {file_path}")
 
   # Check columns id  -------------------------------------------------------
 
   message("Checking column requirements:")
-  log_info("Checking column requirements:")
+  logger::log_info("Checking column requirements:")
 
   id_column <- which(names(data) == id_col)
 
   if (length(id_column) == 0) {
-    log_error("The dataset must contain a column named {id_col}")
+    logger::log_error("The dataset must contain a column named {id_col}")
     stop(glue::glue("The dataset must contain a column named {id_col}"))
   }
 
@@ -120,31 +129,31 @@ read_admin_data <- function(file_path, data_type = c("t_variant", "t_invariant")
   # }
 
   cli::cli_alert_success("ID column")
-  log_info("ID column \u2713")
+  logger::log_info("ID column \u2713")
 
 
 
 # Time variant: Check date column  ----------------------------------------
 
   if (data_type == "t_variant"){
-    log_info("Specified data type: t_variant")
+    logger::log_info("Specified data type: t_variant")
     message("Data type: time variant. Checking requirements...")
 
     date_column <- which(names(data) == date_col)
 
     if (length(date_column) == 0) {
-      log_error("The dataset must contain a column named: {date_col}")
+      logger::log_error("The dataset must contain a column named: {date_col}")
       stop(glue::glue("The dataset must contain a column named: {date_col}"))
     }
     cli::cli_alert_success("Date column")
     cat("\n")
-    log_info("Date column \u2713")
+    logger::log_info("Date column \u2713")
   }
 
 # Time invariant: check ID duplicates -------------------------------------
 
   if (data_type == "t_invariant"){
-    log_info("Specified data type: t_invariant")
+    logger::log_info("Specified data type: t_invariant")
     message("Data type: time invariant. Checking requirements...")
 
     if (file_extension == "parquet"){
@@ -160,11 +169,11 @@ read_admin_data <- function(file_path, data_type = c("t_variant", "t_invariant")
 
     } else {
       if (any(duplicated(data[[id_column]]))) {
-        log_error("The dataset contains duplicate IDs. Verify that this dataset only contains persistent characteristics.")
+        logger::log_error("The dataset contains duplicate IDs. Verify that this dataset only contains persistent characteristics.")
         stop("The dataset contains duplicate IDs. Verify that this dataset only contains persistent characteristics.")
       }
     }
-    log_info("No duplicate IDs \u2713")
+    logger::log_info("No duplicate IDs \u2713")
     cli::cli_alert_success("No duplicate IDs")
     cat("\n")
   }
@@ -177,7 +186,7 @@ read_admin_data <- function(file_path, data_type = c("t_variant", "t_invariant")
     data <- dplyr::as_tibble(data)
   }
 
-  log_with_separator(glue::glue("Administrative (sociodemographic) dataset '{file_path}' successfully read and columns validated"))
+  logger::log_with_separator(glue::glue("Administrative (sociodemographic) dataset '{file_path}' successfully read and columns validated"))
   cli::cli_h1("")
   cat(crayon::green$bold("Administrative (sociodemographic) dataset successfully read and columns validated\n"))
   cli::cli_h1("Data Summary")
@@ -194,9 +203,9 @@ read_admin_data <- function(file_path, data_type = c("t_variant", "t_invariant")
   cat("\n")
   cat("\n")
   dplyr::glimpse(data)
-  log_info("Data Summary: ")
-  log_info("Number of rows: {nrow(data)}")
-  log_info("Numner of columns: {ncol(data)}")
+  logger::log_info("Data Summary: ")
+  logger::log_info("Number of rows: {nrow(data)}")
+  logger::log_info("Numner of columns: {ncol(data)}")
 
   return(data)
 }

@@ -25,25 +25,24 @@
 #'                                date_col = "diag_year",
 #'                                log_path = log_file)
 #' @export
-#' @import logger
 #'
 curate_diag_data <- function(data, min_diag = 1, first_diag = TRUE, id_col = "id", code_col = "icd_code", date_col = "date", log_path = NULL){
 
   ##### Set up logging #####
-  log_threshold(DEBUG)
-  log_formatter(formatter_glue)
+  logger::log_threshold(logger::DEBUG)
+  logger::log_formatter(logger::formatter_glue)
 
   if (is.null(log_path) || !file.exists(log_path)){
     if(!dir.exists("log")){
       dir.create("log")
     }
     formatted_date <- format(Sys.Date(), "%d_%m_%Y")
-    log_appender(appender_file(glue::glue("log/curate_diag_data_{formatted_date}.log")))
-    log_info("Log file does not exist in specified path: {log_path}. Created file in log directory")
+    logger::log_appender(logger::appender_file(glue::glue("log/curate_diag_data_{formatted_date}.log")))
+    logger::log_info("Log file does not exist in specified path: {log_path}. Created file in log directory")
     cli::cli_alert_warning("Log file does not exist in specified path. Creating .log file in log directory")
     cat("\n")
   } else {
-    log_appender(appender_file(log_path))
+    logger::log_appender(logger::appender_file(log_path))
   }
 
   function_call <- deparse(match.call())
@@ -52,17 +51,17 @@ curate_diag_data <- function(data, min_diag = 1, first_diag = TRUE, id_col = "id
   ##### Validate input #####
 
   if(!code_col %in% colnames(data)){
-    log_error("The specified code column does not exist in the dataset")
+    logger::log_error("The specified code column does not exist in the dataset")
     stop("The specified code column does not exist in the dataset")
   }
 
   if(!id_col %in% colnames(data)){
-    log_error("The specified id column does not exist in the dataset")
+    logger::log_error("The specified id column does not exist in the dataset")
     stop("The specified id column does not exist in the dataset")
   }
 
   if(!date_col %in% colnames(data)){
-    log_error("The specified date column does not exist in the dataset")
+    logger::log_error("The specified date column does not exist in the dataset")
     stop("The specified date column does not exist in the dataset")
   }
 
@@ -74,7 +73,7 @@ curate_diag_data <- function(data, min_diag = 1, first_diag = TRUE, id_col = "id
     dplyr::filter(dplyr::n() >= min_diag)
 
   cli::cli_alert_success("Filtered observations that do not have at least {min_diag} diagnostic event")
-  log_info("Filtered observations that do not have at least {min_diag} diagnostic event")
+  logger::log_info("Filtered observations that do not have at least {min_diag} diagnostic event")
 
   if(nrow(filtered_data_min)==0){
     stop(glue::glue("There were zero observations that had at least {min_diag} diagnostic event"))
@@ -95,7 +94,7 @@ curate_diag_data <- function(data, min_diag = 1, first_diag = TRUE, id_col = "id
                      dplyr::across(!c(!!code_col_sym, !!date_col_sym), dplyr::first),
                      .groups = 'drop')
     cli::cli_alert_success("Summarized first diagnostic event information")
-    log_info("Summarized first diagnostic event information")
+    logger::log_info("Summarized first diagnostic event information")
   }
 
   ###### Summary data #####
@@ -113,11 +112,11 @@ curate_diag_data <- function(data, min_diag = 1, first_diag = TRUE, id_col = "id
   cat(utils::str(filtered_data_min))
 
   # Logs
-  log_with_separator(glue::glue("Diagnostic dataset '{substitute(data)}' successfully curated and summarized"))
-  log_info("Remaining number of rows: {nrow(filtered_data_min)}")
-  log_info("Remaining number of columns: {ncol(filtered_data_min)}")
-  log_info("Unique IDs in dataset: {dplyr::n_distinct(filtered_data_min[[id_col]])}")
-  log_info("ICD-10 codes in dataset: {paste(unique(filtered_data_min$code, fromLast = T), collapse = ', ')}")
+  logger::log_with_separator(glue::glue("Diagnostic dataset '{substitute(data)}' successfully curated and summarized"))
+  logger::log_info("Remaining number of rows: {nrow(filtered_data_min)}")
+  logger::log_info("Remaining number of columns: {ncol(filtered_data_min)}")
+  logger::log_info("Unique IDs in dataset: {dplyr::n_distinct(filtered_data_min[[id_col]])}")
+  logger::log_info("ICD-10 codes in dataset: {paste(unique(filtered_data_min$code, fromLast = T), collapse = ', ')}")
 
   return(filtered_data_min)
 }

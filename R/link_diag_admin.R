@@ -37,39 +37,37 @@
 #'                                       log_path = log_file)
 #'
 #' @export
-#' @import logger
 #'
 link_diag_admin <- function(data_diag, data_admin_inv = NULL, data_admin_var = NULL, id_col= "id", date_col = "year", log_path = NULL){
 
   ##### Set up logging #####
-  log_threshold(DEBUG)
-  log_formatter(formatter_glue)
+  logger::log_threshold(logger::DEBUG)
+  logger::log_formatter(logger::formatter_glue)
 
   if (is.null(log_path) || !file.exists(log_path)){
     if(!dir.exists("log")){
       dir.create("log")
     }
     formatted_date <- format(Sys.Date(), "%d_%m_%Y")
-    log_appender(appender_file(glue::glue("log/link_diag_admin_{formatted_date}.log")))
-    log_info("Log file does not exist in specified path: {log_path}. Created file in log directory")
+    logger::log_appender(logger::appender_file(glue::glue("log/link_diag_admin_{formatted_date}.log")))
+    logger::log_info("Log file does not exist in specified path: {log_path}. Created file in log directory")
     cli::cli_alert_warning("Log file does not exist in specified path. Creating .log file in log directory")
     cat("\n")
   } else {
-    log_appender(appender_file(log_path))
+    logger::log_appender(logger::appender_file(log_path))
   }
 
   function_call <- deparse(match.call())
   logger::log_info("Call : {function_call}")
 
   ###Input validation#####
-  # include diag validation s
   if(is.null(data_admin_inv) && is.null(data_admin_var)) {
-    log_error("At least one of data_admin_inv or data_admin_var must be provided")
+    logger::log_error("At least one of data_admin_inv or data_admin_var must be provided")
     stop("At least one of data_admin_inv or data_admin_var must be provided")
   }
 
   if(!is.null(data_admin_var) && !all(c(id_col,date_col) %in% names(data_admin_var))) {
-    log_error("data_admin_var must contain the specified 'date' and 'id' columns")
+    logger::log_error("data_admin_var must contain the specified 'date' and 'id' columns")
     stop("data_admin_var must contain the specified 'date' and 'id' columns")
   }
 
@@ -80,7 +78,7 @@ link_diag_admin <- function(data_diag, data_admin_inv = NULL, data_admin_var = N
 
   if(!is.null(data_admin_inv)){
     if(!id_col %in% names(data_admin_inv)){
-      log_error("{data_admin_inv} must contain specified 'id' column")
+      logger::log_error("{data_admin_inv} must contain specified 'id' column")
       stop(glue::glue("data_admin_inv must contain specified 'id' column"))
     }
     message("Joining diagnostic data with time-invariant administrative data...")
@@ -89,7 +87,7 @@ link_diag_admin <- function(data_diag, data_admin_inv = NULL, data_admin_var = N
 
     joined_datasets <- c(joined_datasets, substitute(data_admin_inv))
     cli::cli_alert_success("Datasets successfully linked: {paste(joined_datasets, collapse = ', ')}")
-    log_info("Datasets successfully linked: {paste(joined_datasets, collapse = ', ')}")
+    logger::log_info("Datasets successfully linked: {paste(joined_datasets, collapse = ', ')}")
   }
 
   ##add check for 'date' column in last linked_df or directly from diag data
@@ -101,33 +99,31 @@ link_diag_admin <- function(data_diag, data_admin_inv = NULL, data_admin_var = N
 
     joined_datasets <- c(joined_datasets, substitute(data_admin_var))
     cli::cli_alert_success("Datasets successfully linked: {paste(joined_datasets, collapse = ', ')}")
-    log_info("Datasets successfully linked: {paste(joined_datasets, collapse = ', ')}")
+    logger::log_info("Datasets successfully linked: {paste(joined_datasets, collapse = ', ')}")
   }
-
-  linked_df <- linked_df |> janitor::clean_names() # consider removing it
 
   ###### Summary data #####
   cli::cli_h1("Data Summary")
   cli::cli_alert_info("After joining added {.val {ncol(linked_df)-ncol(data_diag)}} columns to '{substitute(data_diag)}': {setdiff(names(linked_df), names(data_diag))}")
-  log_info("After joining added {ncol(linked_df)-ncol(data_diag)} columns to '{substitute(data_diag)}': {paste(setdiff(names(linked_df), names(data_diag)), collapse = ', ')}")
+  logger::log_info("After joining added {ncol(linked_df)-ncol(data_diag)} columns to '{substitute(data_diag)}': {paste(setdiff(names(linked_df), names(data_diag)), collapse = ', ')}")
 
   cli::cli_alert_info("Rows in '{substitute(data_diag)}': {.val {nrow(data_diag)}}")
-  log_info("Rows in '{substitute(data_diag)}': {nrow(data_diag)}")
+  logger::log_info("Rows in '{substitute(data_diag)}': {nrow(data_diag)}")
 
   if(!is.null(data_admin_var)){
     cli::cli_alert_info("Rows in '{substitute(data_admin_var)}': {.val {nrow(data_admin_var)}}")
-    log_info("Rows in '{substitute(data_admin_var)}': {nrow(data_admin_var)}")
+    logger::log_info("Rows in '{substitute(data_admin_var)}': {nrow(data_admin_var)}")
     if(!is.null(data_admin_inv)){
       cli::cli_alert_info("Rows in '{substitute(data_admin_inv)}': {.val {nrow(data_admin_inv)}}")
-      log_info("Rows in '{substitute(data_admin_inv)}': {nrow(data_admin_inv)}")
+      logger::log_info("Rows in '{substitute(data_admin_inv)}': {nrow(data_admin_inv)}")
     }
   } else if (is.null(data_admin_var)){
     cli::cli_alert_info("Rows in '{substitute(data_admin_inv)}': {.val {nrow(data_admin_inv)}}")
-    log_info("Rows in '{substitute(data_admin_inv)}': {nrow(data_admin_inv)}")
+    logger::log_info("Rows in '{substitute(data_admin_inv)}': {nrow(data_admin_inv)}")
   }
 
   cli::cli_alert_success("Total matched rows: {.val {nrow(linked_df)}}")
-  log_info("Total matched rows: {nrow(linked_df)}")
+  logger::log_info("Total matched rows: {nrow(linked_df)}")
 
   return(linked_df)
 }

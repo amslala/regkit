@@ -31,7 +31,6 @@
 #'                                  )
 #'
 #' @export
-#' @import logger
 #' @importFrom rlang .data
 
 filter_diag_data <- function(data, codes = NULL, pattern_codes = NULL, classification = "icd", id_col = "id", code_col = "code", date_col = NULL, diag_dates = NULL, rm_na = TRUE, add_description = FALSE, log_path = NULL){
@@ -39,20 +38,20 @@ filter_diag_data <- function(data, codes = NULL, pattern_codes = NULL, classific
 # Set up logging ----------------------------------------------------------
 
 
-  log_threshold(DEBUG)
-  log_formatter(formatter_glue)
+  logger::log_threshold(logger::DEBUG)
+  logger::log_formatter(logger::formatter_glue)
 
   if (is.null(log_path) || !file.exists(log_path)){
     if(!dir.exists("log")){
       dir.create("log")
     }
     formatted_date <- format(Sys.Date(), "%d_%m_%Y")
-    log_appender(appender_file(glue::glue("log/filter_diag_data_{formatted_date}.log")))
-    log_info("Log file does not exist in specified path: {log_path}. Created file in log directory")
+    logger::log_appender(logger::appender_file(glue::glue("log/filter_diag_data_{formatted_date}.log")))
+    logger::log_info("Log file does not exist in specified path: {log_path}. Created file in log directory")
     cli::cli_alert_warning("Log file does not exist in specified path. Creating .log file in log directory")
     cat("\n")
   } else {
-    log_appender(appender_file(log_path))
+    logger::log_appender(logger::appender_file(log_path))
   }
 
   function_call <- deparse(match.call())
@@ -63,18 +62,23 @@ filter_diag_data <- function(data, codes = NULL, pattern_codes = NULL, classific
 
 
   if(!code_col %in% colnames(data)){
-    log_error("The specified code column does not exist in the dataset")
+    logger::log_error("The specified code column does not exist in the dataset")
     cli::cli_abort("The specified code column does not exist in the dataset")
   }
 
   if(!id_col %in% colnames(data)){
-    log_error("The specified id column does not exist in the dataset")
+    logger::log_error("The specified id column does not exist in the dataset")
     cli::cli_abort("The specified id column does not exist in the dataset")
   }
 
   if(!is.null(pattern_codes) && !is.null(codes)){
-    log_error("Only one of 'pattern_codes' or 'codes' should be specified.")
+    logger::log_error("Only one of 'pattern_codes' or 'codes' should be specified.")
     cli::cli_abort("Only one of 'pattern_codes' or 'codes' should be specified.")
+  }
+
+  if(is.null(pattern_codes) && is.null(codes)){
+    logger::log_error("One of 'pattern_codes' or 'codes' should be specified.")
+    cli::cli_abort("One of 'pattern_codes' or 'codes' should be specified.")
   }
 
   if(!classification %in% c("icd", "icpc")){
@@ -94,11 +98,11 @@ filter_diag_data <- function(data, codes = NULL, pattern_codes = NULL, classific
       data_no_na <- data |>
         tidyr::drop_na()
       cli::cli_alert_success("Removed {.val {sum(n_missing)}} rows with NAs.")
-      log_info("Removed {sum(n_missing)} rows with NAs.")
+      logger::log_info("Removed {sum(n_missing)} rows with NAs.")
     } else {
       cat("\n")
       cli::cli_alert_warning("The dataset has no NAs or they are coded in a different format.")
-      log_warn("The dataset has no NAs or they are coded in a different format.")
+      logger::log_warn("The dataset has no NAs or they are coded in a different format.")
       data_no_na <- data
     }
     return(data_no_na)
@@ -142,15 +146,15 @@ if (inherits(data, what = c("ArrowObject"))){
       type_code,
       "pattern" = pattern_codes[!codes_found],
       "exact"   = codes[!codes_found])
-    log_warn("{paste(missing_codes, collapse = ', ')} code(s) not valid")
+    logger::log_warn("{paste(missing_codes, collapse = ', ')} code(s) not valid")
     warning(paste0(paste0(missing_codes, collapse = ", "), " code(s) not valid or not mandated to be reported in NPR"))
     } else {
       valid_codes <- switch(
         type_code,
-        "pattern" = pattern_codes,
-        "exact"   = codes)
-      cli::cli_alert_success("Selected codes are valid: {paste(valid_codes, collapse = ', ')}")
-      log_info("Selected codes ({paste(valid_codes, collapse = ', ')}) are valid")
+        "pattern" = stringr::str_subset(npr[[1]], paste0("^(", paste(pattern_codes, collapse = "|"), ")")),
+        "exact"   = stringr::str_subset(npr[[1]], paste0("(", paste(codes, collapse = "|"), ")")))
+      cli::cli_alert_success("Selected codes/pattern are valid: {paste(valid_codes, collapse = ', ')}")
+      logger::log_info("Selected codes/pattern ({paste(valid_codes, collapse = ', ')}) are valid")
       cat("\n")
     }
 
@@ -159,9 +163,10 @@ if (inherits(data, what = c("ArrowObject"))){
 
 
   message("Filtering data by selected codes...")
+
   if (!(all(codes %in% data[[code_col]]))){
     cli::cli_alert_warning("Warning: The following codes are not found in the dataset: {paste(codes[!codes %in% data[[code_col]]], collapse = ', ')}")
-    log_warn("The following codes are not found in the dataset: {paste(codes[!codes %in% data[[code_col]]], collapse = ', ')}")
+    logger::log_warn("The following codes are not found in the dataset: {paste(codes[!codes %in% data[[code_col]]], collapse = ', ')}")
 
     if(!is.null(pattern_codes)){
       pattern <- paste0("^(", paste(pattern_codes, collapse = "|"), ")")
@@ -191,7 +196,7 @@ if (inherits(data, what = c("ArrowObject"))){
   if(!is.null(date_col)){
     message("Filtering observations by date of diagnosis...")
     if(!date_col %in% colnames(data)){
-      log_error("The specified date column does not exist in the dataset")
+      logger::log_error("The specified date column does not exist in the dataset")
       cli::cli_abort("The specified date column does not exist in the dataset")
     }
     filtered_data[[date_col]] <- as.character(filtered_data[[date_col]])
@@ -237,14 +242,15 @@ if (inherits(data, what = c("ArrowObject"))){
     dplyr::collect() |>
     dplyr::pull(n)
 
-  cli::cli_alert_info("Unique IDs in dataset: {.val {unique_ids}}.")
+  cli::cli_alert_info("Unique IDs in dataset: {.val {unique_ids}}")
 
   unique_codes <- filtered_data |>
     dplyr::summarise(n = dplyr::n_distinct(!!rlang::sym(code_col))) |>
     dplyr::collect() |>
     dplyr::pull(n)
 
-  cli::cli_alert_info("ICD-10 codes in dataset: {.val {unique_codes}}")
+  cli::cli_alert_info("Unique codes in dataset: {.val {unique_codes}}")
+  cli::cli_alert_info("Codes in dataset: {.val {unique(filtered_data[[code_col]], fromLast = T)}}")
 
 
 
@@ -252,11 +258,13 @@ if (inherits(data, what = c("ArrowObject"))){
   dplyr::glimpse(filtered_data)
 
   # Logs
-  log_with_separator("Diagnostic dataset '{substitute(data)}' successfully filtered")
-  log_info("Remaining number of rows: {nrow(filtered_data)}")
-  log_info("Remaining number of columns: {ncol(filtered_data)}")
-  log_info("Unique IDs in dataset: {dplyr::n_distinct(filtered_data[[id_col]])}")
-  log_info("ICD-10 codes in dataset: {paste(unique(filtered_data[[code_col]], fromLast = T), collapse = ', ')}")
+  logger::log_with_separator("Diagnostic dataset '{substitute(data)}' successfully filtered")
+  logger::log_info("Remaining number of rows: {nrow(filtered_data)}")
+  logger::log_info("Remaining number of columns: {ncol(filtered_data)}")
+  logger::log_info("Unique IDs in dataset: {dplyr::n_distinct(filtered_data[[id_col]])}")
+  logger::log_info("Unique codes in dataset: {length(unique(filtered_data[[code_col]], fromLast = T))}")
+  logger::log_info("Codes in dataset: {paste(unique(filtered_data[[code_col]], fromLast = T), collapse = ', ')}")
+
 
   return(filtered_data)
 }

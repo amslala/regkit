@@ -31,25 +31,25 @@
 #' log_path = log_file)
 #'
 #' @export
-#' @import logger
 
 filter_admin_data <- function(data, data_type = c("t_variant", "t_invariant"), filter_param, id_col = NULL, any = FALSE, rm_na = TRUE, log_path = NULL){
 
 # Set up logging ----------------------------------------------------------
-  log_threshold(DEBUG)
-  log_formatter(formatter_glue)
+
+  logger::log_threshold(logger::DEBUG)
+  logger::log_formatter(logger::formatter_glue)
 
   if (is.null(log_path) || !file.exists(log_path)){
     if(!dir.exists("log")){
       dir.create("log")
     }
     formatted_date <- format(Sys.Date(), "%d_%m_%Y")
-    log_appender(appender_file(glue::glue("log/filter_admin_data_{formatted_date}.log")))
-    log_info("Log file does not exist in specified path: {log_path}. Created file in log directory")
+    logger::log_appender(logger::appender_file(glue::glue("log/filter_admin_data_{formatted_date}.log")))
+    logger::log_info("Log file does not exist in specified path: {log_path}. Created file in log directory")
     cli::cli_alert_warning("Log file does not exist in specified path. Creating .log file in log directory")
     cat("\n")
   } else {
-    log_appender(appender_file(log_path))
+    logger::log_appender(logger::appender_file(log_path))
   }
 
   function_call <- deparse(match.call())
@@ -58,7 +58,7 @@ filter_admin_data <- function(data, data_type = c("t_variant", "t_invariant"), f
 # Validate Input ----------------------------------------------------------
 
   if(any(!names(filter_param) %in% colnames(data))){
-    log_error("Not all the specified variables exist in the dataset")
+    logger::log_error("Not all the specified variables exist in the dataset")
     stop("Not all the specified variables exist in the dataset")
   }
 
@@ -85,11 +85,11 @@ filter_admin_data <- function(data, data_type = c("t_variant", "t_invariant"), f
       data_no_na <- data |>
         tidyr::drop_na()
       cli::cli_alert_success("Removed {.val {sum(n_missing)}} rows with NAs.")
-      log_info("Removed {sum(n_missing)} rows with NAs.")
+      logger::log_info("Removed {sum(n_missing)} rows with NAs.")
       } else {
         cat("\n")
         cli::cli_alert_warning("The dataset has no NAs or they are coded in a different format.")
-        log_warn("The dataset has no NAs or they are coded in a different format.")
+        logger::log_warn("The dataset has no NAs or they are coded in a different format.")
         data_no_na <- data
       }
     return(data_no_na)
@@ -118,15 +118,15 @@ filter_admin_data <- function(data, data_type = c("t_variant", "t_invariant"), f
     message("Filtering time-invariant dataset...")
     cli::cli_alert_success("Filtered time-invariant dataset by '{names(filter_param)}' column(s)")
     cli::cli_alert_info("Filtered {.val {nrow(data) - nrow(filtered_data)}} rows ({.strong {round((nrow(data) - nrow(filtered_data)) / nrow(data) * 100, 1)}%} removed)")
-    log_info("Filtering time-invariant by '{names(filter_param)}' column(s)")
+    logger::log_info("Filtering time-invariant by '{names(filter_param)}' column(s)")
   } else if (data_type == "t_variant"){
     filtered_data <- do_filter(data, filter_param, id_col, any)
     message("Filtering time-variant dataset...")
     cli::cli_alert_success("Filtered time-variant by '{names(filter_param)}' column(s)")
     cli::cli_alert_info("Filtered {.val {nrow(data) - nrow(filtered_data)}} rows ({.strong {round((nrow(data) - nrow(filtered_data)) / nrow(data) * 100, 1)}%} removed)")
-    log_info("Filtering time-variant by '{names(filter_param)}' column(s)")
+    logger::log_info("Filtering time-variant by '{names(filter_param)}' column(s)")
   } else {
-    log_error("Invalid data type specified")
+    logger::log_error("Invalid data type specified")
     stop("Invalid data type specified")
   }
 
@@ -135,7 +135,7 @@ filter_admin_data <- function(data, data_type = c("t_variant", "t_invariant"), f
 # NA filtering ------------------------------------------------------------
 
   if(inherits(filtered_data, what = "arrow_dplyr_query")){
-    filtered_data<- filtered_data |> dplyr::collect()
+    filtered_data <- filtered_data |> dplyr::collect()
   }
 
   if(rm_na) {
@@ -155,9 +155,9 @@ filter_admin_data <- function(data, data_type = c("t_variant", "t_invariant"), f
   dplyr::glimpse(filtered_data)
 
   # Logs
-  log_with_separator(glue::glue("Diagnostic dataset '{substitute(data)}' successfully filtered"))
-  log_info("Remaining number of rows: {nrow(filtered_data)}")
-  log_info("Remaining number of columns: {ncol(filtered_data)}")
+  logger::log_with_separator(glue::glue("Diagnostic dataset '{substitute(data)}' successfully filtered"))
+  logger::log_info("Remaining number of rows: {nrow(filtered_data)}")
+  logger::log_info("Remaining number of columns: {ncol(filtered_data)}")
 
   return(filtered_data)
 }
