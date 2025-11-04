@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">regtools</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.1.0.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,7 +36,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Validate and filter diagnostic data by selected ICD-10 or ICPC-2 codes</h1>
-      <small class="dont-index">Source: <a href="https://github.com/amslala/regtools/blob/master/R/filter_diag.R" class="external-link"><code>R/filter_diag.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/amslala/regtools/blob/master/R/filter_diag_data.R" class="external-link"><code>R/filter_diag_data.R</code></a></small>
       <div class="d-none name"><code>filter_diag_data.Rd</code></div>
     </div>
 
@@ -131,7 +131,7 @@
 <span class="r-in"><span>                                 rm_na <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span>                                 <span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Checking that code exists in ICD-10 or ICPC-2 code list...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Selected codes are valid: F45, F84</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Selected codes/pattern are valid: F450, F451, F452, F453, F4530, F4531, F4532, F4533, F4534, F4538, F454, F458, F459, F840, F841, F842, F843, F844, F845, F848, F849</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Filtering data by selected codes...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
@@ -145,8 +145,9 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── After filtering: </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Remaining number of rows: <span style="color: #0000BB;">2539</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Remaining number of columns: <span style="color: #0000BB;">3</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Unique IDs in dataset: <span style="color: #0000BB;">2464</span>.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> ICD-10 codes in dataset: <span style="color: #0000BB;">28</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Unique IDs in dataset: <span style="color: #0000BB;">2464</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Unique codes in dataset: <span style="color: #0000BB;">28</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Codes in dataset: <span style="color: #0000BB;">"F4520"</span>, <span style="color: #0000BB;">"F454"</span>, <span style="color: #0000BB;">"F840"</span>, <span style="color: #0000BB;">"F845"</span>, <span style="color: #0000BB;">"F4529"</span>, <span style="color: #0000BB;">"F456"</span>, <span style="color: #0000BB;">"F4541"</span>, <span style="color: #0000BB;">"F841"</span>, <span style="color: #0000BB;">"F4522"</span>, <span style="color: #0000BB;">"F844"</span>, <span style="color: #0000BB;">"F842"</span>, <span style="color: #0000BB;">"F849"</span>, <span style="color: #0000BB;">"F457"</span>, <span style="color: #0000BB;">"F846"</span>, <span style="color: #0000BB;">"F455"</span>, <span style="color: #0000BB;">"F452"</span>, <span style="color: #0000BB;">"F45"</span>, <span style="color: #0000BB;">"F847"</span>, …, <span style="color: #0000BB;">"F459"</span>, and <span style="color: #0000BB;">"F843"</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Rows: 2,539</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Columns: 3</span>
@@ -161,7 +162,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Alejandra Martinez Sanchez.</p>
+  <p>Developed by Alejandra Martinez Sanchez, Helga Ask, Johanne Pettersen, Alexandra Havdahl.</p>
 </div>
 
 <div class="pkgdown-footer-right">

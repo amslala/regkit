@@ -23,7 +23,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">regtools</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.1.0.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -340,7 +340,7 @@ and 2017:</p>
 <span>  log_path <span class="op">=</span> <span class="va">log_file</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; Checking that code exists in ICD-10 or ICPC-2 code list...</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Selected codes are valid: F840, F841</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Selected codes/pattern are valid: F840, F841</span></span>
 <span><span class="co">#&gt; Filtering data by selected codes...</span></span>
 <span><span class="co">#&gt; Filtering observations by date of diagnosis...</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> The dataset has no NAs or they are coded in a different format.</span></span>
@@ -355,8 +355,9 @@ and 2017:</p>
 <span><span class="co">#&gt; ── After filtering:</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Remaining number of rows: <span style="color: #0000BB;">47</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Remaining number of columns: <span style="color: #0000BB;">3</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Unique IDs in dataset: <span style="color: #0000BB;">47</span>.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> ICD-10 codes in dataset: <span style="color: #0000BB;">2</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Unique IDs in dataset: <span style="color: #0000BB;">47</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Unique codes in dataset: <span style="color: #0000BB;">2</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Codes in dataset: <span style="color: #0000BB;">"F840"</span> and <span style="color: #0000BB;">"F841"</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Rows: 47</span></span>
 <span><span class="co">#&gt; Columns: 3</span></span>
@@ -380,7 +381,7 @@ short description of the diagnostic code.</p>
 <span>  log_path <span class="op">=</span> <span class="va">log_file</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; Checking that code exists in ICD-10 or ICPC-2 code list...</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Selected codes are valid: F45, F84</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Selected codes/pattern are valid: F450, F451, F452, F453, F4530, F4531, F4532, F4533, F4534, F4538, F454, F458, F459, F840, F841, F842, F843, F844, F845, F848, F849</span></span>
 <span><span class="co">#&gt; Filtering data by selected codes...</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> The dataset has no NAs or they are coded in a different format.</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -394,8 +395,9 @@ short description of the diagnostic code.</p>
 <span><span class="co">#&gt; ── After filtering:</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Remaining number of rows: <span style="color: #0000BB;">2539</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Remaining number of columns: <span style="color: #0000BB;">5</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Unique IDs in dataset: <span style="color: #0000BB;">2464</span>.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> ICD-10 codes in dataset: <span style="color: #0000BB;">28</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Unique IDs in dataset: <span style="color: #0000BB;">2464</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Unique codes in dataset: <span style="color: #0000BB;">28</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Codes in dataset: <span style="color: #0000BB;">"F4520"</span>, <span style="color: #0000BB;">"F454"</span>, <span style="color: #0000BB;">"F840"</span>, <span style="color: #0000BB;">"F845"</span>, <span style="color: #0000BB;">"F4529"</span>, <span style="color: #0000BB;">"F456"</span>, <span style="color: #0000BB;">"F4541"</span>, <span style="color: #0000BB;">"F841"</span>, <span style="color: #0000BB;">"F4522"</span>, <span style="color: #0000BB;">"F844"</span>, <span style="color: #0000BB;">"F842"</span>, <span style="color: #0000BB;">"F849"</span>, <span style="color: #0000BB;">"F457"</span>, <span style="color: #0000BB;">"F846"</span>, <span style="color: #0000BB;">"F455"</span>, <span style="color: #0000BB;">"F452"</span>, <span style="color: #0000BB;">"F45"</span>, <span style="color: #0000BB;">"F847"</span>, …, <span style="color: #0000BB;">"F459"</span>, and <span style="color: #0000BB;">"F843"</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Rows: 2,539</span></span>
 <span><span class="co">#&gt; Columns: 5</span></span>
@@ -554,7 +556,7 @@ time-invariant datasets:</p>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Datasets successfully linked: curated_diag, filtered_invar</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Data Summary</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────────────</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> After joining added <span style="color: #0000BB;">3</span> columns to 'curated_diag': tekst_uten_lengdebegrensning, tekst_med_maksimalt_60_tegn, sex, y_birth, and innvandringsgrunn</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> After joining added <span style="color: #0000BB;">3</span> columns to 'curated_diag': sex, y_birth, and innvandringsgrunn</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Rows in 'curated_diag': <span style="color: #0000BB;">2464</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Rows in 'filtered_invar': <span style="color: #0000BB;">691</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Total matched rows: <span style="color: #0000BB;">691</span></span></span></code></pre></div>
@@ -856,7 +858,7 @@ information: <code><a href="../articles/other-useful-fun.html">vignette("other-u
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Alejandra Martinez Sanchez.</p>
+  <p>Developed by Alejandra Martinez Sanchez, Helga Ask, Johanne Pettersen, Alexandra Havdahl.</p>
 </div>
 
 <div class="pkgdown-footer-right">
