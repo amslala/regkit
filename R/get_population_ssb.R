@@ -79,7 +79,7 @@ get_population_ssb <- function(url_api = "https://data.ssb.no/api/v0/en/table/07
 
 
     population_api_df <- population_api_df |>
-      dplyr::rename("region_code" = "Region", "region_name" = "region", "sex_value" = "sex", "sex" = "Kjonn", "year" = "Tid", "age"= "Alder", "population" = "value") |>
+      dplyr::rename("region_code" = "Region", "region_name" = "region", "sex_value" = "gender", "sex" = "Kjonn", "year" = "Tid", "age"= "Alder", "population" = "value") |>
       dplyr::select(!c("ContentsCode"))
 
     if (aggregate_age == TRUE && length(ages)>1){

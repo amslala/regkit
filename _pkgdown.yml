@@ -35,6 +35,7 @@ reference:
   - calculate_prevalence_series
   - calculate_incidence_series
   - plot_rates
+  - plot_map
 - title: "Helper functions"
   contents:
   - synthetic_data

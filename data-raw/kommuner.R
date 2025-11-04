@@ -1,7 +1,7 @@
 ## code to prepare `kommuner` dataset
 
 library(readxl)
-data <- read_excel("./kommuner-1994-2024.xlsx")
+data <- read_excel("data_test/kommuner-1994-2024.xlsx")
 
 data$validity <- gsub(".*\\(([^\\)]+)\\).*", "\\1", data$TEKST)
 

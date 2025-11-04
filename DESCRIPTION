@@ -35,6 +35,7 @@ Depends:
 Suggests: 
     haven,
     PxWebApiData,
+    sf,
     openxlsx,
     plotly,
     ggrepel,
