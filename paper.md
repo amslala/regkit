@@ -32,22 +32,22 @@ affiliations:
  - name: PsychGen Centre for Genetic Epidemiology and Mental Health, Norwegian Institute of Public Health
    index: 1
    ror: 046nvst19
- - name: Psychiatric Genetic Epidemiology Group, Research Department, Lovisenberg Diaconal Hospital
-   index: 3
-   ror: 03ym7ve89
  - name:  Center for Precision Psychiatry, University of Oslo
    index: 2
    ror: 01xtthb56
+ - name: Psychiatric Genetic Epidemiology Group, Research Department, Lovisenberg Diaconal Hospital
+   index: 3
+   ror: 03ym7ve89
  - name: PROMENTA Research Center, Department of Psychology, University of Oslo
    index: 4
    ror: 01xtthb56
-date: 7 October 2025
+date: 4 November 2025
 bibliography: paper.bib
 ---
 
 # Summary
 
-The combined use of health and administrative registers is an essential component of modern epidemiological research. Among the Nordic countries, in particular, an array of registry sources offers high-quality, broad-coverage data collected across many years [@Laugesen_2021]. The use of existing data from registers in research circumvents the data collection process, thus making research more cost and time effective [@Thygesen_2014]. Moreover, health and administrative registers offer enormous sample sizes and high representativeness that are much needed, particularly in epidemiological research. Although registers are rich sources of information, pre–processing and working with the large datasets they produce can be challenging and time-consuming – especially for researchers with limited programming experience – and the process is vulnerable to both unintended variations across projects and highly consequential errors.
+The use of health and administrative registers, often in combination, is an essential component of modern epidemiological research. Among the Nordic countries, in particular, an array of registry sources offers high-quality, broad-coverage data collected across many years [@Laugesen_2021]. The use of existing data from registers in research circumvents the data collection process, thus making research more cost and time effective [@Thygesen_2014]. Moreover, health and administrative registers offer enormous sample sizes and high representativeness that are much needed, particularly in epidemiological research. Although registers are rich sources of information, pre–processing and working with the large datasets they produce can be challenging and time-consuming – especially for researchers with limited programming experience – and the process is vulnerable to both unintended variations across projects and highly consequential errors.
 
 The `regtools` R package is an open-source toolkit designed to aid researchers in performing efficient and well-documented manipulation, analysis and visualization of individual-level data from Norwegian health and population registers. With it, we aim to facilitate reproducible descriptive epidemiology based on Norwegian health data, supplemented with sociodemographic information, such as income and education information, from other registry sources. The package includes functions to validate, filter, and link health (diagnostic) and administrative (sociodemographic) data. For transparency, each function creates a log that documents the function's internal data processing, warnings/errors, and corresponding outputs. Finally, considering the extensive use of registers in epidemiological research, `regtools` includes functions intended to help users compute common descriptive epidemiology statistics, such as prevalence and incidence rates, and visualize the underlying data.
 
