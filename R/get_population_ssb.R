@@ -30,6 +30,10 @@
 get_population_ssb <- function(url_api = "https://data.ssb.no/api/v0/en/table/07459/", regions = c("norway", "fylker", "kommuner"), years, ages, aggregate_age = TRUE, by_sex = TRUE, save_xslx = FALSE){
 
 
+  if(!requireNamespace("PxWebApiData", quietly = TRUE)){
+    stop("Package \"PxWebApiData\" must be installed to use this function.",call. = FALSE)
+  }
+
   ## Input validation ####
   if(is.null(url_api)){
     cli::cli_abort("Requires SSB population table URL")
@@ -75,7 +79,7 @@ get_population_ssb <- function(url_api = "https://data.ssb.no/api/v0/en/table/07
 
 
     population_api_df <- population_api_df |>
-      dplyr::rename("region_code" = "Region", "region_name" = "region", "sex_value" = "sex", "sex" = "Kjonn", "year" = "Tid", "age"= "Alder", "population" = "value") |>
+      dplyr::rename("region_code" = "Region", "region_name" = "region", "sex_value" = "gender", "sex" = "Kjonn", "year" = "Tid", "age"= "Alder", "population" = "value") |>
       dplyr::select(!c("ContentsCode"))
 
     if (aggregate_age == TRUE && length(ages)>1){
@@ -117,11 +121,15 @@ get_population_ssb <- function(url_api = "https://data.ssb.no/api/v0/en/table/07
   }
 
   if (save_xslx == TRUE){
-    openxlsx::write.xlsx(population_api_df, glue::glue("population_ssb_{regions}.xlsx"), overwrite = T)
-    cli::cli_alert_success("XLSX file saved as: population_ssb_{regions}.xlsx")
-  } else {
-    cli::cli_alert_success("Population dataset ready!")
+    if(!requireNamespace("openxlsx", quietly = TRUE)){
+      stop("Package \"openxlsx\" must be installed to save population as xslx file.",call. = FALSE)
+    } else {
+      openxlsx::write.xlsx(population_api_df, glue::glue("population_ssb_{regions}.xlsx"), overwrite = TRUE)
+      cli::cli_alert_success("XLSX file saved as: population_ssb_{regions}.xlsx")
+    }
   }
+
+  cli::cli_alert_success("Population dataset ready!")
 
   return(population_api_df)
 }

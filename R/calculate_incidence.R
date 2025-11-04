@@ -73,21 +73,24 @@ calculate_incidence <- function(linked_data,
 
 
   # Set up logging ----------------------------------------------------------
-  logger::log_threshold(DEBUG)
-  logger::log_formatter(formatter_glue)
+  logger::log_threshold(logger::DEBUG)
+  logger::log_formatter(logger::formatter_glue)
 
   if (is.null(log_path) || !file.exists(log_path)){
     if(!dir.exists("log")){
       dir.create("log")
     }
     formatted_date <- format(Sys.Date(), "%d_%m_%Y")
-    logger::log_appender(appender_file(glue::glue("log/calculate_incidence_{formatted_date}.log")))
+    logger::log_appender(logger::appender_file(glue::glue("log/calculate_incidence_{formatted_date}.log")))
     logger::log_info("Log file does not exist in specified path: {log_path}. Created file in log directory")
     cli::cli_alert_warning("Log file does not exist in specified path. Creating .log file in log directory")
     cat("\n")
   } else {
-    logger::log_appender(appender_file(log_path))
+    logger::log_appender(logger::appender_file(log_path))
   }
+
+  function_call <- deparse(match.call())
+  logger::log_info("Call : {function_call}")
 
   # Validate Input ----------------------------------------------------------
 
@@ -189,7 +192,7 @@ calculate_incidence <- function(linked_data,
 
   check_mapping <- function(df1, by_cols){
     if(!all(by_cols %in% names(df1))){
-      log_warn("There are some cells missing from {substitute(df1)}")
+      logger::log_warn("There are some cells missing from {substitute(df1)}")
       cli::cli_alert_warning("Warning: there are some cells missing from {substitute(df1)}. Join with population dataset will not have a 'one-to-one' relationship")
     }
   }

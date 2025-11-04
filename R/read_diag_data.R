@@ -36,8 +36,8 @@ read_diag_data <- function(file_path, id_col = "id", date_col = "date", code_col
 # Logging -----------------------------------------------------------------
 
 
-  logger::log_threshold(DEBUG)
-  logger::log_formatter(formatter_glue)
+  logger::log_threshold(logger::DEBUG)
+  logger::log_formatter(logger::formatter_glue)
 
   if (is.null(log_path) || !file.exists(log_path)){
     if(!dir.exists("log")){
@@ -49,8 +49,11 @@ read_diag_data <- function(file_path, id_col = "id", date_col = "date", code_col
     cli::cli_alert_warning("Log file does not exist in specified path. Creating .log file in log directory")
     cat("\n")
   } else {
-    logger::log_appender(appender_file(log_path))
+    logger::log_appender(logger::appender_file(log_path))
   }
+
+  function_call <- deparse(match.call())
+  logger::log_info("Call : {function_call}")
 
 
 # Check file existence and type -------------------------------------------
@@ -77,6 +80,17 @@ read_diag_data <- function(file_path, id_col = "id", date_col = "date", code_col
   }
 
 
+
+# SAV file package --------------------------------------------------------
+
+  if(file_extension == "sav"){
+    if(!requireNamespace("haven", quietly = TRUE)){
+      stop(
+        "Package \"haven\" must be installed to read .sav files",
+        call. = FALSE
+      )
+    }
+  }
 
 # Parquet warning ---------------------------------------------------------
 

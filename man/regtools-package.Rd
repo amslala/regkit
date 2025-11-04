@@ -4,9 +4,9 @@
 \name{regtools-package}
 \alias{regtools}
 \alias{regtools-package}
-\title{regtools: regtools: facilitating manipulation, analysis and visualization of data from Norwegian health and population registers.}
+\title{regtools: Facilitating manipulation, analysis and visualization of data from Norwegian health and population registers}
 \description{
-R package to facilitate the manipulation, analysis and visualization of data from Norwegian health and population registers
+Aid researchers in performing efficient and well-documented manipulation, analysis and visualization of individual-level data from Norwegian health and population registers. The package includes functions to validate, filter, and link health (diagnostic) and administrative (sociodemographic) data. `regtools` also includes functions intended to help users compute common descriptive epidemiology statistics, such as prevalence and incidence rates, and visualize the underlying data.
 }
 \seealso{
 Useful links:
@@ -14,6 +14,22 @@ Useful links:
   \item \url{https://github.com/amslala/regtools}
   \item \url{https://amslala.github.io/regtools/}
   \item Report bugs at \url{https://github.com/amslala/regtools/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Alejandra Martinez Sanchez \email{alejandra.martinez.sanchez@fhi.no}
+
+Authors:
+\itemize{
+  \item Helga Ask
+  \item Johanne Pettersen
+  \item Alexandra Havdahl
+}
+
+Other contributors:
+\itemize{
+  \item Laurie Hannigan [thesis advisor]
 }
 
 }

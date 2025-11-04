@@ -1,11 +1,9 @@
 Package: regtools
 Type: Package
-Title: regtools: facilitating manipulation, analysis and visualization of data from Norwegian health and population registers
-Version: 0.1.0.9000
-Author: Alejandra Martinez Sanchez
-Description: R package to facilitate the manipulation, analysis and visualization of data from Norwegian health and population registers.
-Maintainer: Alejandra Martinez Sanchez <alejandra.martinez.sanchez@fhi.no>
-License: MIT + file LICENSE
+Title: Facilitating manipulation, analysis and visualization of data from Norwegian health and population registers
+Version: 0.2.0
+Description: Aid researchers in performing efficient and well-documented manipulation, analysis and visualization of individual-level data from Norwegian health and population registers. The package includes functions to validate, filter, and link health (diagnostic) and administrative (sociodemographic) data. `regtools` also includes functions intended to help users compute common descriptive epidemiology statistics, such as prevalence and incidence rates, and visualize the underlying data.
+License: GPL (>= 3) + file LICENSE
 Encoding: UTF-8
 LazyData: true
 URL: https://github.com/amslala/regtools, https://amslala.github.io/regtools/
@@ -19,19 +17,12 @@ Imports:
     crayon,
     dplyr,
     ggplot2,
-    ggrepel,
     ggthemes,
     glue,
-    haven,
-    janitor,
     klassR,
     logger,
-    openxlsx,
-    plotly,
     purrr,
-    PxWebApiData,
     rlang,
-    scales,
     stringr,
     tibble,
     tidyr,
@@ -40,9 +31,23 @@ Imports:
 Depends: 
     R (>= 3.5)
 Suggests: 
+    haven,
+    PxWebApiData,
+    sf,
+    openxlsx,
+    plotly,
+    ggrepel,
+    scales,
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Config/Needs/website: rmarkdown
+Authors@R: c(
+    person("Alejandra", "Martinez Sanchez", email = "alejandra.martinez.sanchez@fhi.no" ,role = c("aut", "cre")),
+    person("Laurie", "Hannigan", role = "ths"),
+    person("Helga", "Ask", role = "aut"),
+    person("Johanne", "Pettersen", role = "aut"),
+    person("Alexandra", "Havdahl", role = "aut")
+  )

@@ -115,7 +115,6 @@ plot_rates <- function(data,
     )
 
 
-
   # Base plots  ---------------------------------------------------------------
 
   if (!is.null(grouping_var)){
@@ -157,7 +156,10 @@ plot_rates <- function(data,
   }
 
 
-  if(percent == T){
+  if(percent == TRUE){
+    if(!requireNamespace("scales", quietly = TRUE)){
+      stop("Package \"scales\" must be installed to use percentages in x axis .",call. = FALSE)
+    }
     plot <- plot + scale_y_continuous(labels = scales::label_percent())
   }
 
@@ -213,17 +215,31 @@ plot_rates <- function(data,
     plot <- plot + ggplot2::geom_vline(aes(xintercept = as.character(annotated_line)), linetype="dashed", linewidth = 0.6)
   }
 
-  if(start_end_points){
+  if(start_end_points  == TRUE){
+    if(!requireNamespace("ggrepel", quietly = TRUE)){
+      stop("Package \"ggrepel\" must be installed to annotate start and end points.",call. = FALSE)
+    }
     variables <- c(grouping_var, facet_var)
     data_start_end_points <- data |>
       dplyr::group_by(dplyr::across(tidyselect::all_of(variables))) |>
       dplyr::slice(1, dplyr::n())
-
-    plot <- plot + ggrepel::geom_text_repel(data = data_start_end_points, aes(label = scales::percent(!!rlang::sym(rate_col), accuracy = 0.01)), color = "black", size = 4.7)
-
+    if(percent == TRUE){
+      if(!requireNamespace("scales", quietly = TRUE)){
+        stop("Package \"scales\" must be installed to annotate percentages in start and end points.",call. = FALSE)
+      }
+      plot <- plot + ggrepel::geom_text_repel(data = data_start_end_points, aes(label = scales::percent(!!rlang::sym(rate_col), accuracy = 0.01)), color = "black", size = 4.7)
+    } else {
+      plot <- plot + ggrepel::geom_text_repel(data = data_start_end_points, aes(label = !!rlang::sym(rate_col)), color = "black", size = 4.7)
+    }
   }
 
-  if(interactive == TRUE){   # does not work in R 4.4.0, need to open in external window
+
+
+
+  if(interactive == TRUE){
+    if(!requireNamespace("plotly", quietly = TRUE)){
+      stop("Package \"plotly\" must be installed to create interactive plot.",call. = FALSE)
+    }
     plot <- plot |> plotly::ggplotly()
   }
 
