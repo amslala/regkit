@@ -3,7 +3,7 @@ Type: Package
 Title: Facilitating manipulation, analysis and visualization of data from Norwegian health and population registers
 Version: 0.2.0
 Description: Aid researchers in performing efficient and well-documented manipulation, analysis and visualization of individual-level data from Norwegian health and population registers. The package includes functions to validate, filter, and link health (diagnostic) and administrative (sociodemographic) data. `regtools` also includes functions intended to help users compute common descriptive epidemiology statistics, such as prevalence and incidence rates, and visualize the underlying data.
-License: GPL (>= 3) + file LICENSE
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 URL: https://github.com/amslala/regtools, https://amslala.github.io/regtools/
@@ -46,7 +46,7 @@ Config/testthat/edition: 3
 Config/Needs/website: rmarkdown
 Authors@R: c(
     person("Alejandra", "Martinez Sanchez", email = "alejandra.martinez.sanchez@fhi.no" ,role = c("aut", "cre")),
-    person("Laurie", "Hannigan", role = "ths"),
+    person("Laurie", "Hannigan", role = "aut"),
     person("Helga", "Ask", role = "aut"),
     person("Johanne", "Pettersen", role = "aut"),
     person("Alexandra", "Havdahl", role = "aut")
