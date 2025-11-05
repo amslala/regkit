@@ -22,14 +22,10 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Laurie Hannigan
   \item Helga Ask
   \item Johanne Pettersen
   \item Alexandra Havdahl
-}
-
-Other contributors:
-\itemize{
-  \item Laurie Hannigan [thesis advisor]
 }
 
 }

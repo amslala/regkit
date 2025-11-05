@@ -22,12 +22,12 @@ authors:
     affiliation: 1
   - name: Alexandra Havdahl 
     orcid: 0000-0002-9268-0423
-    affiliation: "1, 4"
+    affiliation: "1, 3"
   - name: 
       given-names: Laurie John
       surname: Hannigan 
     orcid: 0000-0003-3123-5411
-    affiliation: "1, 3"
+    affiliation: "1, 4"
 affiliations:
  - name: PsychGen Centre for Genetic Epidemiology and Mental Health, Norwegian Institute of Public Health
    index: 1
@@ -35,13 +35,13 @@ affiliations:
  - name:  Center for Precision Psychiatry, University of Oslo
    index: 2
    ror: 01xtthb56
- - name: Psychiatric Genetic Epidemiology Group, Research Department, Lovisenberg Diaconal Hospital
-   index: 3
-   ror: 03ym7ve89
  - name: PROMENTA Research Center, Department of Psychology, University of Oslo
-   index: 4
+   index: 3
    ror: 01xtthb56
-date: 4 November 2025
+ - name: Psychiatric Genetic Epidemiology Group, Research Department, Lovisenberg Diaconal Hospital
+   index: 4
+   ror: 03ym7ve89
+date: 5 November 2025
 bibliography: paper.bib
 ---
 
