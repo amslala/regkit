@@ -96,7 +96,6 @@ plot_map <- function(data, level = c("kommune", "fylke"), rate_col, region_numbe
           labels = scales::label_number(),
           guide = ggplot2::guide_colorbar(
             barheight = 0.5, barwidth = 12,
-            labels = scales::label_number(),
             ticks = FALSE, direction = "horizontal",
             title.position = "top", title.hjust = 0.5,
             theme = ggplot2::theme(legend.text = ggplot2::element_text(size = 13))
@@ -108,9 +107,9 @@ plot_map <- function(data, level = c("kommune", "fylke"), rate_col, region_numbe
     map <- map +
       ggplot2::scale_fill_viridis_c(
         direction = -1,
+        labels = scales::percent_format(accuracy = .1),
         guide = ggplot2::guide_colorbar(
           barheight = 0.5, barwidth = 12,
-          labels = scales::percent_format(accuracy = .1),
           ticks = FALSE, direction = "horizontal",
           title.position = "top", title.hjust = 0.5,
           theme = ggplot2::theme(legend.text = ggplot2::element_text(size = 13))
@@ -121,9 +120,9 @@ plot_map <- function(data, level = c("kommune", "fylke"), rate_col, region_numbe
     map <- map +
       ggplot2::scale_fill_viridis_c(
         direction = -1,
+        labels = scales::label_number(),
         guide = ggplot2::guide_colorbar(
           barheight = 0.5, barwidth = 12,
-          labels = scales::label_number(),
           ticks = FALSE, direction = "horizontal",
           title.position = "top", title.hjust = 0.5,
           theme = ggplot2::theme(legend.text = ggplot2::element_text(size = 13))
