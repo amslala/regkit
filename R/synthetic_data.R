@@ -73,7 +73,26 @@ synthetic_data <- function(
     date_classifications = NULL){
 
 
-  # Set seed only for funtion
+
+
+# Stringr and KlassR check ------------------------------------------------
+
+  if(!is.null(varying_query)  || !is.null(invariant_queries)){
+    v <- as.character(utils::packageVersion("stringr"))
+    if (utils::compareVersion(v, "1.6.0") >= 0) {
+      msg <- paste0(
+        "This function currently requires stringr 1.5.1.\n",
+        "You have stringr ", v, ".\n\n",
+        "Workaround: install stringr 1.5.1, e.g.\n",
+        "  install.packages('remotes'); remotes::install_version('stringr', '1.5.1')\n",
+        "Or use `varying_codes` and/or `invariant_codes` instead of queries"
+      )
+      stop(msg, call. = FALSE)
+    }
+  }
+
+
+  # Set seed only for function
 
   withr::with_seed(seed, {
 
