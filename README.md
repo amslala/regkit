@@ -24,6 +24,10 @@ characteristics. As such, it can also be used to explore the
 possibilities associated with analyses of data from Norwegian health and
 population registries prior to accessing real data.
 
+For detailed information about the workflow and functions in the package
+please refer to the vignettes or [Get
+Started](https://amslala.github.io/regtools/articles/regtools.html).
+
 ## Installation
 
 You can install the development version of regtools from
@@ -57,3 +61,14 @@ install.packages(path,
                  repos = NULL,
                  type = "binary")
 ```
+
+## Report issues and contribute
+
+To submit bug reports or request features, open an issue in
+[GitHub](https://github.com/amslala/regtools/issues).
+
+Pull requests are welcomed! To streamline the process, first open an
+issue and make sure to include unit tests covering any new features. You
+can also send an email to the
+[Maintainer](mailto:alejandra.martinez.sanchez@fhi.no) for more
+information.
