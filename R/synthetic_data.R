@@ -87,10 +87,8 @@ synthetic_data <- function(
         "  install.packages('remotes'); remotes::install_version('stringr', '1.5.1')\n",
         "Or use `varying_codes` and/or `invariant_codes` instead of queries"
       )
-      stop(msg, call. = FALSE)
     }
   }
-
 
   # Set seed only for function
 
