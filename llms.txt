@@ -1,0 +1,135 @@
+# regtools
+
+The goal of regtools is to assist researchers in performing efficient
+and well-documented manipulation, analysis and visualization of data
+from Norwegian health and population registers. The package includes
+functions for data pre-processing, linkage, and the computation of
+relevant statistics and visualizations, such as stratified frequencies,
+incidence and prevalence rates.
+
+The regtools package will be of most use to you if you are a researcher
+with access to microdata from health and/or administrative registers in
+Norway. However, the package also includes simulated registry datasets,
+as well as functionality simulate your own datasets with custom
+characteristics. As such, it can also be used to explore the
+possibilities associated with analyses of data from Norwegian health and
+population registries prior to accessing real data.
+
+For detailed information about the workflow and functions in the package
+please refer to the vignettes or [Get
+Started](https://amslala.github.io/regtools/articles/regtools.html).
+
+## Installation
+
+You can install the development version of regtools from
+[GitHub](https://github.com/) with:
+
+``` r
+# install.packages("pak")
+pak::pak("amslala/regtools")
+
+
+# or 
+# install.packages("devtools")
+devtools::install_github("amslala/regtools")
+```
+
+### TSD
+
+Researchers working with sensitive individual-level data in Norway will
+most likely have their projects (and data) set up in
+[TSD](https://www.uio.no/english/services/it/research/sensitive-data/access/)
+with no internet access. Although all the main function in `regtools`
+work inside of TSD, it is not possible to install R packages directly
+from GitHub without internet access. Instead, you can download the
+binary for the latest working version from the [Releases
+section](https://github.com/amslala/regtools/releases) and import it to
+TSD. You can then install it specifying the path of the binary within
+TSD:
+
+``` r
+install.packages(path, 
+                 repos = NULL,
+                 type = "binary")
+```
+
+## Report issues and contribute
+
+To submit bug reports or request features, open an issue in
+[GitHub](https://github.com/amslala/regtools/issues).
+
+Pull requests are welcomed! To streamline the process, first open an
+issue and make sure to include unit tests covering any new features. You
+can also send an email to the
+[Maintainer](mailto:alejandra.martinez.sanchez@fhi.no) for more
+information.
+
+# Package index
+
+## Main functions
+
+- [`read_diag_data()`](https://amslala.github.io/regtools/reference/read_diag_data.md)
+  : Read and validate the structure of diagnostic data
+- [`read_admin_data()`](https://amslala.github.io/regtools/reference/read_admin_data.md)
+  : Read and validate the structure of administrative (sociodemographic)
+  individual-level data
+- [`filter_diag_data()`](https://amslala.github.io/regtools/reference/filter_diag_data.md)
+  : Validate and filter diagnostic data by selected ICD-10 or ICPC-2
+  codes
+- [`filter_admin_data()`](https://amslala.github.io/regtools/reference/filter_admin_data.md)
+  : Filter administrative (sociodemographic) data by selected filtering
+  parameters
+- [`curate_diag_data()`](https://amslala.github.io/regtools/reference/curate_diag_data.md)
+  : Curate diagnostic data
+- [`link_diag_admin()`](https://amslala.github.io/regtools/reference/link_diag_admin.md)
+  : Link diagnostic and demographic datasets using unique personal
+  identifiers
+- [`calculate_incidence()`](https://amslala.github.io/regtools/reference/calculate_incidence.md)
+  : Calculate incidence rates
+- [`calculate_prevalence()`](https://amslala.github.io/regtools/reference/calculate_prevalence.md)
+  : Calculate prevalence rates
+- [`calculate_prevalence_series()`](https://amslala.github.io/regtools/reference/calculate_prevalence_series.md)
+  : Calculate prevalence series rates
+- [`calculate_incidence_series()`](https://amslala.github.io/regtools/reference/calculate_incidence_series.md)
+  : Calculate incidence series rates
+- [`plot_rates()`](https://amslala.github.io/regtools/reference/plot_rates.md)
+  : Plot prevalence/incidence rates
+- [`plot_map()`](https://amslala.github.io/regtools/reference/plot_map.md)
+  : Plot spatial data
+
+## Helper functions
+
+- [`synthetic_data()`](https://amslala.github.io/regtools/reference/synthetic_data.md)
+  : Create synthetic diagnostic, time-varying and time-invariant
+  individual level data
+- [`get_population_ssb()`](https://amslala.github.io/regtools/reference/get_population_ssb.md)
+  : Get yearly population data from SSB, by region, sex and age.
+- [`harmonize_municipality_codes()`](https://amslala.github.io/regtools/reference/harmonize_municipality_codes.md)
+  : Harmonize old municipality codes in Norway to 2024 municipality
+  codes
+
+## Example datasets
+
+- [`diag_df`](https://amslala.github.io/regtools/reference/diag_df.md) :
+  Example diagnostic individual-level data
+- [`invar_df`](https://amslala.github.io/regtools/reference/invar_df.md)
+  : Example time-invariant individual-level data
+- [`var_df`](https://amslala.github.io/regtools/reference/var_df.md) :
+  Example time-variant individual-level data
+- [`linked_df`](https://amslala.github.io/regtools/reference/linked_df.md)
+  : Example linked individual-level data
+- [`kommuner_2016`](https://amslala.github.io/regtools/reference/kommuner_2016.md)
+  : Norwegian municipalities valid in 2016
+
+# Articles
+
+### All vignettes
+
+- [Simulate individual-level
+  data](https://amslala.github.io/regtools/articles/h-functions.md):
+- [Other useful
+  functions](https://amslala.github.io/regtools/articles/other-useful-fun.md):
+- [Working with parquet
+  datasets](https://amslala.github.io/regtools/articles/parquet-files.md):
+- [Introduction to
+  regtools](https://amslala.github.io/regtools/articles/regtools.md):
