@@ -92,16 +92,17 @@ classification standards and survey weighting and estimation
 
 In summary, these existing projects have showcased the potential of
 using open-source R packages to assist researchers working with
-Norwegian survey and register data. The package `regtools` was built
-rather than contributing to actual packages, as the existing software
-focus on well-defined case uses (e.g. tabular suppression, disease
-surveillance) and are not intended to deal with large, linked
-individual-level data with descriptive epidemiological analyses in mind.
-In addition, building a new package has enabled us to create a
-streamlined framework including only functions relevant to this research
-area. For instance, it integrates relevant functions originally
-developed by Statistics Norway to facilitate the creation of realistic
-synthetic data.
+Norwegian survey and register data. The justification for building
+`regtools` as a new package, rather than contributing to existing
+packages, is that currently available software focuses on relatively
+narrow, well-defined use-cases (e.g. tabular suppression, disease
+surveillance) as opposed to broad operations with large, linked
+individual-level datasets aimed at facilitating descriptive
+epidemiological analyses. In addition, building a new package has
+enabled us to create a streamlined framework including only functions
+relevant to this research area. For instance, it integrates relevant
+functions originally developed by Statistics Norway to facilitate the
+creation of realistic synthetic data.
 
 # Software design
 
