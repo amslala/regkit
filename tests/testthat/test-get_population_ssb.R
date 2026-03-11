@@ -89,7 +89,7 @@ test_that("correct sex (dis)aggregation", {
                                       by_sex = TRUE,
                                       save_xslx = FALSE)
 
-  expect_length(which(names(disaggregated) == "sex"), 1)
+  expect_length(which(names(disaggregated) == "sex_code"), 1)
 
   aggregated <- get_population_ssb(regions = "norway",
                                    years = c(2020:2022),
