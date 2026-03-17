@@ -149,7 +149,7 @@ datasets (synthetic_data()) also allow research-groups to use the
 package as zero-risk training material for new members, and to plan and
 structure analytic projects prior to obtaining data access.
 
-# Research impact statement (200 words)
+# Research impact statement
 
 The most prominent use of the `regtools` package to date has been in
 providing analyses on time trends in autism diagnoses in Norway over

@@ -127,8 +127,8 @@ diag_parquet <- read_diag_data(
   code_col = "code",
   log_path = l_path)
 #> ℹ You have provided a parquet file or database. Due to the characteristics of these data objects, the console output and logging will provide minimal information.
-#> Reading /tmp/RtmpARV7gi/file8c1538170aeb/new_df.parquet file...
-#> ✔ Successfully read file: /tmp/RtmpARV7gi/file8c1538170aeb/new_df.parquet
+#> Reading /tmp/RtmpX3vTd2/file8e574f972a34/new_df.parquet file...
+#> ✔ Successfully read file: /tmp/RtmpX3vTd2/file8e574f972a34/new_df.parquet
 #> Checking column requirements:
 #> ✔ ID column
 #> ✔ Code column
@@ -144,9 +144,9 @@ diag_parquet <- read_diag_data(
 #> 
 #> FileSystemDataset with 1 Parquet file
 #> 8,391,376 rows x 3 columns
-#> $ id       <string> "P023206282", "P023206282", "P023206311", "P023206311", "P02…
-#> $ code     <string> "F381", "F421", "F176", "F654", "F6698", "F1073", "F0124", "…
-#> $ diag_year <int32> 2015, 2014, 2015, 2012, 2013, 2013, 2014, 2014, 2013, 2015, …
+#> $ id       <string> "P010462517", "P010462517", "P010462517", "P010462613", "P01…
+#> $ code     <string> "F1171", "F6698", "F522", "F2053", "F4324", "F1730", "F1870"…
+#> $ diag_year <int32> 2014, 2013, 2012, 2012, 2012, 2012, 2013, 2015, 2012, 2014, …
 ```
 
 ### Filtering
@@ -187,12 +187,12 @@ filtered_parquet <- filter_diag_data(
 #> ℹ Remaining number of columns: 3
 #> ℹ Unique IDs in dataset: 38459
 #> ℹ Unique codes in dataset: 21
-#> ℹ Codes in dataset: "F4531", "F4532", "F4530", "F459", "F842", "F843", "F454", "F849", "F844", "F841", "F452", "F845", "F450", "F458", "F4538", "F453", "F4533", "F840", …, "F4534", and "F451"
+#> ℹ Codes in dataset: "F849", "F451", "F840", "F4533", "F843", "F454", "F4538", "F4531", "F4532", "F450", "F841", "F459", "F4530", "F453", "F4534", "F844", "F458", "F845", …, "F842", and "F848"
 #> 
 #> Rows: 38,714
 #> Columns: 3
-#> $ id        <chr> "P023214344", "P023220089", "P023220706", "P023222447", "P02…
-#> $ code      <chr> "F843", "F458", "F4530", "F848", "F4533", "F844", "F844", "F…
+#> $ id        <chr> "P010467145", "P010467716", "P010470463", "P010471759", "P01…
+#> $ code      <chr> "F458", "F844", "F4531", "F452", "F844", "F848", "F4533", "F…
 #> $ diag_year <int> 2012, 2012, 2012, 2012, 2012, 2012, 2012, 2012, 2012, 2012, …
 ```
 
@@ -241,9 +241,9 @@ mb_filter <- microbenchmark::microbenchmark(
 ```
 
     #> Unit: milliseconds
-    #>     expr       min        lq      mean    median        uq       max neval
-    #>  parquet  560.6397  562.4761  582.5328  564.4207  570.4344  667.5238   100
-    #>   tibble 1250.5915 1259.5709 1273.3378 1263.4949 1268.0772 1388.9504   100
+    #>     expr       min        lq      mean    median       uq      max neval
+    #>  parquet  570.1842  574.4254  597.6516  578.2376  584.529  707.239   100
+    #>   tibble 1271.0295 1283.5075 1297.9233 1287.2122 1292.613 1464.315   100
     #> Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
     #> ℹ Please use tidy evaluation idioms with `aes()`.
     #> ℹ See also `vignette("ggplot2-in-packages")` for more information.
