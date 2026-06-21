@@ -2,11 +2,13 @@
 
 ### All vignettes
 
+- [Reference for package
+  dependencies](https://amslala.github.io/regkit/articles/Dependencies.md):
 - [Simulate individual-level
-  data](https://amslala.github.io/regtools/articles/h-functions.md):
+  data](https://amslala.github.io/regkit/articles/h-functions.md):
 - [Other useful
-  functions](https://amslala.github.io/regtools/articles/other-useful-fun.md):
+  functions](https://amslala.github.io/regkit/articles/other-useful-fun.md):
 - [Working with parquet
-  datasets](https://amslala.github.io/regtools/articles/parquet-files.md):
+  datasets](https://amslala.github.io/regkit/articles/parquet-files.md):
 - [Introduction to
-  regtools](https://amslala.github.io/regtools/articles/regtools.md):
+  regkit](https://amslala.github.io/regkit/articles/regkit.md):

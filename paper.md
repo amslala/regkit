@@ -15,7 +15,7 @@ challenging and time-consuming – especially for researchers with limited
 programming experience – and the process is vulnerable to both
 unintended variations across projects and highly consequential errors.
 
-The `regtools` R package is an open-source toolkit designed to aid
+The `regkit` R package is an open-source toolkit designed to aid
 researchers in performing efficient and well-documented manipulation,
 analysis and visualization of individual-level data from Norwegian
 health and population registers. With it, we aim to facilitate
@@ -26,7 +26,7 @@ functions to validate, filter, and link health (diagnostic) and
 administrative (sociodemographic) data. For transparency, each function
 creates a log that documents the function’s internal data processing,
 warnings/errors, and corresponding outputs. Finally, considering the
-extensive use of registers in epidemiological research, `regtools`
+extensive use of registers in epidemiological research, `regkit`
 includes functions intended to help users compute common descriptive
 epidemiology statistics, such as prevalence and incidence rates, and
 visualize the underlying data.
@@ -93,7 +93,7 @@ classification standards and survey weighting and estimation
 In summary, these existing projects have showcased the potential of
 using open-source R packages to assist researchers working with
 Norwegian survey and register data. The justification for building
-`regtools` as a new package, rather than contributing to existing
+`regkit` as a new package, rather than contributing to existing
 packages, is that currently available software focuses on relatively
 narrow, well-defined use-cases (e.g. tabular suppression, disease
 surveillance) as opposed to broad operations with large, linked
@@ -106,7 +106,7 @@ creation of realistic synthetic data.
 
 # Software design
 
-The package `regtools` was built following the principles of modularity
+The package `regkit` was built following the principles of modularity
 and flexibility, as such the functions included in the package operate
 independently from one another, which increases their possible
 application in various research projects. Given the potential of
@@ -115,13 +115,13 @@ important to note that, while the package workflow is originally
 designed for Norwegian data sources, its flexibility may allow for use
 with other national registries.
 
-Considering that the target user base of `regtools` (social scientists,
+Considering that the target user base of `regkit` (social scientists,
 epidemiologists) might have limited programming experience, we aimed to
 provide a user-friendly and educational framework and functions. For
 instance, one of the first challenges researchers working with
 population-based registers encounter is that of efficiently manipulating
 very large datasets into smaller and tidier datasets with which they can
-work analytically. The `regtools` package includes reading and filtering
+work analytically. The `regkit` package includes reading and filtering
 functions that support files in parquet format \[@ApacheParquet_2025\],
 which seamlessly enables users to efficiently work with
 larger-than-memory files in R without requiring deeper knowledge on the
@@ -132,13 +132,13 @@ also includes functions that are particularly useful for descriptive
 epidemiology analyses, such as the computation of prevalence and
 incidence rates, along with a function for visualizing the results.
 There are some specific challenges related to Norwegian registry data
-that are addressed in the helper functions of `regtools`, such as
+that are addressed in the helper functions of `regkit`, such as
 harmonizing municipality codes and retrieving population counts from
 SSB’s open data.
 
 In addition to helping solve practical challenges associated with
 processing, manipulation, and analysis of Norwegian register data,
-`regtools` provides “hands-on” guidance on how to efficiently work with
+`regkit` provides “hands-on” guidance on how to efficiently work with
 individual-level registry data for epidemiological research. The
 functions in the package are intended to serve as a loose framework that
 can be adapted by researchers working with similar data and research
@@ -151,12 +151,12 @@ structure analytic projects prior to obtaining data access.
 
 # Research impact statement
 
-The most prominent use of the `regtools` package to date has been in
+The most prominent use of the `regkit` package to date has been in
 providing analyses on time trends in autism diagnoses in Norway over
 recent years, published as part of a national public health report
 \[@MartinezSanchez_2025a\]. The report received approximately 500,000
 unique visits throughout 2025, and the analytic component based on work
-carried out using `regtools` was the most visited section. Core features
+carried out using `regkit` was the most visited section. Core features
 of this report, which included regional breakdowns and visualization of
 autism incidence spanning 12 years and prevalence analyses with
 stratification by demographic characteristics retrieved from Statistics
@@ -164,7 +164,7 @@ Norway, showcase the key advantages of the software. The package has
 additionally been used for analyses of time trends in other conditions
 (e.g., anxiety and depression), with publication of results forthcoming.
 Moreover, community-readiness has been demonstrated by the acceptance of
-talks and posters presenting `regtools` at conferences in the fields of
+talks and posters presenting `regkit` at conferences in the fields of
 epidemiology, autism research, and reproducibility in scientific
 publishing \[e.g. @MartinezSanchez_2025b\].
 

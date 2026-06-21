@@ -67,14 +67,14 @@ A data frame with the validated minimum requirements for diagnostic data
 log_file <- tempfile()
 cat("Example log file", file = log_file)
 
-diag_csv <- system.file("extdata", "diag_data.csv", package = "regtools")
+diag_csv <- system.file("extdata", "diag_data.csv", package = "regkit")
 
 diag_data_validated <- read_diag_data(diag_csv,
   id_col = "id",
   date_col = "diag_year",
   log_path = log_file)
-#> Reading /home/runner/.cache/R/renv/library/regtools-66178653/linux-ubuntu-noble/R-4.5/x86_64-pc-linux-gnu/regtools/extdata/diag_data.csv file...
-#> ✔ Successfully read file: /home/runner/.cache/R/renv/library/regtools-66178653/linux-ubuntu-noble/R-4.5/x86_64-pc-linux-gnu/regtools/extdata/diag_data.csv
+#> Reading /home/runner/.cache/R/renv/library/regkit-7ae0198c/linux-ubuntu-noble/R-4.6/x86_64-pc-linux-gnu/regkit/extdata/diag_data.csv file...
+#> ✔ Successfully read file: /home/runner/.cache/R/renv/library/regkit-7ae0198c/linux-ubuntu-noble/R-4.6/x86_64-pc-linux-gnu/regkit/extdata/diag_data.csv
 #> 
 #> Checking column requirements:
 #> 

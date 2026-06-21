@@ -1,9 +1,9 @@
 # Other useful functions
 
-This vignette describes some additional function in `regtools` that can
-be useful when working with registry data in Norway. It is important to
+This vignette describes some additional function in `regkit` that can be
+useful when working with registry data in Norway. It is important to
 note that the
-[`get_population_ssb()`](https://amslala.github.io/regtools/reference/get_population_ssb.md)
+[`get_population_ssb()`](https://amslala.github.io/regkit/reference/get_population_ssb.md)
 function requires an internet connection and therefore only works
 outside of TSD (Services for sensitive data).
 
@@ -46,13 +46,14 @@ disease has significantly changed between 2024 and 2017 by place of
 residence. The first step would be to ensure that all the codes and
 classifications in your data have stayed consistent and are comparable
 between 2017 and 2024. The function
-[`harmonize_municipality_codes()`](https://amslala.github.io/regtools/reference/harmonize_municipality_codes.md)
+[`harmonize_municipality_codes()`](https://amslala.github.io/regkit/reference/harmonize_municipality_codes.md)
 aids researchers to harmonize municipality codes (between 1994-2024):
 
 ``` r
 
+
 # Silenced CLI output for this example
-simulated_list <- regtools::synthetic_data(
+simulated_list <- regkit::synthetic_data(
   population_size = 100,
   prefix_ids = "P000",
   length_ids = 6,
@@ -79,25 +80,27 @@ municipality codes in 2017.
 
 ``` r
 
+
 head(residence_df)
 #> # A tibble: 6 × 3
 #>   id         year_varying varying_code
 #>   <chr>             <dbl> <chr>       
-#> 1 P000025558         2017 5.1         
-#> 2 P000037543         2017 5           
-#> 3 P000043041         2017 3           
-#> 4 P000053240         2017 5.1         
-#> 5 P000090076         2017 5.2         
-#> 6 P000117065         2017 4
+#> 1 P000025558         2017 1           
+#> 2 P000037543         2017 6           
+#> 3 P000043041         2017 5           
+#> 4 P000053240         2017 4           
+#> 5 P000090076         2017 7           
+#> 6 P000117065         2017 6
 ```
 
 Using
-[`harmonize_municipality_codes()`](https://amslala.github.io/regtools/reference/harmonize_municipality_codes.md)
+[`harmonize_municipality_codes()`](https://amslala.github.io/regkit/reference/harmonize_municipality_codes.md)
 you can easily get the harmonized codes (standard 2024), harmonized name
 and corresponding county in 2024.
 
 ``` r
-residence_df_harmonized <- regtools::harmonize_municipality_codes(
+
+residence_df_harmonized <- regkit::harmonize_municipality_codes(
   data = residence_df,
   municipality_col = "varying_code", 
   fylke = TRUE)
@@ -110,18 +113,18 @@ head(residence_df_harmonized)
 #> # A tibble: 6 × 7
 #>   id        year_varying varying_code harmonized_code harmonized_name fylke_code
 #>   <chr>            <dbl> <chr>        <chr>           <chr>           <chr>     
-#> 1 P0000255…         2017 5.1          NA              NA              NA        
-#> 2 P0000375…         2017 5            NA              NA              NA        
-#> 3 P0000430…         2017 3            NA              NA              NA        
-#> 4 P0000532…         2017 5.1          NA              NA              NA        
-#> 5 P0000900…         2017 5.2          NA              NA              NA        
-#> 6 P0001170…         2017 4            NA              NA              NA        
+#> 1 P0000255…         2017 1            NA              NA              NA        
+#> 2 P0000375…         2017 6            NA              NA              NA        
+#> 3 P0000430…         2017 5            NA              NA              NA        
+#> 4 P0000532…         2017 4            NA              NA              NA        
+#> 5 P0000900…         2017 7            NA              NA              NA        
+#> 6 P0001170…         2017 6            NA              NA              NA        
 #> # ℹ 1 more variable: fylke_name <chr>
 ```
 
 ## Get population SSB
 
-[`get_population_ssb()`](https://amslala.github.io/regtools/reference/get_population_ssb.md)
+[`get_population_ssb()`](https://amslala.github.io/regkit/reference/get_population_ssb.md)
 is a useful wrapper of the function ApiData() from the package
 PxWebApiData. The main goal of this function its to facilitate
 retrieving population information from Statistics Norway, and performing
@@ -134,6 +137,7 @@ county in Norway using the harmonized codes we have previously mentioned
 for individuals aged 10-15:
 
 ``` r
+
 population_fylke<- get_population_ssb(
   regions = "fylker", 
   years = c(2020, 2021), 

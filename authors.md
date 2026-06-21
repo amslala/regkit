@@ -15,17 +15,17 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/amslala/regtools/blob/master/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/amslala/regkit/blob/master/DESCRIPTION)
 
 Martinez Sanchez A, Hannigan L, Ask H, Pettersen J, Havdahl A (2026).
-*regtools: Facilitating manipulation, analysis and visualization of data
+*regkit: Facilitating manipulation, analysis and visualization of data
 from Norwegian health and population registers*. R package version
-0.2.0, <https://github.com/amslala/regtools>.
+0.2.0, <https://github.com/amslala/regkit>.
 
     @Manual{,
-      title = {regtools: Facilitating manipulation, analysis and visualization of data from Norwegian health and population registers},
+      title = {regkit: Facilitating manipulation, analysis and visualization of data from Norwegian health and population registers},
       author = {Alejandra {Martinez Sanchez} and Laurie Hannigan and Helga Ask and Johanne Pettersen and Alexandra Havdahl},
       year = {2026},
       note = {R package version 0.2.0},
-      url = {https://github.com/amslala/regtools},
+      url = {https://github.com/amslala/regkit},
     }

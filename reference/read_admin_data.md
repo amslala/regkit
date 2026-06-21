@@ -60,15 +60,15 @@ A data frame with the validated minimum requirements for administrative
 
 ``` r
 # Read and validate CSV file for varying individual level administrative (sociodemographic) data
-admin_csv <- system.file("extdata", "invar_data.csv", package = "regtools")
+admin_csv <- system.file("extdata", "invar_data.csv", package = "regkit")
 log_file <- tempfile()
 cat("Example log file", file = log_file)
 
 admin_data_validated <- read_admin_data(admin_csv, data_type = "t_invariant",
 id_col = "id", log_path = log_file)
 #> 
-#> Reading /home/runner/.cache/R/renv/library/regtools-66178653/linux-ubuntu-noble/R-4.5/x86_64-pc-linux-gnu/regtools/extdata/invar_data.csv file...
-#> ✔ Successfully read file: /home/runner/.cache/R/renv/library/regtools-66178653/linux-ubuntu-noble/R-4.5/x86_64-pc-linux-gnu/regtools/extdata/invar_data.csv
+#> Reading /home/runner/.cache/R/renv/library/regkit-7ae0198c/linux-ubuntu-noble/R-4.6/x86_64-pc-linux-gnu/regkit/extdata/invar_data.csv file...
+#> ✔ Successfully read file: /home/runner/.cache/R/renv/library/regkit-7ae0198c/linux-ubuntu-noble/R-4.6/x86_64-pc-linux-gnu/regkit/extdata/invar_data.csv
 #> Checking column requirements:
 #> ✔ ID column
 #> Data type: time invariant. Checking requirements...

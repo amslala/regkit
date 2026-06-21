@@ -2,7 +2,7 @@
 
 The `calculate_prevalence_series()` function calculates prevalence rates
 series based on the given diagnostic and demographic information. Use
-[`calculate_prevalence()`](https://amslala.github.io/regtools/reference/calculate_prevalence.md)
+[`calculate_prevalence()`](https://amslala.github.io/regkit/reference/calculate_prevalence.md)
 function for only one time period or time point. Prevalence represents
 the number of cases of a given diagnosis that exist in a population of
 interest at a specified point or period in time.
@@ -118,8 +118,12 @@ Prevalence series for specified time points/periods
 ## Examples
 
 ``` r
+# Set up a temporary log file
 log_file <- tempfile()
 cat("Example log file", file = log_file)
+
+# Set seed for reproducibility
+set.seed(123)
 
 pop_df <- tibble::tibble(year = c(2012:2020), population = floor(runif(9, min=3000, max=4000)))
 linked_df <- linked_df |> dplyr::rename("year"= "y_diagnosis_first")

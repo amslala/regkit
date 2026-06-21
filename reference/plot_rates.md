@@ -130,8 +130,12 @@ A ggplot object
 ## Examples
 
 ``` r
+# Set up a temporary log file
 log_file <- tempfile()
 cat("Example log file", file = log_file)
+
+# Set seed for reproducibility
+set.seed(123)
 
 pop_df <- tidyr::expand_grid(year = 2012:2020,
   sex = as.factor(c(0, 1)),
@@ -140,7 +144,7 @@ pop_df <- tidyr::expand_grid(year = 2012:2020,
 
 linked_df <- linked_df |> dplyr::rename("year"= "y_diagnosis_first")
 
-prev_series <- regtools::calculate_prevalence_series(linked_df,
+prev_series <- regkit::calculate_prevalence_series(linked_df,
   time_points = c(2012:2020),
   id_col = "id",
   date_col = "year",

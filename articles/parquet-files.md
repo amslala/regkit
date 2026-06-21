@@ -14,15 +14,15 @@ in the data-analysis world, they are not as commonly used in research.
 For instance, it is still common for Norwegian register microdata
 (e.g. NPR) to be delivered as chunked CSVs.
 
-To enable users to work with larger-than-memory data within `regtools`,
+To enable users to work with larger-than-memory data within `regkit`,
 the functions
-[`read_diag_data()`](https://amslala.github.io/regtools/reference/read_diag_data.md)
+[`read_diag_data()`](https://amslala.github.io/regkit/reference/read_diag_data.md)
 `read_demo_data()`
-[`filter_diag_data()`](https://amslala.github.io/regtools/reference/filter_diag_data.md)
+[`filter_diag_data()`](https://amslala.github.io/regkit/reference/filter_diag_data.md)
 `filter_demo_data()` support parquet files. This is particularly helpful
 to speed-up the filtering steps in very large data sets. In the next
 example, it is shown how to write/read parquet datasets and use them as
-part of the `regtools` analytical pipeline.
+part of the `regkit` analytical pipeline.
 
 ### Writing parquet files
 
@@ -30,6 +30,7 @@ First, we generate a simulated diagnostic dataset with ~8.3 million
 rows:
 
 ``` r
+
 
 simulated_list <- synthetic_data(
   population_size = 2100000,
@@ -77,6 +78,7 @@ files. In the case of parquet files, we will use the function
 
 ``` r
 
+
 # Save as csv 
 td <- withr::local_tempdir()
 tp_csv <- file.path(td, "new_df.csv")
@@ -103,6 +105,7 @@ by grouping our data by the variable `diag_year`:
 
 ``` r
 
+
 tp_parquet_part <- file.path(td, "new_df_partition.parquet")
 
 new_df |> 
@@ -113,10 +116,11 @@ new_df |>
 ### Reading parquet files
 
 To read a parquet dataset, it is possible to use the
-[`read_diag_data()`](https://amslala.github.io/regtools/reference/read_diag_data.md)
+[`read_diag_data()`](https://amslala.github.io/regkit/reference/read_diag_data.md)
 as you would with a .csv or .sav files:
 
 ``` r
+
 rm(new_df)
 l_path <- withr::local_tempfile(fileext = ".log", lines = "Parquet log")
 
@@ -127,8 +131,8 @@ diag_parquet <- read_diag_data(
   code_col = "code",
   log_path = l_path)
 #> ℹ You have provided a parquet file or database. Due to the characteristics of these data objects, the console output and logging will provide minimal information.
-#> Reading /tmp/RtmpaFrJQa/file8e19341fed87/new_df.parquet file...
-#> ✔ Successfully read file: /tmp/RtmpaFrJQa/file8e19341fed87/new_df.parquet
+#> Reading /tmp/RtmpHdUYfm/file7dd658445d04/new_df.parquet file...
+#> ✔ Successfully read file: /tmp/RtmpHdUYfm/file7dd658445d04/new_df.parquet
 #> Checking column requirements:
 #> ✔ ID column
 #> ✔ Code column
@@ -144,19 +148,20 @@ diag_parquet <- read_diag_data(
 #> 
 #> FileSystemDataset with 1 Parquet file
 #> 8,391,376 rows x 3 columns
-#> $ id       <string> "P023206282", "P023206282", "P023206311", "P023206311", "P02…
-#> $ code     <string> "F381", "F421", "F176", "F654", "F6698", "F1073", "F0124", "…
-#> $ diag_year <int32> 2015, 2014, 2015, 2012, 2013, 2013, 2014, 2014, 2013, 2015, …
+#> $ id       <string> "P000000669", "P000000669", "P000000669", "P000000775", "P00…
+#> $ code     <string> "F841", "F0111", "F141", "F843", "F192", "F144", "F451", "F5…
+#> $ diag_year <int32> 2012, 2015, 2013, 2014, 2014, 2014, 2014, 2012, 2013, 2013, …
 ```
 
 ### Filtering
 
 As an output from
-[`read_diag_data()`](https://amslala.github.io/regtools/reference/read_diag_data.md)
+[`read_diag_data()`](https://amslala.github.io/regkit/reference/read_diag_data.md)
 will be ArrowObject (Dataset) that you can then pass to the function
 `filter_diag()` to efficiently filter any relevant observations:
 
 ``` r
+
 
 filtered_parquet <- filter_diag_data(
   diag_parquet, 
@@ -187,12 +192,12 @@ filtered_parquet <- filter_diag_data(
 #> ℹ Remaining number of columns: 3
 #> ℹ Unique IDs in dataset: 38459
 #> ℹ Unique codes in dataset: 21
-#> ℹ Codes in dataset: "F4531", "F4532", "F4530", "F459", "F842", "F843", "F454", "F849", "F844", "F841", "F452", "F845", "F450", "F458", "F4538", "F453", "F4533", "F840", …, "F4534", and "F451"
+#> ℹ Codes in dataset: "F452", "F844", "F4533", "F454", "F849", "F4530", "F848", "F4532", "F450", "F843", "F842", "F840", "F458", "F845", "F841", "F451", "F4531", "F4534", …, "F4538", and "F459"
 #> 
 #> Rows: 38,714
 #> Columns: 3
-#> $ id        <chr> "P023214344", "P023220089", "P023220706", "P023222447", "P02…
-#> $ code      <chr> "F843", "F458", "F4530", "F848", "F4533", "F844", "F844", "F…
+#> $ id        <chr> "P000000669", "P000023038", "P000097523", "P000108943", "P00…
+#> $ code      <chr> "F841", "F4531", "F458", "F454", "F4538", "F4531", "F842", "…
 #> $ diag_year <int> 2012, 2012, 2012, 2012, 2012, 2012, 2012, 2012, 2012, 2012, …
 ```
 
@@ -203,6 +208,7 @@ average double as fast than the regular filter done on a tibble or data
 frame object:
 
 ``` r
+
 
 diag_tibble <- read_diag_data(
   file_path = tp_csv, 
@@ -242,8 +248,8 @@ mb_filter <- microbenchmark::microbenchmark(
 
     #> Unit: milliseconds
     #>     expr       min        lq      mean    median        uq       max neval
-    #>  parquet  560.4112  561.8523  582.7542  563.2424  566.8996  689.0457   100
-    #>   tibble 1325.1502 1363.2222 1376.0190 1366.5859 1371.2534 1483.2337   100
+    #>  parquet  579.3034  581.9105  597.5571  582.6917  585.0665  685.4128   100
+    #>   tibble 1310.8380 1318.5727 1342.7491 1325.5770 1342.2588 1442.1210   100
     #> Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
     #> ℹ Please use tidy evaluation idioms with `aes()`.
     #> ℹ See also `vignette("ggplot2-in-packages")` for more information.
