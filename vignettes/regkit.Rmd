@@ -325,6 +325,9 @@ Besides computing prevalence rates based on the provided linked dataset, `calcul
 Often, it is relevant to compute counts or rates stratified by certain groupings. It is also possible to specify this, as long as the population dataset includes the necessary information (with a warning if it does not have a one-to-one match):
 
 ```{r prevalence-strat, echo = TRUE}
+# Set seed for reproducibility
+set.seed(123)
+
 pop_df <- tidyr::expand_grid(year = "2012-2020",
                                sex = as.factor(c(0, 1)),
                                innvandringsgrunn = c("ARB", "UKJ", "NRD")) |>
@@ -352,6 +355,8 @@ prevalence_df_strat
 Often in descriptive epidemiology, researchers are interested in the evolution of prevalence of a certain disease through time. For that purpose, the `calculate_prevalence_series()` can compute prevalence rates for a time series. The `calculate_incidence_series()` follows the same logic.
 
 ```{r prevalence-series, echo = T, results = 'hide', message=FALSE}
+# Set seed for reproducibility
+set.seed(123)
 
 # Silenced CLI output for example 
 

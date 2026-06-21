@@ -27,8 +27,12 @@
 #'
 #' @returns A ggplot object
 #' @examples
+#' # Set up a temporary log file
 #' log_file <- tempfile()
 #' cat("Example log file", file = log_file)
+#'
+#' # Set seed for reproducibility
+#' set.seed(123)
 #'
 #' pop_df <- tidyr::expand_grid(year = 2012:2020,
 #'   sex = as.factor(c(0, 1)),
