@@ -9,8 +9,8 @@
 A data frame with 270,216 rows and 3 columns:
 \describe{
 \item{id}{Unique personal identifier}
-\item{code_varying}{Code place of residence (time varying)}
-\item{year_varying}{Year of residence}
+\item{code}{Code place of residence (time varying)}
+\item{year}{Year of residence}
 }
 }
 \source{
