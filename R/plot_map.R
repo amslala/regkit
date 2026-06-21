@@ -54,7 +54,7 @@ plot_map <- function(data, level = c("kommune", "fylke"), rate_col, region_numbe
   suppressMessages({
     geo <- switch(map_type,
                   kommune = kommuner_sf |>
-                    regtools::harmonize_municipality_codes(municipality_col = "kommunenummer") |>
+                    regkit::harmonize_municipality_codes(municipality_col = "kommunenummer") |>
                     dplyr::left_join(data, by = c("harmonized_code" = region_number_col)),
                   fylke = fylker_sf |>
                     dplyr::left_join(data, by = c("fylkesnummer" = region_number_col)),

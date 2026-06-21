@@ -15,12 +15,12 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup, include = FALSE}
-library(regtools)
+library(regkit)
 l_file <- tempfile()
 cat("Vignette log file", file = l_file)
 ```
 
-This vignette describes some additional function in `regtools` that can be useful when working with registry data in Norway. It is important to note that the `get_population_ssb()` function requires an internet connection and therefore only works outside of TSD (Services for sensitive data). 
+This vignette describes some additional function in `regkit` that can be useful when working with registry data in Norway. It is important to note that the `get_population_ssb()` function requires an internet connection and therefore only works outside of TSD (Services for sensitive data). 
 
 ## Harmonize municipality codes 
 
@@ -36,7 +36,7 @@ For example, imagine you have individual-level data for your population of inter
 ```{r simulate-municipalities, echo = T, results = 'hide', message=FALSE}
 
 # Silenced CLI output for this example
-simulated_list <- regtools::synthetic_data(
+simulated_list <- regkit::synthetic_data(
   population_size = 100,
   prefix_ids = "P000",
   length_ids = 6,
@@ -73,7 +73,7 @@ Using `harmonize_municipality_codes()` you can easily get the harmonized codes (
 
 
 ```{r}
-residence_df_harmonized <- regtools::harmonize_municipality_codes(
+residence_df_harmonized <- regkit::harmonize_municipality_codes(
   data = residence_df,
   municipality_col = "varying_code", 
   fylke = TRUE)

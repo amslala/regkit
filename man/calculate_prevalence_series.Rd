@@ -71,9 +71,12 @@ The \code{calculate_prevalence_series()} function calculates prevalence rates se
 Prevalence represents the number of cases of a given diagnosis that exist in a population of interest at a specified point or period in time.
 }
 \examples{
-
+# Set up a temporary log file
 log_file <- tempfile()
 cat("Example log file", file = log_file)
+
+# Set seed for reproducibility
+set.seed(123)
 
 pop_df <- tibble::tibble(year = c(2012:2020), population = floor(runif(9, min=3000, max=4000)))
 linked_df <- linked_df |> dplyr::rename("year"= "y_diagnosis_first")

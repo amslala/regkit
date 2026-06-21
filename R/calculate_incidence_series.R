@@ -30,9 +30,12 @@
 #'
 #' @return incidence series for specified time points/periods
 #' @examples
-#'
+#' # Set up a temporary log file
 #' log_file <- tempfile()
 #' cat("Example log file", file = log_file)
+#'
+#' # Set seed for reproducibility
+#' set.seed(123)
 #'
 #' pop_df <- tibble::tibble(year = c(2012:2020), population = floor(runif(9, min=3000, max=4000)))
 #' linked_df <- linked_df |> dplyr::rename("year"= "y_diagnosis_first")
@@ -99,7 +102,7 @@ calculate_incidence_series <- function(linked_data,
 
   ## Cycle through specified time points
   incidence_series_ls <- purrr::map(processed_time_points, function(time_p) {
-    regtools::calculate_incidence(
+    regkit::calculate_incidence(
       linked_data = linked_data,
       type = type,
       id_col = id_col,

@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(regtools)
+library(regkit)
 
-test_check("regtools")
+test_check("regkit")

@@ -1,0 +1,118 @@
+---
+title: "Reference for package dependencies"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Reference for package dependencies}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(regkit)
+```
+
+The package `regkit` has the following Imports and Suggests:
+
+
+```{r dep, echo = F}
+
+desc::desc_get_deps(".")
+
+```
+
+Each of those packages has a number of dependencies (recursive dependencies): 
+
+
+```{r recursive, echo = F}
+
+direct <- desc::desc_get_deps(".")$package
+direct <- setdiff(direct, "R")
+
+recursive_deps <- tools::package_dependencies(
+  direct,
+  which = c("Depends", "Imports"),    
+  recursive = TRUE
+)
+
+all_deps <- sort(unique(unlist(recursive_deps)))
+all_deps
+
+```
+
+
+### Dependency tree 
+
+
+You can also visualize how all the dependencies fit together: 
+
+```{r dep-tree, echo = F}
+
+ pak::pkg_deps_tree(".")
+
+```
+
+
+## Installing dependencies in secure environments 
+
+The package `regkit` is meant to be used inside a secure computing environment with limited internet access, thus some dependencies might have to be installed manually. One solution is to create a miniCRAN repository containing all dependencies necessary to successfully install `regkit`. 
+
+As a reference, here is the workflow to build a miniCRAN repository assuming the secure environment you are installing it runs Windows: 
+
+1. Install the `miniCRAN` package and `regkit` outside the secure environment 
+2. Save the dependencies using the following code: 
+
+
+
+```{r get-deps, eval = F}
+
+library(miniCRAN)
+pkg_list <- pkgDep("regkit", repos = "https://cloud.r-project.org", type = "source", suggests = TRUE)
+
+makeRepo(pkg_list, path = "/path/to/myrepo", repos = "https://cloud.r-project.org", type = "source")
+saveRDS(pkg_list, "pkg_list.rds")
+
+```
+
+3. Import the miniCRAN folder and dependency list `pkg_list.rds` to the secure environment 
+4. Read `pkg_list.rds` and install dependencies from miniCRAN inside secure environment: 
+
+```{r install-deps, eval = F}
+
+pkg_list <- readRDS("pkg_list.rds")
+
+install.packages(
+  pkg_list,  
+  repos = paste0("file:///", "/path/to/myrepo"),
+  type = "source"
+)
+
+```
+
+4. Install `regkit` from the tarball you can download from the [Releases
+section](https://github.com/amslala/regkit/releases) in GitHub: 
+
+
+```{r install-pkg, eval = F}
+
+pkg_list <- readRDS("pkg_list.rds")
+
+install.packages(
+  "/path/to/regkit_x.y.z.tar.gz",  
+  repos = NULL,
+  type = "source"
+)
+
+```
+
+
+
+
+
+

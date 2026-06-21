@@ -4,7 +4,7 @@
 
 test_that("reads a supported format into the same reference .rds and log file",{
             l_path <- withr::local_tempfile(fileext = ".log", lines = "Test log")
-            test_csv <- system.file("extdata", "invar_data.csv", package = "regtools")
+            test_csv <- system.file("extdata", "invar_data.csv", package = "regkit")
 
             # Test CSV reading and validation
             output_csv <- read_admin_data(
@@ -27,7 +27,7 @@ test_that("reads a supported format into the same reference .rds and log file",{
 test_that("creates dir and file log", {
   td <- withr::local_tempdir()
   withr::local_dir(td)
-  test_csv <- system.file("extdata", "invar_data.csv", package = "regtools")
+  test_csv <- system.file("extdata", "invar_data.csv", package = "regkit")
 
   # Test CSV reading and validation
   output_csv <- read_admin_data(
@@ -134,7 +134,7 @@ test_that("Error when unsupported file extensions and nonexistent files", {
 test_that("Error when not valid data type given", {
   l_path <- withr::local_tempfile(fileext = ".log", lines = "Test log")
   l_path <- withr::local_tempfile(fileext = ".log", lines = "Test log") # Temporal log path, should delete itself at the end
-  test_csv <- system.file("extdata", "invar_data.csv", package = "regtools") #Read example csv
+  test_csv <- system.file("extdata", "invar_data.csv", package = "regkit") #Read example csv
 
   expect_error(
     read_admin_data(
@@ -187,7 +187,7 @@ test_that("Error duplicated ids when invariant type", {
 
 # test_that("CLI stable for sample CSV", {
 #   log_path <- withr::local_tempfile(fileext = ".log", lines = "Test log")
-#   test_csv <- system.file("extdata", "invar_data.csv", package = "regtools")
+#   test_csv <- system.file("extdata", "invar_data.csv", package = "regkit")
 #   expect_snapshot({
 #     invisible(
 #       read_admin_data(

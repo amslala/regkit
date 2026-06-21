@@ -38,7 +38,7 @@ The input data sets must be CSV, RDS, RDA or .SAV files.
 }
 \examples{
 # Read and validate CSV file for varying individual level administrative (sociodemographic) data
-admin_csv <- system.file("extdata", "invar_data.csv", package = "regtools")
+admin_csv <- system.file("extdata", "invar_data.csv", package = "regkit")
 log_file <- tempfile()
 cat("Example log file", file = log_file)
 

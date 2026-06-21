@@ -10,14 +10,14 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup, include = FALSE}
-library(regtools)
+library(regkit)
 ```
 
 Apache Parquet is an open-source data storage format that efficiently handles large complex data. In contrast to CSV files, `.parquet` files are column-oriented, making them storage efficient. Additionally, the columnar storage of parquet files avoids having to read the full datasets in memory.  This last feature of parquet files makes them ideal to work in R with larger than memory datasets. 
 
 Efficiently storing and processing large individual-level data is one important challenge that researchers commonly face. Although parquet files (or other column-oriented tabular data) are becoming more popular in the data-analysis world, they are not as commonly used in research. For instance, it is still common for Norwegian register microdata (e.g. NPR) to be delivered as chunked CSVs. 
 
-To enable users to work with larger-than-memory data within `regtools`, the functions `read_diag_data()` `read_demo_data()` `filter_diag_data()` `filter_demo_data()` support parquet files. This is particularly helpful to speed-up the filtering steps in very large data sets. In the next example, it is shown how to write/read parquet datasets and use them as part of the `regtools` analytical pipeline. 
+To enable users to work with larger-than-memory data within `regkit`, the functions `read_diag_data()` `read_demo_data()` `filter_diag_data()` `filter_demo_data()` support parquet files. This is particularly helpful to speed-up the filtering steps in very large data sets. In the next example, it is shown how to write/read parquet datasets and use them as part of the `regkit` analytical pipeline. 
 
 ### Writing parquet files 
 

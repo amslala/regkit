@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup, include = FALSE}
-library(regtools)
+library(regkit)
 l_file <- tempfile()
 cat("Vignette log file", file = l_file)
 ```
@@ -28,7 +28,7 @@ In most research fields, individual-level data is regulated by strict confidenti
 
 One possible solution to the challenges associated with using confidential data is to create synthetic or simulated data that have similar structure and statistical characteristics as the original data. There are a number of excellent R packages dedicated to creating synthetic datasets from existing data, such as `synthpop`, `faux` and `simpop`. The resulting synthetic data are high-fidelity and aim to maintain the internal statistical characteristics and relationships between variables. However, many features of these packages rely on having full access to the original individual-based data. Additionally, it is crucial to remember that synthetic data based on existing datasets is not inherently private (source , Alan Turing Institute) and can be vulnerable to data leaks and attacks.
 
-In line with the overarching objectives of `regtools`, the `synthetic_data()` function aims to help researchers navigate some of the challenges associated with working with confidential individual-level data in Norway by creating synthetic datasets without the need of pre-existing data. As this function does not require the use of pre-existing data, it also does not attempt to capture the internal statistical characteristics and relationships between variables. However, `synthetic_data()` is still particularly useful for researchers working with Norwegian health and sociodemographic datasets, as it produces synthetic datasets with a structure and semantics resembling those found in actual individual-level data (e.g NPR, KPR, SSB).
+In line with the overarching objectives of `regkit`, the `synthetic_data()` function aims to help researchers navigate some of the challenges associated with working with confidential individual-level data in Norway by creating synthetic datasets without the need of pre-existing data. As this function does not require the use of pre-existing data, it also does not attempt to capture the internal statistical characteristics and relationships between variables. However, `synthetic_data()` is still particularly useful for researchers working with Norwegian health and sociodemographic datasets, as it produces synthetic datasets with a structure and semantics resembling those found in actual individual-level data (e.g NPR, KPR, SSB).
 
 Consider the features the `synthetic_data()` function, we have identified three main use cases:
 
@@ -64,7 +64,7 @@ In most cases you will want to specify your own column names and codes for the i
 
 ```{r synthetic-data}
 
-dummy_data <- regtools::synthetic_data(
+dummy_data <- regkit::synthetic_data(
   population_size = 25000,
   prefix_ids = "P000",
   length_ids = 6,
@@ -96,7 +96,7 @@ The second list ("metadata") includes useful metadata like the exact call used t
 str(dummy_data$metadata)
 ```
 
-Let's say you are researcher looking into the co-occurrence of two particular family codes (ICD-10 F8 and F7) in your population of interest. However, there has been a delay in data access. However, using the diagnostic dataset generated in the previous step and some of the functions from `regtools`, it is possible to prepare some analytic scripts before you have access to the actual data in your project.
+Let's say you are researcher looking into the co-occurrence of two particular family codes (ICD-10 F8 and F7) in your population of interest. However, there has been a delay in data access. However, using the diagnostic dataset generated in the previous step and some of the functions from `regkit`, it is possible to prepare some analytic scripts before you have access to the actual data in your project.
 
 ```{r coocurrent-example, echo = T, results = 'hide', message=FALSE}
 # Output in console has been silenced for this example 
@@ -104,13 +104,13 @@ Let's say you are researcher looking into the co-occurrence of two particular fa
 dates <- as.character(c(2012:2018))
 
 diag_df_first <- dummy_diag_df |> 
-  regtools::curate_diag_data(
+  regkit::curate_diag_data(
     code_col = "code", 
     date_col = "diag_year", 
     log_path = l_file)
 
 diag_f8_year <- dates |> 
-  purrr::map(\(x) regtools::filter_diag_data(
+  purrr::map(\(x) regkit::filter_diag_data(
     diag_df_first, 
     pattern_codes = "F8", 
     code_col = "code", 
@@ -121,7 +121,7 @@ diag_f8_year <- dates |>
 
 
 diag_f7 <- dummy_diag_df |> 
-  regtools::filter_diag_data(
+  regkit::filter_diag_data(
     pattern_codes = "F7", 
     code_col = "code", 
     log_path = l_file)
@@ -137,7 +137,7 @@ intersect_f8_f7_df <- purrr::map_df(intersect_f8_f7, ~as.data.frame(.x), .id="ye
 ```
 
 ```{r plot-coocurrent, fig.width = 5.5, fig.height = 5.5}
-regtools::plot_rates(
+regkit::plot_rates(
   intersect_f8_f7_df, 
   date_col = "year", 
   grouping_var = "year", 

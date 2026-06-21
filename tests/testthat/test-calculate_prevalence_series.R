@@ -1,4 +1,5 @@
 test_that("writes to log", {
+  set.seed(123)
   l_path <- withr::local_tempfile(fileext = ".log", lines = "Test log")
   pop_df <- tibble::tibble(year = c(2012:2020), population = floor(runif(9, min=3000, max=4000)))
   linked_df <- linked_df |> dplyr::rename("year"= "y_diagnosis_first")
@@ -26,6 +27,7 @@ test_that("writes to log", {
 test_that("creates dir and file log", {
   td <- withr::local_tempdir()
   withr::local_dir(td)
+  set.seed(123)
   pop_df <- tibble::tibble(year = c(2012:2020), population = floor(runif(9, min=3000, max=4000)))
   linked_df <- linked_df |> dplyr::rename("year"= "y_diagnosis_first")
   prevalence_df <- calculate_prevalence_series(linked_df,
@@ -52,6 +54,7 @@ test_that("creates dir and file log", {
 
 test_that("input validation works", {
   l_path <- withr::local_tempfile(fileext = ".log", lines = "Test log")
+  set.seed(123)
   pop_df <- tibble::tibble(year = c(2012:2020), population = floor(runif(9, min=3000, max=4000)))
   linked_df <- linked_df |> dplyr::rename("year"= "y_diagnosis_first")
 
@@ -90,6 +93,7 @@ test_that("input validation works", {
 
 test_that("Correct processing of time points/periods", {
   l_path <- withr::local_tempfile(fileext = ".log", lines = "Test log")
+  set.seed(123)
   pop_df <- tibble::tibble(year = c(2012:2020), population = floor(runif(9, min=3000, max=4000)))
   linked_df <- linked_df |> dplyr::rename("year"= "y_diagnosis_first")
   times <- list(2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020)
@@ -108,7 +112,7 @@ test_that("Correct processing of time points/periods", {
                                                log_path = l_path)
 
   expect_equal(nrow(prevalence_point), length(times))
-
+  set.seed(123)
   # For time periods
   pop_df <- tibble::tibble(year = c("2012-2014", "2015-2017", "2018-2020"), population = floor(runif(3, min=5000, max=7000)))
   times <- list(c(2012,2014), c(2015,2017), c(2018,2020))
