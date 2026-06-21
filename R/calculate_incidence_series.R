@@ -99,7 +99,7 @@ calculate_incidence_series <- function(linked_data,
 
   ## Cycle through specified time points
   incidence_series_ls <- purrr::map(processed_time_points, function(time_p) {
-    regtools::calculate_incidence(
+    regkit::calculate_incidence(
       linked_data = linked_data,
       type = type,
       id_col = id_col,

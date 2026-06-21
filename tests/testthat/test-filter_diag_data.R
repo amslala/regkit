@@ -131,7 +131,7 @@ test_that("Pattern vs exact codes work", {
 
 test_that("Remove NAs correctly in both dataframes and parquet datasets", {
   l_path <- withr::local_tempfile(fileext = ".log", lines = "Test log")
-  test_csv <- system.file("extdata", "diag_data.csv", package = "regtools")
+  test_csv <- system.file("extdata", "diag_data.csv", package = "regkit")
 
   na_diag <- diag_df
   na_diag$diag_year[na_diag$diag_year == 2016] <- NA

@@ -1,8 +1,8 @@
 ---
-title: "Introduction to regtools"
+title: "Introduction to regkit"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introduction to regtools}
+  %\VignetteIndexEntry{Introduction to regkit}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -15,16 +15,16 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup, echo=FALSE}
-library(regtools)
+library(regkit)
 log_file <- tempfile()
 cat("Vignette log file", file = log_file)
 ```
 
-**regtools** aims to facilitate the manipulation, analysis and visualization of data from Norwegian health and population registers and capitalize on their characteristics.
+**regkit** aims to facilitate the manipulation, analysis and visualization of data from Norwegian health and population registers and capitalize on their characteristics.
 
-Researchers with access to microdata from health and/or administrative registers in Norway can use **regtools** to streamline their initial analytical processes. The package includes functions for data pre-processing, linkage, and the computation of relevant statistics and visualizations, such as stratified frequencies, incidence and prevalence rates.
+Researchers with access to microdata from health and/or administrative registers in Norway can use **regkit** to streamline their initial analytical processes. The package includes functions for data pre-processing, linkage, and the computation of relevant statistics and visualizations, such as stratified frequencies, incidence and prevalence rates.
 
-This vignette introduces **regtools**'s main functions and shows examples of how to use them with individual-level data. The package also includes some helper functions that can aid researchers working with registry data in Norway address specific problems, more information in the `vignette("h-functions")` and `vignette("other-useful-fun")`.
+This vignette introduces **regkit**'s main functions and shows examples of how to use them with individual-level data. The package also includes some helper functions that can aid researchers working with registry data in Norway address specific problems, more information in the `vignette("h-functions")` and `vignette("other-useful-fun")`.
 
 ## Example datasets
 
@@ -48,7 +48,7 @@ The dataset `invar_df` is a tibble with simulated individual-level time-invarian
 str(invar_df)
 ```
 
-All the datasets above have been created using the `synthetic_dataset()` function included in this package. The exact code used to create them can be found in the folder `/data-raw` in the package's source code. The `vignette("h_functions")` includes more detailed information about simulating datasets in `regtools`.
+All the datasets above have been created using the `synthetic_dataset()` function included in this package. The exact code used to create them can be found in the folder `/data-raw` in the package's source code. The `vignette("h_functions")` includes more detailed information about simulating datasets in `regkit`.
 
 ## Data reading and validation
 
@@ -78,16 +78,16 @@ div.blue { border: 4px #65699d; border-style: none none none solid; padding: 3px
 
 <br>
 
-The `read_..._data()` functions support common file formats that researchers might realistically encounter in data deliveries, such as CSV, SAV, and *parquet* files. Parquet files are specially useful when working with very large data, as the storage and data processing is more efficient than other types of file formats (e.g. CSV files). As explained in the `vignette("parquet-files")`, using parquet files is recommended for large and larger-than-memory data within **regtools**. The vignette also includes general instructions on how to write/save parquet datasets.
+The `read_..._data()` functions support common file formats that researchers might realistically encounter in data deliveries, such as CSV, SAV, and *parquet* files. Parquet files are specially useful when working with very large data, as the storage and data processing is more efficient than other types of file formats (e.g. CSV files). As explained in the `vignette("parquet-files")`, using parquet files is recommended for large and larger-than-memory data within **regkit**. The vignette also includes general instructions on how to write/save parquet datasets.
 
 ### Read example diagnostic data
 
 To read and validate the minimum requirements of a CSV file containing *diagnostic data*:
 
 ```{r read-diag, echo=TRUE}
-diag_csv <- system.file("extdata", "diag_data.csv", package = "regtools")
+diag_csv <- system.file("extdata", "diag_data.csv", package = "regkit")
 
-diag_data_validated <- regtools::read_diag_data(
+diag_data_validated <- regkit::read_diag_data(
   diag_csv,
   id_col = "id",
   date_col = "diag_year",
@@ -100,7 +100,7 @@ diag_data_validated <- regtools::read_diag_data(
 Similarly, to read and validate the minimum requirements of a CSV file containing *time invariant data*:
 
 ```{r read-demo, echo=TRUE}
-demo_csv <- system.file("extdata", "invar_data.csv", package = "regtools")
+demo_csv <- system.file("extdata", "invar_data.csv", package = "regkit")
 
 demo_data_validated <- read_admin_data(
   demo_csv,
@@ -229,7 +229,7 @@ filtered_invar <- filter_admin_data(
 
 ## Linkage
 
-In order to use information from datasets containing *diagnostic* and *time-varying* or *time invariant* data in analyses (e.g., the calculation of stratified prevalence rates), it is necessary to link them. In the **regtools** workflow, linkage using the individuals' unique personal identifiers present in each dataset comes after filtering, to save on memory and reduce the potential for merging errors.
+In order to use information from datasets containing *diagnostic* and *time-varying* or *time invariant* data in analyses (e.g., the calculation of stratified prevalence rates), it is necessary to link them. In the **regkit** workflow, linkage using the individuals' unique personal identifiers present in each dataset comes after filtering, to save on memory and reduce the potential for merging errors.
 
 <br>
 
@@ -256,7 +256,7 @@ As part of the linking process, the function provides some useful information ab
 
 Until this point, all the functions described are concerned with general data preparation and manipulation that researchers working with this type of individual-level data have to perform. The functions described in the next section are specific to descriptive epidemiology and public health monitoring - though elements of them are generalizable to other contexts.
 
-Two of the most common statistics in descriptive epidemiology are incidence and prevalence rates. Consequently, **regtools** includes the functions `calculate_prevalence()` and `calculate_incidence()` to aid with these analyses. Both functions require as input a filtered linked dataset with relevant observations (output from `link_diag_admin()`), and population counts stored in a different dataset.
+Two of the most common statistics in descriptive epidemiology are incidence and prevalence rates. Consequently, **regkit** includes the functions `calculate_prevalence()` and `calculate_incidence()` to aid with these analyses. Both functions require as input a filtered linked dataset with relevant observations (output from `link_diag_admin()`), and population counts stored in a different dataset.
 
 Both functions internally operate in the same way, it is then crucial to verify that the linked dataset contains only relevant observations for the desired analysis. Briefly, incidence refers to the number of **new cases** of a disease that occur in a specified population during a period of time. While, prevalence describes the total number of **existing cases** in the population at a specific point or period in time. In order to then correctly calculate incidence rates or incidence proportions, the linked dataset should only contain **new cases** in our population of interest. In contrast, to calculate prevalence rates the linked dataset should include all existing (both old and new) cases in our population.
 
@@ -273,7 +273,7 @@ In order to correctly compute the incidence and prevalence, it is necessary to k
 | Incidence proportion or cumulative incidence | Proportion of new cases over a period of time | Disease-free individuals at the start of the period of interest |
 | Prevalence rate | Proportion of existing cases at a point or period of time | Everyone in the population (with or without the disease) |
 
-As the definition and calculation of population will greatly vary depending on each research question and desired analyses, **regtools** currently does not include any specific functions to compute population counts from individual-level data. However, in most cases the study population should be available as metadata to the research project. Otherwise, in the case of having individual-level data with **full coverage** of the population of interest, it is possible to compute population counts based on that.
+As the definition and calculation of population will greatly vary depending on each research question and desired analyses, **regkit** currently does not include any specific functions to compute population counts from individual-level data. However, in most cases the study population should be available as metadata to the research project. Otherwise, in the case of having individual-level data with **full coverage** of the population of interest, it is possible to compute population counts based on that.
 
 For publicly available population counts from SSB, the function `get_population_ssb()` can retrieve population counts by year, age, sex and place of residence (municipality and county level).
 :::
@@ -397,10 +397,10 @@ plot_line + ggplot2::labs(subtitle = "Norway, individuals born between 2010-2018
 
 ## Logging
 
-To facilitate reproducibility and transparency across research projects, the majority of functions in **regtools** create log files that document their internal data processing, warnings/errors and corresponding outputs. Similarly, each function provides clear console feedback after it executes important operations (filter, select, join, etc).
+To facilitate reproducibility and transparency across research projects, the majority of functions in **regkit** create log files that document their internal data processing, warnings/errors and corresponding outputs. Similarly, each function provides clear console feedback after it executes important operations (filter, select, join, etc).
 
 It is possible to either provide the path to an already existing .log file or set the argument `log_path = NULL` (default) to create a new /log directory and .log file for each function. For instance, the `read_diag_data()` with a `NULL` log_path will first check in the working directory for a `/log` directory. In case it does not already exist, the `/log` directory is created in the current working directory and a \<read_diag_data_dd_mm_yyyy.log\> file is initialized.
 
 ## Other useful functions
 
-In addition to the main functions in the **regtools** workflow, the package includes some additional functions that can be helpful in the process of working with Norwegian individual-level registry data. Please refer to the specific vignettes for more information: `vignette("other-useful-fun")`
+In addition to the main functions in the **regkit** workflow, the package includes some additional functions that can be helpful in the process of working with Norwegian individual-level registry data. Please refer to the specific vignettes for more information: `vignette("other-useful-fun")`

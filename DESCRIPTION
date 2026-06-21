@@ -1,14 +1,13 @@
-Package: regtools
+Package: regkit
 Type: Package
 Title: Facilitating manipulation, analysis and visualization of data from Norwegian health and population registers
 Version: 0.2.0
-Description: Aid researchers in performing efficient and well-documented manipulation, analysis and visualization of individual-level data from Norwegian health and population registers. The package includes functions to validate, filter, and link health (diagnostic) and administrative (sociodemographic) data. `regtools` also includes functions intended to help users compute common descriptive epidemiology statistics, such as prevalence and incidence rates, and visualize the underlying data.
+Description: Aid researchers in performing efficient and well-documented manipulation, analysis and visualization of individual-level data from Norwegian health and population registers. The package includes functions to validate, filter, and link health (diagnostic) and administrative (sociodemographic) data. `regkit` also includes functions intended to help users compute common descriptive epidemiology statistics, such as prevalence and incidence rates, and visualize the underlying data.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-URL: https://github.com/amslala/regtools, https://amslala.github.io/regtools/
-BugReports: https://github.com/amslala/regtools/issues
-RoxygenNote: 7.3.3
+URL: https://github.com/amslala/regkit, https://amslala.github.io/regkit/
+BugReports: https://github.com/amslala/regkit/issues
 Roxygen: list(markdown = TRUE)
 Imports: 
     arrow,
@@ -29,7 +28,7 @@ Imports:
     tidyselect,
     withr
 Depends: 
-    R (>= 3.5)
+    R (>= 4.1.0)
 Suggests: 
     haven,
     PxWebApiData,
@@ -51,3 +50,4 @@ Authors@R: c(
     person("Johanne", "Pettersen", role = "aut"),
     person("Alexandra", "Havdahl", role = "aut")
   )
+Config/roxygen2/version: 8.0.0

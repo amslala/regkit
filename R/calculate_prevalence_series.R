@@ -88,7 +88,7 @@ calculate_prevalence_series <- function(linked_data,
 
   ## Cycle through specified time points
   prevalence_series_ls <- purrr::map(processed_time_points, function(time_p) {
-    regtools::calculate_prevalence(
+    regkit::calculate_prevalence(
       linked_data = linked_data,
       id_col = id_col,
       date_col = date_col,

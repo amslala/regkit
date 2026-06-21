@@ -37,7 +37,7 @@
 #'
 #' linked_df <- linked_df |> dplyr::rename("year"= "y_diagnosis_first")
 #'
-#' prev_series <- regtools::calculate_prevalence_series(linked_df,
+#' prev_series <- regkit::calculate_prevalence_series(linked_df,
 #'   time_points = c(2012:2020),
 #'   id_col = "id",
 #'   date_col = "year",
