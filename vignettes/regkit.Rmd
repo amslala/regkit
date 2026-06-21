@@ -16,8 +16,7 @@ knitr::opts_chunk$set(
 
 ```{r setup, echo=FALSE}
 library(regkit)
-log_file <- tempfile()
-cat("Vignette log file", file = log_file)
+
 ```
 
 **regkit** aims to facilitate the manipulation, analysis and visualization of data from Norwegian health and population registers and capitalize on their characteristics.
@@ -49,6 +48,23 @@ str(invar_df)
 ```
 
 All the datasets above have been created using the `synthetic_dataset()` function included in this package. The exact code used to create them can be found in the folder `/data-raw` in the package's source code. The `vignette("h_functions")` includes more detailed information about simulating datasets in `regkit`.
+
+
+## Logging
+
+To facilitate reproducibility and transparency across research projects, the majority of functions in **regkit** create log files that document their internal data processing, warnings/errors and corresponding outputs. Similarly, each function provides clear console feedback after it executes important operations (filter, select, join, etc).
+
+It is possible to either provide the path to an already existing .log file or set the argument `log_path = NULL` (default) to create a new /log directory and .log file for each function. For instance, the `read_diag_data()` with a `NULL` log_path will first check in the working directory for a `/log` directory. In case it does not already exist, the `/log` directory is created in the current working directory and a \<read_diag_data_dd_mm_yyyy.log\> file is initialized.
+
+In the following examples, we set up and utilize a temporary log file: 
+
+
+```{r logging, echo=TRUE}
+log_file <- tempfile()
+cat("Vignette log file", file = log_file)
+
+```
+
 
 ## Data reading and validation
 
@@ -395,11 +411,6 @@ plot_line + ggplot2::labs(subtitle = "Norway, individuals born between 2010-2018
   
 ```
 
-## Logging
-
-To facilitate reproducibility and transparency across research projects, the majority of functions in **regkit** create log files that document their internal data processing, warnings/errors and corresponding outputs. Similarly, each function provides clear console feedback after it executes important operations (filter, select, join, etc).
-
-It is possible to either provide the path to an already existing .log file or set the argument `log_path = NULL` (default) to create a new /log directory and .log file for each function. For instance, the `read_diag_data()` with a `NULL` log_path will first check in the working directory for a `/log` directory. In case it does not already exist, the `/log` directory is created in the current working directory and a \<read_diag_data_dd_mm_yyyy.log\> file is initialized.
 
 ## Other useful functions
 
