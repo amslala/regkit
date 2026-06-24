@@ -1,7 +1,7 @@
 
 test_that("Input validation works", {
 
-  expect_error(synthetic_data(
+  expect_error(simulate_data(
     population_size = 1000,
     prefix_ids = "P000",
     length_ids = 6,
@@ -20,7 +20,7 @@ test_that("Input validation works", {
   )
 
 
-  expect_error(synthetic_data(
+  expect_error(simulate_data(
     population_size = 1000,
     prefix_ids = "P000",
     length_ids = 6,
@@ -37,7 +37,7 @@ test_that("Input validation works", {
     ), "Either prevalance or incidence has to be provided"
   )
 
-  expect_error(synthetic_data(
+  expect_error(simulate_data(
     population_size = 1000,
     prefix_ids = "P000",
     length_ids = 6,
@@ -55,7 +55,7 @@ test_that("Input validation works", {
   ), "Prevalence rate is not expressed as a proportion between 0 and 1."
   )
 
-  expect_error(synthetic_data(
+  expect_error(simulate_data(
     population_size = 1000,
     prefix_ids = "P000",
     length_ids = 6,
@@ -69,7 +69,7 @@ test_that("Input validation works", {
     filler_y_birth = c(2000:2009),
     varying_query = "fylke"), "Either invariant queries for SSB's API, or invariant codes need to be provided")
 
-  expect_error(synthetic_data(
+  expect_error(simulate_data(
     population_size = 1000,
     prefix_ids = "P000",
     length_ids = 6,
@@ -87,7 +87,7 @@ test_that("Input validation works", {
     "You have provided varying codes. Filler varying codes also need to be provided."
     )
 
-  expect_message(synthetic_data(
+  expect_message(simulate_data(
     population_size = 1000,
     prefix_ids = "P000",
     length_ids = 6,
@@ -103,7 +103,7 @@ test_that("Input validation works", {
     invariant_codes_filler = list("innvandringsgrunn" = c("FAMM", "UTD")),
   ), "Varying query and varying codes arguments are empty. The varying dataset will not be generated.")
 
-expect_error(synthetic_data(
+expect_error(simulate_data(
   population_size = 1000,
   prefix_ids = "P000",
   length_ids = 6,
@@ -121,7 +121,7 @@ expect_error(synthetic_data(
   ), "Number of elements in incidence vector do not correspond with number of diagnosis years"
 )
 
-expect_error(synthetic_data(
+expect_error(simulate_data(
   population_size = 1000,
   prefix_ids = "P000",
   length_ids = 6,
@@ -137,7 +137,7 @@ expect_error(synthetic_data(
   invariant_codes_filler = list("innvandringsgrunn" = c("FAMM", "UTD")),
   varying_query = "fylke"))
 
-expect_error(synthetic_data(
+expect_error(simulate_data(
   population_size = 1000,
   prefix_ids = "P000",
   length_ids = 6,
@@ -153,7 +153,7 @@ expect_error(synthetic_data(
   invariant_codes_filler = list("innvandringsgrunn" = c("FAMM", "UTD")),
   varying_query = "fylke"), "Not all incidence rates are expressed as a proportion between 0 and 1.")
 
-expect_error(synthetic_data(
+expect_error(simulate_data(
   population_size = 100,
   prefix_ids = "P000",
   length_ids = 6,
@@ -182,7 +182,7 @@ expect_error(synthetic_data(
 test_that("Correct population size", {
   n_pop <- 100
   diag_years <- c(2012:2020)
-  test_simulate <- synthetic_data(
+  test_simulate <- simulate_data(
     population_size = n_pop,
     prefix_ids = "P000",
     length_ids = 6,
@@ -207,7 +207,7 @@ test_that("Correct population size", {
 # Test that diag codes match (use other functions in package)
 
 test_that("Diagnostic codes", {
-  icd_simulate <- synthetic_data(
+  icd_simulate <- simulate_data(
     population_size = 100,
     prefix_ids = "P000",
     length_ids = 6,
@@ -230,7 +230,7 @@ test_that("Diagnostic codes", {
   expect_gt(length(stringr::str_starts(df$code, "F")), 0)
 
 
-  icpc_simulate <- synthetic_data(
+  icpc_simulate <- simulate_data(
     population_size = 100,
     prefix_ids = "P000",
     length_ids = 6,
@@ -262,7 +262,7 @@ test_that("Year of birth", {
   years_birth <-c(2010:2018)
   filler_years_birth <- c(2000:2009)
 
-  test <- synthetic_data(
+  test <- simulate_data(
     population_size = 100,
     prefix_ids = "P000",
     length_ids = 6,
@@ -300,7 +300,3 @@ test_that("Year of birth", {
 
 })
 
-
-#Test that prevalence is correct
-
-#Test that incidence is correct

@@ -1,7 +1,7 @@
-#' Create synthetic diagnostic, time-varying and time-invariant individual level data
+#' Create simulated diagnostic, time-varying and time-invariant individual level data
 #'
 #' @description
-#' The `synthetic_data()` function creates individual-level data sets.
+#' The `simulate_data()` function creates individual-level data sets.
 #' It simulates the structure of diagnostic, time-varying and time-invariant data you might commonly encounter when working with Norwegian medical and sociodemographic data (e.g. NPR and SSB)
 #'
 #' @param population_size An integer. Number of total population size (individual).
@@ -23,14 +23,14 @@
 #' * If a data frame is provided, column names will be considered as the names of the invariant variables.
 #' * If a named list is provided, the name of each element will be consider as the invariant variable name. Example: `invariant_codes = list("innvandringsgrunn" = c("ARB", "NRD", "UKJ"), "blodtype" = c("A", "B", "AB", "O"))`
 #' @param invariant_codes_filler Data frame or named list. Codes to be used as filler invariant codes in dataset.
-#' @param varying_query A character string. Uses Statistics Norway API to retrieve desired varying variable classification(s). Example: `varying_query = c("sivilstand")`
+#' @param varying_query A character string. Uses Statistics Norway API to retrieve desired varying variable classification(s). Example: `varying_query = c("kommune")`
 #' @param varying_codes A character vector. Codes to be used as relevant varying codes in dataset. Example: `varying_codes = as.character(0:4)`
 #' @param varying_codes_filler A character vector. Codes to be used as filler varying codes in dataset. Example: `varying_codes_filler = as.character(5:9)`
 #' @param date_classifications Date used to retrieve classification system from SSB. Format must be **"yyyy-mm-dd"**
 #'
 #' @return Named list containing two lists. The first list named 'datasets' includes the data frames with individual level diagnostic and sociodemographic data. The second list named 'metadata' includes the exact function call and arguments given by the user
 #' @examples
-#' simulated_list <- synthetic_data(
+#' simulated_list <- simulate_data(
 #'   population_size = 1000,
 #'   prefix_ids = "P000",
 #'   length_ids = 6,
@@ -49,7 +49,7 @@
 #' @importFrom rlang .data
 #' @export
 #'
-synthetic_data <- function(
+simulate_data <- function(
     population_size,
     prefix_ids,
     length_ids,
@@ -499,7 +499,7 @@ synthetic_data <- function(
 
 # Add metadata ------------------------------------------------------------
 
-  matched <- rlang::call_match(sys.call(), synthetic_data)
+  matched <- rlang::call_match(sys.call(), simulate_data)
   arg_vals <- rlang::call_args(matched)
   final_list <- list(datasets = all_cases_updated_list, metadata = list(call = matched, arguments = arg_vals))
   return(final_list)

@@ -36,7 +36,7 @@ For example, imagine you have individual-level data for your population of inter
 ```{r simulate-municipalities, echo = T, results = 'hide', message=FALSE}
 
 # Silenced CLI output for this example
-simulated_list <- regkit::synthetic_data(
+simulated_list <- regkit::simulate_data(
   population_size = 100,
   prefix_ids = "P000",
   length_ids = 6,
@@ -50,7 +50,7 @@ simulated_list <- regkit::synthetic_data(
   filler_y_birth = c(2000:2009),
   invariant_codes = list("innvandringsgrunn" = c("ARB", "NRD", "UKJ")),
   invariant_codes_filler = list("innvandringsgrunn" = c("FAMM", "UTD")),
-  varying_query = "kommuner",
+  varying_query = "kommune",
   date_classifications = "2017-01-01", 
   seed = 123
 )
