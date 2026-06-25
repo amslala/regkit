@@ -1,7 +1,7 @@
 Package: regkit
 Type: Package
 Title: Facilitating manipulation, analysis and visualization of data from Norwegian health and population registers
-Version: 0.2.0
+Version: 0.3.0
 Description: Aid researchers in performing efficient and well-documented manipulation, analysis and visualization of individual-level data from Norwegian health and population registers. The package includes functions to validate, filter, and link health (diagnostic) and administrative (sociodemographic) data. `regkit` also includes functions intended to help users compute common descriptive epidemiology statistics, such as prevalence and incidence rates, and visualize the underlying data.
 License: MIT + file LICENSE
 Encoding: UTF-8
