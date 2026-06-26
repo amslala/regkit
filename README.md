@@ -48,19 +48,33 @@ devtools::install_github("amslala/regkit")
 Researchers working with sensitive individual-level data in Norway will
 most likely have their projects (and data) set up in
 [TSD](https://www.uio.no/english/services/it/research/sensitive-data/access/)
-with no internet access. Although all the main function in `regkit` work
-inside of TSD, it is not possible to install R packages directly from
-GitHub without internet access. Instead, you can download the binary for
-the latest working version from the [Releases
-section](https://github.com/amslala/regkit/releases) and import it to
-TSD. You can then install it specifying the path of the binary within
-TSD:
+or similar secure environments with no internet access. Although all the
+main function in `regkit` work inside of TSD, it is not possible to
+install R packages directly from GitHub without internet access.
+
+Additionally, you might have to install package dependencies, if they
+are not already installed in your secure environment. Read more the
+package dependencies in the `vignette("Dependencies")` section. To
+facilitate the process of installing dependencies, we have create a
+miniCRAN bundle including `regkit` and all of the necessary packages it
+needs to load and run its core functions. There are additionally a
+series of packages necessary only for specific functions in the package,
+we have included them in a extra miniCRAN bundle. You can find the
+miniCRAN bundles in the [Releases section in
+GitHub](https://github.com/amslala/regkit/releases).
+
+Once you have imported the miniCRAN zip bundles into TSD and unzipped
+them, you can install the package and its dependencies with:
 
 ``` r
-install.packages(path, 
-                 repos = NULL,
-                 type = "binary")
+
+install.packages("regkit", 
+                 repos = "file:///path/to/dep_repo",
+                 type = "source")
 ```
+
+Replace `file:///path/to/dep_repo` with the actual path where you
+unzipped the folder.
 
 ## Report issues and contribute
 
