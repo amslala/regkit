@@ -75,21 +75,6 @@ simulate_data <- function(
 
 
 
-# Stringr and KlassR check ------------------------------------------------
-
-  if(!is.null(varying_query)  || !is.null(invariant_queries)){
-    v <- as.character(utils::packageVersion("stringr"))
-    if (utils::compareVersion(v, "1.6.0") >= 0) {
-      msg <- paste0(
-        "This function currently requires stringr 1.5.1.\n",
-        "You have stringr ", v, ".\n\n",
-        "Workaround: install stringr 1.5.1, e.g.\n",
-        "  install.packages('remotes'); remotes::install_version('stringr', '1.5.1')\n",
-        "Or use `varying_codes` and/or `invariant_codes` instead of queries"
-      )
-    }
-  }
-
   # Set seed only for function
 
   withr::with_seed(seed, {
@@ -250,6 +235,9 @@ simulate_data <- function(
         return(codes_ssb)
       } else {
         search <- klassR::search_klass(queries)
+        if(length(search) == 0){
+          stop("No results from query search!")
+        }
         class_code <- search$klass_nr[1]
         codes_ssb <- klassR::get_klass(classification = class_code,
                                       language = "en",
@@ -298,6 +286,7 @@ simulate_data <- function(
       new_cols <- purrr::imap(new_info, function(codes, var_name){
         sample(codes, size = nrow(data), replace = TRUE)
       })
+      #"names(new_cols)[1] <- "invariant_code"
       data <- cbind(data, new_cols)
     }
 
@@ -452,10 +441,11 @@ simulate_data <- function(
 
   filler_diagnostic_df <- filler_diagnostic_df_noise |> dplyr::left_join(filler_diagnostic_unvar, by = c("id"))
 
-
   # all cases (relevant and filler with noise)
   all_cases <- relevant_cases_unvar |>
     dplyr::bind_rows(filler_diagnostic_df)
+
+
 
   # Add filler varying codes
 
