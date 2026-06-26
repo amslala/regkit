@@ -163,7 +163,7 @@ mb_filter <- microbenchmark::microbenchmark(
 
 
 
-```{r bench-plot, echo = FALSE}
+```{r bench-plot, echo = TRUE}
 
 mb_filter
 ggplot2::autoplot(mb_filter) + ggplot2::ggtitle("Parquet vs csv filtering")

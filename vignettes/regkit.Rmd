@@ -47,7 +47,7 @@ The dataset `invar_df` is a tibble with simulated individual-level time-invarian
 str(invar_df)
 ```
 
-All the datasets above have been created using the `synthetic_dataset()` function included in this package. The exact code used to create them can be found in the folder `/data-raw` in the package's source code. The `vignette("h_functions")` includes more detailed information about simulating datasets in `regkit`.
+All the datasets above have been created using the `simulate_dataset()` function included in this package. The exact code used to create them can be found in the folder `/data-raw` in the package's source code. The `vignette("h_functions")` includes more detailed information about simulating datasets in `regkit`.
 
 
 ## Logging
