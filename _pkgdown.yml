@@ -38,7 +38,7 @@ reference:
   - plot_map
 - title: "Helper functions"
   contents:
-  - synthetic_data
+  - simulate_data
   - get_population_ssb
   - harmonize_municipality_codes
 - title: "Example datasets"
