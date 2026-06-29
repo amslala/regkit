@@ -25,7 +25,7 @@ First, we generate a simulated diagnostic dataset with ~8.3 million rows:
 
 ```{r}
 
-simulated_list <- synthetic_data(
+simulated_list <- simulate_data(
   population_size = 2100000,
   prefix_ids = "P0",
   length_ids = 8,
