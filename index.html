@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="index.html">regkit</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.2.0</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,11 +82,15 @@
 <div class="section level3">
 <h3 id="tsd">TSD<a class="anchor" aria-label="anchor" href="#tsd"></a>
 </h3>
-<p>Researchers working with sensitive individual-level data in Norway will most likely have their projects (and data) set up in <a href="https://www.uio.no/english/services/it/research/sensitive-data/access/" class="external-link">TSD</a> with no internet access. Although all the main function in <code>regkit</code> work inside of TSD, it is not possible to install R packages directly from GitHub without internet access. Instead, you can download the binary for the latest working version from the <a href="https://github.com/amslala/regkit/releases" class="external-link">Releases section</a> and import it to TSD. You can then install it specifying the path of the binary within TSD:</p>
+<p>Researchers working with sensitive individual-level data in Norway will most likely have their projects (and data) set up in <a href="https://www.uio.no/english/services/it/research/sensitive-data/access/" class="external-link">TSD</a> or similar secure environments with no internet access. Although all the main function in <code>regkit</code> work inside of TSD, it is not possible to install R packages directly from GitHub without internet access.</p>
+<p>Additionally, you might have to install package dependencies, if they are not already installed in your secure environment. Read more the package dependencies in the <code>vignette("Dependencies")</code> section. To facilitate the process of installing dependencies, we have create a miniCRAN bundle including <code>regkit</code> and all of the necessary packages it needs to load and run its core functions. There are additionally a series of packages necessary only for specific functions in the package, we have included them in a extra miniCRAN bundle. You can find the miniCRAN bundles in the <a href="https://github.com/amslala/regkit/releases" class="external-link">Releases section in GitHub</a>.</p>
+<p>Once you have imported the miniCRAN zip bundles into TSD and unzipped them, you can install the package and its dependencies with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="va">path</span>, </span>
-<span>                 repos <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>                 type <span class="op">=</span> <span class="st">"binary"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"regkit"</span>, </span>
+<span>                 repos <span class="op">=</span> <span class="st">"file:///path/to/dep_repo"</span>,</span>
+<span>                 type <span class="op">=</span> <span class="st">"source"</span><span class="op">)</span></span></code></pre></div>
+<p>Replace <code>file:///path/to/dep_repo</code> with the actual path where you unzipped the folder.</p>
 </div>
 </div>
 <div class="section level2">

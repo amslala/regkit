@@ -20,12 +20,12 @@ Source:
 Martinez Sanchez A, Hannigan L, Ask H, Pettersen J, Havdahl A (2026).
 *regkit: Facilitating manipulation, analysis and visualization of data
 from Norwegian health and population registers*. R package version
-0.2.0, <https://github.com/amslala/regkit>.
+0.3.0, <https://github.com/amslala/regkit>.
 
     @Manual{,
       title = {regkit: Facilitating manipulation, analysis and visualization of data from Norwegian health and population registers},
       author = {Alejandra {Martinez Sanchez} and Laurie Hannigan and Helga Ask and Johanne Pettersen and Alexandra Havdahl},
       year = {2026},
-      note = {R package version 0.2.0},
+      note = {R package version 0.3.0},
       url = {https://github.com/amslala/regkit},
     }

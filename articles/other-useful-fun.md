@@ -53,7 +53,7 @@ aids researchers to harmonize municipality codes (between 1994-2024):
 
 
 # Silenced CLI output for this example
-simulated_list <- regkit::synthetic_data(
+simulated_list <- regkit::simulate_data(
   population_size = 100,
   prefix_ids = "P000",
   length_ids = 6,
@@ -67,7 +67,7 @@ simulated_list <- regkit::synthetic_data(
   filler_y_birth = c(2000:2009),
   invariant_codes = list("innvandringsgrunn" = c("ARB", "NRD", "UKJ")),
   invariant_codes_filler = list("innvandringsgrunn" = c("FAMM", "UTD")),
-  varying_query = "kommuner",
+  varying_query = "kommune",
   date_classifications = "2017-01-01", 
   seed = 123
 )
@@ -85,12 +85,12 @@ head(residence_df)
 #> # A tibble: 6 × 3
 #>   id         year_varying varying_code
 #>   <chr>             <dbl> <chr>       
-#> 1 P000025558         2017 1           
-#> 2 P000037543         2017 6           
-#> 3 P000043041         2017 5           
-#> 4 P000053240         2017 4           
-#> 5 P000090076         2017 7           
-#> 6 P000117065         2017 6
+#> 1 P000025558         2017 1868        
+#> 2 P000037543         2017 1003        
+#> 3 P000043041         2017 1233        
+#> 4 P000053240         2017 1502        
+#> 5 P000090076         2017 0402        
+#> 6 P000117065         2017 0833
 ```
 
 Using
@@ -107,18 +107,18 @@ residence_df_harmonized <- regkit::harmonize_municipality_codes(
 #> ! NAs in municipality code column in residence_df: 0
 #> ────────────────────────────────────────────────────────────────────────────────
 #> ✔ Successfully matched old municipality codes with harmonized municipality codes
-#> ℹ Total matched rows: 0
+#> ℹ Total matched rows: 100
 
 head(residence_df_harmonized)
 #> # A tibble: 6 × 7
 #>   id        year_varying varying_code harmonized_code harmonized_name fylke_code
 #>   <chr>            <dbl> <chr>        <chr>           <chr>           <chr>     
-#> 1 P0000255…         2017 1            NA              NA              NA        
-#> 2 P0000375…         2017 6            NA              NA              NA        
-#> 3 P0000430…         2017 5            NA              NA              NA        
-#> 4 P0000532…         2017 4            NA              NA              NA        
-#> 5 P0000900…         2017 7            NA              NA              NA        
-#> 6 P0001170…         2017 6            NA              NA              NA        
+#> 1 P0000255…         2017 1868         K.1868          Øksnes          18        
+#> 2 P0000375…         2017 1003         K.4206          Farsund         42        
+#> 3 P0000430…         2017 1233         K.4620          Ulvik           46        
+#> 4 P0000532…         2017 1502         K.1506          Molde           15        
+#> 5 P0000900…         2017 0402         K.3401          Kongsvinger     34        
+#> 6 P0001170…         2017 0833         K.4034          Tokke           40        
 #> # ℹ 1 more variable: fylke_name <chr>
 ```
 

@@ -71,7 +71,7 @@ You can also visualize how all the dependencies fit together:
     #> ℹ Loading metadata database
     #> ✔ Loading metadata database ... done
     #> 
-    #> local::. 0.2.0 [new][bld]
+    #> local::. 0.3.0 [new][bld]
     #> ├─arrow 24.0.0 [new][bld][cmp]
     #> │ ├─assertthat 0.2.1 [new][bld]
     #> │ ├─bit64 4.8.2 [new][bld][cmp]
@@ -178,7 +178,7 @@ You can also visualize how all the dependencies fit together:
     #> │ │ │ └─askpass 1.2.1 [new][bld][cmp]
     #> │ │ │   └─sys 3.4.3 [new][bld][cmp]
     #> │ │ └─R6
-    #> │ ├─igraph 2.3.2 [new][bld][cmp]
+    #> │ ├─igraph 2.3.3 [new][bld][cmp]
     #> │ │ ├─cli
     #> │ │ ├─cpp11
     #> │ │ ├─lifecycle
@@ -194,7 +194,7 @@ You can also visualize how all the dependencies fit together:
     #> │   ├─NLP 0.3-2 [new][bld]
     #> │   ├─Rcpp 1.1.1-1.1 [new][bld][cmp]
     #> │   ├─slam 0.1-55 [new][bld][cmp]
-    #> │   └─xml2 1.5.2 [new][bld][cmp]
+    #> │   └─xml2 1.6.0 [new][bld][cmp]
     #> │     ├─cli
     #> │     └─rlang
     #> ├─logger 0.4.2 [new][bld]
@@ -219,61 +219,3 @@ You can also visualize how all the dependencies fit together:
     #> └─withr
     #> 
     #> Key:  [new] new | [bld] build | [cmp] compile
-
-## Installing dependencies in secure environments
-
-The package `regkit` is meant to be used inside a secure computing
-environment with limited internet access, thus some dependencies might
-have to be installed manually. One solution is to create a miniCRAN
-repository containing all dependencies necessary to successfully install
-`regkit`.
-
-As a reference, here is the workflow to build a miniCRAN repository
-assuming the secure environment you are installing it runs Windows:
-
-1.  Install the `miniCRAN` package and `regkit` outside the secure
-    environment
-2.  Save the dependencies using the following code:
-
-``` r
-
-
-library(miniCRAN)
-pkg_list <- pkgDep("regkit", repos = "https://cloud.r-project.org", type = "source", suggests = TRUE)
-
-makeRepo(pkg_list, path = "/path/to/myrepo", repos = "https://cloud.r-project.org", type = "source")
-saveRDS(pkg_list, "pkg_list.rds")
-```
-
-3.  Import the miniCRAN folder and dependency list `pkg_list.rds` to the
-    secure environment
-4.  Read `pkg_list.rds` and install dependencies from miniCRAN inside
-    secure environment:
-
-``` r
-
-
-pkg_list <- readRDS("pkg_list.rds")
-
-install.packages(
-  pkg_list,  
-  repos = paste0("file:///", "/path/to/myrepo"),
-  type = "source"
-)
-```
-
-4.  Install `regkit` from the tarball you can download from the
-    [Releases section](https://github.com/amslala/regkit/releases) in
-    GitHub:
-
-``` r
-
-
-pkg_list <- readRDS("pkg_list.rds")
-
-install.packages(
-  "/path/to/regkit_x.y.z.tar.gz",  
-  repos = NULL,
-  type = "source"
-)
-```

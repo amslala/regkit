@@ -33,8 +33,8 @@
 
 ## Helper functions
 
-- [`synthetic_data()`](https://amslala.github.io/regkit/reference/synthetic_data.md)
-  : Create synthetic diagnostic, time-varying and time-invariant
+- [`simulate_data()`](https://amslala.github.io/regkit/reference/simulate_data.md)
+  : Create simulated diagnostic, time-varying and time-invariant
   individual level data
 - [`get_population_ssb()`](https://amslala.github.io/regkit/reference/get_population_ssb.md)
   : Get yearly population data from SSB, by region, sex and age.

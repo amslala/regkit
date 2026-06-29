@@ -65,7 +65,7 @@ str(invar_df)
 #>  $ innvandringsgrunn: chr [1:30024] "FAMM" "FAMM" "FAMM" "FAMM" ...
 ```
 
-All the datasets above have been created using the `synthetic_dataset()`
+All the datasets above have been created using the `simulate_dataset()`
 function included in this package. The exact code used to create them
 can be found in the folder `/data-raw` in the package’s source code. The
 `vignette("h_functions")` includes more detailed information about

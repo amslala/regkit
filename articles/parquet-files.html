@@ -23,7 +23,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">regkit</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.2.0</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -100,7 +100,7 @@ pipeline.</p>
 rows:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="va">simulated_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/synthetic_data.html">synthetic_data</a></span><span class="op">(</span></span>
+<span><span class="va">simulated_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simulate_data.html">simulate_data</a></span><span class="op">(</span></span>
 <span>  population_size <span class="op">=</span> <span class="fl">2100000</span>,</span>
 <span>  prefix_ids <span class="op">=</span> <span class="st">"P0"</span>,</span>
 <span>  length_ids <span class="op">=</span> <span class="fl">8</span>,</span>
@@ -189,8 +189,8 @@ files:</p>
 <span>  code_col <span class="op">=</span> <span class="st">"code"</span>,</span>
 <span>  log_path <span class="op">=</span> <span class="va">l_path</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You have provided a parquet file or database. Due to the characteristics of these data objects, the console output and logging will provide minimal information.</span></span>
-<span><span class="co">#&gt; Reading /tmp/RtmpHdUYfm/file7dd658445d04/new_df.parquet file...</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Successfully read file: /tmp/RtmpHdUYfm/file7dd658445d04/new_df.parquet</span></span>
+<span><span class="co">#&gt; Reading /tmp/RtmpllMCjp/file7e25791a6f00/new_df.parquet file...</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Successfully read file: /tmp/RtmpllMCjp/file7e25791a6f00/new_df.parquet</span></span>
 <span><span class="co">#&gt; Checking column requirements:</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> ID column</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Code column</span></span>
@@ -248,7 +248,7 @@ observations:</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Remaining number of columns: <span style="color: #0000BB;">3</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Unique IDs in dataset: <span style="color: #0000BB;">38459</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Unique codes in dataset: <span style="color: #0000BB;">21</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Codes in dataset: <span style="color: #0000BB;">"F452"</span>, <span style="color: #0000BB;">"F844"</span>, <span style="color: #0000BB;">"F4533"</span>, <span style="color: #0000BB;">"F454"</span>, <span style="color: #0000BB;">"F849"</span>, <span style="color: #0000BB;">"F4530"</span>, <span style="color: #0000BB;">"F848"</span>, <span style="color: #0000BB;">"F4532"</span>, <span style="color: #0000BB;">"F450"</span>, <span style="color: #0000BB;">"F843"</span>, <span style="color: #0000BB;">"F842"</span>, <span style="color: #0000BB;">"F840"</span>, <span style="color: #0000BB;">"F458"</span>, <span style="color: #0000BB;">"F845"</span>, <span style="color: #0000BB;">"F841"</span>, <span style="color: #0000BB;">"F451"</span>, <span style="color: #0000BB;">"F4531"</span>, <span style="color: #0000BB;">"F4534"</span>, …, <span style="color: #0000BB;">"F4538"</span>, and <span style="color: #0000BB;">"F459"</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Codes in dataset: <span style="color: #0000BB;">"F848"</span>, <span style="color: #0000BB;">"F458"</span>, <span style="color: #0000BB;">"F842"</span>, <span style="color: #0000BB;">"F4533"</span>, <span style="color: #0000BB;">"F450"</span>, <span style="color: #0000BB;">"F845"</span>, <span style="color: #0000BB;">"F844"</span>, <span style="color: #0000BB;">"F4530"</span>, <span style="color: #0000BB;">"F4532"</span>, <span style="color: #0000BB;">"F454"</span>, <span style="color: #0000BB;">"F453"</span>, <span style="color: #0000BB;">"F843"</span>, <span style="color: #0000BB;">"F4534"</span>, <span style="color: #0000BB;">"F452"</span>, <span style="color: #0000BB;">"F849"</span>, <span style="color: #0000BB;">"F4538"</span>, <span style="color: #0000BB;">"F840"</span>, <span style="color: #0000BB;">"F459"</span>, …, <span style="color: #0000BB;">"F841"</span>, and <span style="color: #0000BB;">"F451"</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Rows: 38,714</span></span>
 <span><span class="co">#&gt; Columns: 3</span></span>
@@ -298,10 +298,14 @@ data frame object:</p>
 <span>      log_path <span class="op">=</span> <span class="va">l_path</span><span class="op">)</span>, </span>
 <span>  check <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">#&gt; Unit: milliseconds</span></span>
-<span><span class="co">#&gt;     expr       min        lq      mean    median        uq       max neval</span></span>
-<span><span class="co">#&gt;  parquet  579.3034  581.9105  597.5571  582.6917  585.0665  685.4128   100</span></span>
-<span><span class="co">#&gt;   tibble 1310.8380 1318.5727 1342.7491 1325.5770 1342.2588 1442.1210   100</span></span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">mb_filter</span></span>
+<span><span class="co">#&gt; Unit: milliseconds</span></span>
+<span><span class="co">#&gt;     expr      min        lq      mean    median        uq       max neval</span></span>
+<span><span class="co">#&gt;  parquet  583.099  586.9634  605.2963  589.1574  593.1437  712.5582   100</span></span>
+<span><span class="co">#&gt;   tibble 1333.803 1345.7619 1369.8007 1351.6246 1363.2697 1493.3770   100</span></span>
+<span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">mb_filter</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Parquet vs csv filtering"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: `aes_string()` was deprecated in ggplot2 3.0.0.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use tidy evaluation idioms with `aes()`.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> See also `vignette("ggplot2-in-packages")` for more information.</span></span>
@@ -310,7 +314,7 @@ data frame object:</p>
 <span><span class="co">#&gt;   <span style="color: #0000BB; font-style: italic;">&lt;https://github.com/joshuaulrich/microbenchmark/issues/&gt;</span>.</span></span>
 <span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once per session.</span></span></span>
 <span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span></code></pre>
+<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span></code></pre></div>
 <p><img src="parquet-files_files/figure-html/bench-plot-1.png" class="r-plt" alt="" width="700"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

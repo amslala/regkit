@@ -23,7 +23,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">regkit</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.2.0</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -137,7 +137,7 @@ dependencies):</p>
 <pre><code><span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Loading metadata database</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Loading metadata database ... done</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold; font-style: italic;">local::. </span><span style="color: #555555; font-weight: bold; font-style: italic;">0.2.0</span> <span style="color: #00BB00;">[new][bld]</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold; font-style: italic;">local::. </span><span style="color: #555555; font-weight: bold; font-style: italic;">0.3.0</span> <span style="color: #00BB00;">[new][bld]</span></span></span>
 <span><span class="co">#&gt; ├─arrow <span style="color: #555555;">24.0.0</span> <span style="color: #00BB00;">[new][bld][cmp]</span></span></span>
 <span><span class="co">#&gt; │ ├─assertthat <span style="color: #555555;">0.2.1</span> <span style="color: #00BB00;">[new][bld]</span></span></span>
 <span><span class="co">#&gt; │ ├─bit64 <span style="color: #555555;">4.8.2</span> <span style="color: #00BB00;">[new][bld][cmp]</span></span></span>
@@ -244,7 +244,7 @@ dependencies):</p>
 <span><span class="co">#&gt; │ │ │ └─askpass <span style="color: #555555;">1.2.1</span> <span style="color: #00BB00;">[new][bld][cmp]</span></span></span>
 <span><span class="co">#&gt; │ │ │   └─sys <span style="color: #555555;">3.4.3</span> <span style="color: #00BB00;">[new][bld][cmp]</span></span></span>
 <span><span class="co">#&gt; │ │ └─R6</span></span>
-<span><span class="co">#&gt; │ ├─igraph <span style="color: #555555;">2.3.2</span> <span style="color: #00BB00;">[new][bld][cmp]</span></span></span>
+<span><span class="co">#&gt; │ ├─igraph <span style="color: #555555;">2.3.3</span> <span style="color: #00BB00;">[new][bld][cmp]</span></span></span>
 <span><span class="co">#&gt; │ │ ├─cli</span></span>
 <span><span class="co">#&gt; │ │ ├─cpp11</span></span>
 <span><span class="co">#&gt; │ │ ├─lifecycle</span></span>
@@ -260,7 +260,7 @@ dependencies):</p>
 <span><span class="co">#&gt; │   ├─NLP <span style="color: #555555;">0.3-2</span> <span style="color: #00BB00;">[new][bld]</span></span></span>
 <span><span class="co">#&gt; │   ├─Rcpp <span style="color: #555555;">1.1.1-1.1</span> <span style="color: #00BB00;">[new][bld][cmp]</span></span></span>
 <span><span class="co">#&gt; │   ├─slam <span style="color: #555555;">0.1-55</span> <span style="color: #00BB00;">[new][bld][cmp]</span></span></span>
-<span><span class="co">#&gt; │   └─xml2 <span style="color: #555555;">1.5.2</span> <span style="color: #00BB00;">[new][bld][cmp]</span></span></span>
+<span><span class="co">#&gt; │   └─xml2 <span style="color: #555555;">1.6.0</span> <span style="color: #00BB00;">[new][bld][cmp]</span></span></span>
 <span><span class="co">#&gt; │     ├─cli</span></span>
 <span><span class="co">#&gt; │     └─rlang</span></span>
 <span><span class="co">#&gt; ├─logger <span style="color: #555555;">0.4.2</span> <span style="color: #00BB00;">[new][bld]</span></span></span>
@@ -286,60 +286,7 @@ dependencies):</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Key:  <span style="color: #00BB00;">[new]</span> new | <span style="color: #00BB00;">[bld]</span> build | <span style="color: #00BB00;">[cmp]</span> compile</span></span></code></pre>
 </div>
-<div class="section level2">
-<h2 id="installing-dependencies-in-secure-environments">Installing dependencies in secure environments<a class="anchor" aria-label="anchor" href="#installing-dependencies-in-secure-environments"></a>
-</h2>
-<p>The package <code>regkit</code> is meant to be used inside a secure
-computing environment with limited internet access, thus some
-dependencies might have to be installed manually. One solution is to
-create a miniCRAN repository containing all dependencies necessary to
-successfully install <code>regkit</code>.</p>
-<p>As a reference, here is the workflow to build a miniCRAN repository
-assuming the secure environment you are installing it runs Windows:</p>
-<ol style="list-style-type: decimal">
-<li>Install the <code>miniCRAN</code> package and <code>regkit</code>
-outside the secure environment</li>
-<li>Save the dependencies using the following code:</li>
-</ol>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/andrie/miniCRAN" class="external-link">miniCRAN</a></span><span class="op">)</span></span>
-<span><span class="va">pkg_list</span> <span class="op">&lt;-</span> <span class="fu">pkgDep</span><span class="op">(</span><span class="st">"regkit"</span>, repos <span class="op">=</span> <span class="st">"https://cloud.r-project.org"</span>, type <span class="op">=</span> <span class="st">"source"</span>, suggests <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">makeRepo</span><span class="op">(</span><span class="va">pkg_list</span>, path <span class="op">=</span> <span class="st">"/path/to/myrepo"</span>, repos <span class="op">=</span> <span class="st">"https://cloud.r-project.org"</span>, type <span class="op">=</span> <span class="st">"source"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS</a></span><span class="op">(</span><span class="va">pkg_list</span>, <span class="st">"pkg_list.rds"</span><span class="op">)</span></span></code></pre></div>
-<ol start="3" style="list-style-type: decimal">
-<li>Import the miniCRAN folder and dependency list
-<code>pkg_list.rds</code> to the secure environment</li>
-<li>Read <code>pkg_list.rds</code> and install dependencies from
-miniCRAN inside secure environment:</li>
-</ol>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="va">pkg_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"pkg_list.rds"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span></span>
-<span>  <span class="va">pkg_list</span>,  </span>
-<span>  repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"file:///"</span>, <span class="st">"/path/to/myrepo"</span><span class="op">)</span>,</span>
-<span>  type <span class="op">=</span> <span class="st">"source"</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<ol start="4" style="list-style-type: decimal">
-<li>Install <code>regkit</code> from the tarball you can download from
-the <a href="https://github.com/amslala/regkit/releases" class="external-link">Releases
-section</a> in GitHub:</li>
-</ol>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="va">pkg_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"pkg_list.rds"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span></span>
-<span>  <span class="st">"/path/to/regkit_x.y.z.tar.gz"</span>,  </span>
-<span>  repos <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  type <span class="op">=</span> <span class="st">"source"</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-</div>
-  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
-    </nav></aside>
+  </main>
 </div>
 
 

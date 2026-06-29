@@ -32,7 +32,7 @@ rows:
 ``` r
 
 
-simulated_list <- synthetic_data(
+simulated_list <- simulate_data(
   population_size = 2100000,
   prefix_ids = "P0",
   length_ids = 8,
@@ -131,8 +131,8 @@ diag_parquet <- read_diag_data(
   code_col = "code",
   log_path = l_path)
 #> ℹ You have provided a parquet file or database. Due to the characteristics of these data objects, the console output and logging will provide minimal information.
-#> Reading /tmp/RtmpHdUYfm/file7dd658445d04/new_df.parquet file...
-#> ✔ Successfully read file: /tmp/RtmpHdUYfm/file7dd658445d04/new_df.parquet
+#> Reading /tmp/RtmpllMCjp/file7e25791a6f00/new_df.parquet file...
+#> ✔ Successfully read file: /tmp/RtmpllMCjp/file7e25791a6f00/new_df.parquet
 #> Checking column requirements:
 #> ✔ ID column
 #> ✔ Code column
@@ -192,7 +192,7 @@ filtered_parquet <- filter_diag_data(
 #> ℹ Remaining number of columns: 3
 #> ℹ Unique IDs in dataset: 38459
 #> ℹ Unique codes in dataset: 21
-#> ℹ Codes in dataset: "F452", "F844", "F4533", "F454", "F849", "F4530", "F848", "F4532", "F450", "F843", "F842", "F840", "F458", "F845", "F841", "F451", "F4531", "F4534", …, "F4538", and "F459"
+#> ℹ Codes in dataset: "F848", "F458", "F842", "F4533", "F450", "F845", "F844", "F4530", "F4532", "F454", "F453", "F843", "F4534", "F452", "F849", "F4538", "F840", "F459", …, "F841", and "F451"
 #> 
 #> Rows: 38,714
 #> Columns: 3
@@ -246,18 +246,24 @@ mb_filter <- microbenchmark::microbenchmark(
 )
 ```
 
-    #> Unit: milliseconds
-    #>     expr       min        lq      mean    median        uq       max neval
-    #>  parquet  579.3034  581.9105  597.5571  582.6917  585.0665  685.4128   100
-    #>   tibble 1310.8380 1318.5727 1342.7491 1325.5770 1342.2588 1442.1210   100
-    #> Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
-    #> ℹ Please use tidy evaluation idioms with `aes()`.
-    #> ℹ See also `vignette("ggplot2-in-packages")` for more information.
-    #> ℹ The deprecated feature was likely used in the microbenchmark package.
-    #>   Please report the issue at
-    #>   <https://github.com/joshuaulrich/microbenchmark/issues/>.
-    #> This warning is displayed once per session.
-    #> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-    #> generated.
+``` r
+
+
+mb_filter
+#> Unit: milliseconds
+#>     expr      min        lq      mean    median        uq       max neval
+#>  parquet  583.099  586.9634  605.2963  589.1574  593.1437  712.5582   100
+#>   tibble 1333.803 1345.7619 1369.8007 1351.6246 1363.2697 1493.3770   100
+ggplot2::autoplot(mb_filter) + ggplot2::ggtitle("Parquet vs csv filtering")
+#> Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
+#> ℹ Please use tidy evaluation idioms with `aes()`.
+#> ℹ See also `vignette("ggplot2-in-packages")` for more information.
+#> ℹ The deprecated feature was likely used in the microbenchmark package.
+#>   Please report the issue at
+#>   <https://github.com/joshuaulrich/microbenchmark/issues/>.
+#> This warning is displayed once per session.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+#> generated.
+```
 
 ![](parquet-files_files/figure-html/bench-plot-1.png)

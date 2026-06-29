@@ -102,7 +102,7 @@ epidemiological analyses. In addition, building a new package has
 enabled us to create a streamlined framework including only functions
 relevant to this research area. For instance, it integrates relevant
 functions originally developed by Statistics Norway to facilitate the
-creation of realistic synthetic data.
+creation of realistic simulated data.
 
 # Software design
 
@@ -144,9 +144,9 @@ functions in the package are intended to serve as a loose framework that
 can be adapted by researchers working with similar data and research
 questions. The package includes a series of vignettes explaining the
 main functions and real-life examples of descriptive epidemiology. The
-vignettes and possibility of creating synthetic individual-level
-datasets (synthetic_data()) also allow research-groups to use the
-package as zero-risk training material for new members, and to plan and
+vignettes and possibility of creating simulated individual-level
+datasets (simulate_data()) also allow research-groups to use the package
+as zero-risk training material for new members, and to plan and
 structure analytic projects prior to obtaining data access.
 
 # Research impact statement
