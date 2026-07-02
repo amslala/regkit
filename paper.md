@@ -113,7 +113,15 @@ application in various research projects. Given the potential of
 multinational registry-based cohort studies \[@Maret-Ouda_2017\], it is
 important to note that, while the package workflow is originally
 designed for Norwegian data sources, its flexibility may allow for use
-with other national registries.
+with other national registries. Similarly, to improve interoperability
+across projects, `regkit` depends primarily on widely used `tidyverse`
+packages that many users working with register data are likely to have
+installed already. In addition, packages used in functions only relevant
+to a specific use case
+(e.g. [`plot_map()`](https://amslala.github.io/regkit/reference/plot_map.md))
+are listed as *Suggest*, keeping the core installation as lean as
+possible. The current unit test suite provides good coverage of the main
+functions, helping to ensure the reliability of the package.
 
 Considering that the target user base of `regkit` (social scientists,
 epidemiologists) might have limited programming experience, we aimed to
@@ -122,19 +130,26 @@ instance, one of the first challenges researchers working with
 population-based registers encounter is that of efficiently manipulating
 very large datasets into smaller and tidier datasets with which they can
 work analytically. The `regkit` package includes reading and filtering
-functions that support files in parquet format \[@ApacheParquet_2025\],
-which seamlessly enables users to efficiently work with
-larger-than-memory files in R without requiring deeper knowledge on the
-inner workings of parquet format objects. Furthermore, the logs created
-by each function can help researchers keep track of and document all
-manipulation or processing steps applied to their datasets. The package
-also includes functions that are particularly useful for descriptive
-epidemiology analyses, such as the computation of prevalence and
-incidence rates, along with a function for visualizing the results.
-There are some specific challenges related to Norwegian registry data
-that are addressed in the helper functions of `regkit`, such as
-harmonizing municipality codes and retrieving population counts from
-SSB’s open data.
+functions
+(e.g. [`read_diag_data()`](https://amslala.github.io/regkit/reference/read_diag_data.md),
+[`filter_diag_data()`](https://amslala.github.io/regkit/reference/filter_diag_data.md))
+that support files in parquet format \[@ApacheParquet_2025\], which
+seamlessly enables users to efficiently work with larger-than-memory
+files in R without requiring deeper knowledge on the inner workings of
+parquet format objects. Furthermore, most functions automatically
+generate a log file that records and timestamps the function call,
+internal data transformations, warnings, errors, and general outputs.
+These logs can help researchers keep track of and document all
+manipulation or processing steps applied to their datasets.
+
+The package also includes functions that are particularly useful for
+descriptive epidemiology analyses, such as the computation of prevalence
+and incidence rates, along with the function
+[`plot_rates()`](https://amslala.github.io/regkit/reference/plot_rates.md)
+for visualizing the results. There are some specific challenges related
+to Norwegian registry data that are addressed in the helper functions of
+`regkit`, such as harmonizing municipality codes and retrieving
+population counts from SSB’s open data.
 
 In addition to helping solve practical challenges associated with
 processing, manipulation, and analysis of Norwegian register data,
@@ -145,9 +160,11 @@ can be adapted by researchers working with similar data and research
 questions. The package includes a series of vignettes explaining the
 main functions and real-life examples of descriptive epidemiology. The
 vignettes and possibility of creating simulated individual-level
-datasets (simulate_data()) also allow research-groups to use the package
-as zero-risk training material for new members, and to plan and
-structure analytic projects prior to obtaining data access.
+datasets with the function
+[`simulate_data()`](https://amslala.github.io/regkit/reference/simulate_data.md)
+also allow research-groups to use the package as zero-risk training
+material for new members, and to plan and structure analytic projects
+prior to obtaining data access.
 
 # Research impact statement
 
@@ -175,10 +192,15 @@ the writing of this manuscript.
 
 # Acknowledgements
 
-This work was performed on the TSD (Tjeneste for Sensitive Data)
-facilities, owned by the University of Oslo, operated and developed by
-the TSD service group at the University of Oslo, IT Department (USIT).
-(<tsd-drift@usit.uio.no>).
+Due to the sensitive nature of the data used to develop and test
+`regkit`, the core development of the package was performed on the TSD
+(Tjeneste for Sensitive Data) facilities, owned by the University of
+Oslo, operated and developed by the TSD service group at the University
+of Oslo, IT Department (USIT) (<tsd-drift@usit.uio.no>). TSD is a secure
+research platform with limited internet access, therefore the commit
+history in the publicly available repository does not reflect
+contributions made within TSD. All the co-authors contributed
+conceptually to the iterative development of the package.
 
 AMS was supported by the Research Council of Norway (#336085). JHP and
 HA were supported by the Research Council of Norway (#324620), and
@@ -186,9 +208,7 @@ NordForsk(#156298). LJH was supported by the South-Eastern Norway
 Regional Health Authority (#2922083). AH was supported by the Research
 Council of Norway (#336085), the South Eastern Norway Regional Health
 Authority (#2020022), and the European Union’s Horizon Europe Research
-and Innovation programme (FAMILY \#101057529).
-
-Thanks to Guido Biele and Lasse Bang for their assistance during the
-early stages of this project.
+and Innovation programme (FAMILY \#101057529). Thanks to Guido Biele and
+Lasse Bang for their assistance during the early stages of this project.
 
 # References
