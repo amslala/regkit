@@ -1,5 +1,7 @@
 # regkit 0.3.1
 
+* Release JOSS
+
 # regkit 0.3.0
 * Package renamed from `regtools` to `regkit`
 * Renamed function `synthetic_data()` to `simulate_data()`
