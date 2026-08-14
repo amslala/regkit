@@ -1,5 +1,5 @@
 pandoc: 3.8.3
-pkgdown: 2.2.0
+pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
   articles/Dependencies: Dependencies.html
@@ -7,7 +7,7 @@ articles:
   other-useful-fun: other-useful-fun.html
   articles/parquet-files: parquet-files.html
   regkit: regkit.html
-last_built: 2026-07-02T15:12Z
+last_built: 2026-08-14T14:28Z
 urls:
   reference: https://amslala.github.io/regkit/reference
   article: https://amslala.github.io/regkit/articles

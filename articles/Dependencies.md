@@ -51,18 +51,18 @@ dependencies):
     #>  [41] "htmltools"    "htmlwidgets"  "httr"         "igraph"       "isoband"     
     #>  [46] "jquerylib"    "jsonlite"     "KernSmooth"   "knitr"        "labeling"    
     #>  [51] "later"        "lattice"      "lazyeval"     "lifecycle"    "magrittr"    
-    #>  [56] "MASS"         "Matrix"       "memoise"      "methods"      "mime"        
-    #>  [61] "NLP"          "openssl"      "otel"         "parallel"     "pillar"      
-    #>  [66] "pkgbuild"     "pkgconfig"    "pkgload"      "praise"       "processx"    
-    #>  [71] "promises"     "proxy"        "ps"           "purrr"        "pxweb"       
-    #>  [76] "R6"           "rappdirs"     "RColorBrewer" "Rcpp"         "readr"       
-    #>  [81] "rjstat"       "rlang"        "rmarkdown"    "rprojroot"    "s2"          
-    #>  [86] "S7"           "sass"         "scales"       "slam"         "stats"       
-    #>  [91] "stringi"      "stringr"      "sys"          "tibble"       "tidyr"       
-    #>  [96] "tidyselect"   "tinytex"      "tm"           "tools"        "tzdb"        
-    #> [101] "units"        "utf8"         "utils"        "vctrs"        "viridisLite" 
-    #> [106] "vroom"        "waldo"        "withr"        "wk"           "xfun"        
-    #> [111] "xml2"         "yaml"         "zip"
+    #>  [56] "Matrix"       "memoise"      "methods"      "mime"         "NLP"         
+    #>  [61] "openssl"      "otel"         "parallel"     "pillar"       "pkgbuild"    
+    #>  [66] "pkgconfig"    "pkgload"      "praise"       "processx"     "promises"    
+    #>  [71] "proxy"        "ps"           "purrr"        "pxweb"        "R6"          
+    #>  [76] "rappdirs"     "RColorBrewer" "Rcpp"         "readr"        "rjstat"      
+    #>  [81] "rlang"        "rmarkdown"    "rprojroot"    "s2"           "S7"          
+    #>  [86] "sass"         "scales"       "slam"         "stats"        "stringi"     
+    #>  [91] "stringr"      "sys"          "tibble"       "tidyr"        "tidyselect"  
+    #>  [96] "tinytex"      "tm"           "tools"        "tzdb"         "units"       
+    #> [101] "utf8"         "utils"        "vctrs"        "viridisLite"  "vroom"       
+    #> [106] "waldo"        "withr"        "wk"           "xfun"         "xml2"        
+    #> [111] "yaml"         "zip"
 
 ### Dependency tree
 
@@ -72,7 +72,7 @@ You can also visualize how all the dependencies fit together:
     #> ✔ Loading metadata database ... done
     #> 
     #> local::. 0.3.0 [new][bld]
-    #> ├─arrow 24.0.0 [new][bld][cmp]
+    #> ├─arrow 25.0.0 [new][bld][cmp]
     #> │ ├─assertthat 0.2.1 [new][bld]
     #> │ ├─bit64 4.8.2 [new][bld][cmp]
     #> │ │ └─bit 4.6.0 [new][bld][cmp]
@@ -82,7 +82,7 @@ You can also visualize how all the dependencies fit together:
     #> │ │ ├─cli 3.6.6 [new][bld][cmp]
     #> │ │ ├─lifecycle 1.0.5 [new][bld]
     #> │ │ │ ├─cli
-    #> │ │ │ └─rlang 1.2.0 [new][bld][cmp]
+    #> │ │ │ └─rlang 1.3.0 [new][bld][cmp]
     #> │ │ ├─magrittr 2.0.5 [new][bld][cmp]
     #> │ │ ├─rlang
     #> │ │ └─vctrs 0.7.3 [new][bld][cmp]
@@ -100,7 +100,7 @@ You can also visualize how all the dependencies fit together:
     #> │ │ ├─vctrs
     #> │ │ └─withr 3.0.3 [new][bld]
     #> │ └─vctrs
-    #> ├─binom 1.1-1.1 [new][bld][cmp]
+    #> ├─binom 1.1-2 [new][bld][cmp]
     #> ├─cli
     #> ├─crayon 1.5.3 [new][bld]
     #> ├─dplyr 1.2.1 [new][bld][cmp]
@@ -165,7 +165,7 @@ You can also visualize how all the dependencies fit together:
     #> │ │ ├─lifecycle
     #> │ │ ├─magrittr
     #> │ │ ├─rlang
-    #> │ │ ├─stringi 1.8.7 [new][bld][cmp]
+    #> │ │ ├─stringi 1.8.9 [new][bld][cmp]
     #> │ │ └─vctrs
     #> │ └─tibble
     #> ├─glue
@@ -183,17 +183,17 @@ You can also visualize how all the dependencies fit together:
     #> │ │ ├─cpp11
     #> │ │ ├─lifecycle
     #> │ │ ├─magrittr
-    #> │ │ ├─Matrix 1.7-5 
-    #> │ │ │ └─lattice 0.22-9 
+    #> │ │ ├─Matrix 1.7-5 -> 1.7-6 [upd][bld][cmp][dl] (2.53 MB)
+    #> │ │ │ └─lattice 0.22-9 -> 0.23-1 [upd][bld][cmp][dl] (682.69 kB)
     #> │ │ ├─pkgconfig
     #> │ │ ├─rlang
     #> │ │ └─vctrs
     #> │ ├─jsonlite
-    #> │ └─tm 0.7-18 [new][bld][cmp]
+    #> │ └─tm 0.7-19 [new][bld][cmp]
     #> │   ├─BH 1.90.0-1 [new][bld]
-    #> │   ├─NLP 0.3-2 [new][bld]
-    #> │   ├─Rcpp 1.1.1-1.1 [new][bld][cmp]
-    #> │   ├─slam 0.1-55 [new][bld][cmp]
+    #> │   ├─NLP 0.3-3 [new][bld]
+    #> │   ├─Rcpp 1.1.2 [new][bld][cmp]
+    #> │   ├─slam 0.1-56 [new][bld][cmp]
     #> │   └─xml2 1.6.0 [new][bld][cmp]
     #> │     ├─cli
     #> │     └─rlang
@@ -218,4 +218,4 @@ You can also visualize how all the dependencies fit together:
     #> ├─tidyselect
     #> └─withr
     #> 
-    #> Key:  [new] new | [bld] build | [cmp] compile
+    #> Key:  [new] new | [upd] update | [dl] download | [bld] build | [cmp] compile

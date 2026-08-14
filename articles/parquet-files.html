@@ -66,7 +66,7 @@
       <h1>Working with parquet datasets</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/amslala/regkit/blob/master/vignettes/articles/parquet-files.Rmd" class="external-link"><code>vignettes/articles/parquet-files.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/amslala/regkit/blob/v0.3.1/vignettes/articles/parquet-files.Rmd" class="external-link"><code>vignettes/articles/parquet-files.Rmd</code></a></small>
       <div class="d-none name"><code>parquet-files.Rmd</code></div>
     </div>
 
@@ -189,8 +189,8 @@ files:</p>
 <span>  code_col <span class="op">=</span> <span class="st">"code"</span>,</span>
 <span>  log_path <span class="op">=</span> <span class="va">l_path</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You have provided a parquet file or database. Due to the characteristics of these data objects, the console output and logging will provide minimal information.</span></span>
-<span><span class="co">#&gt; Reading /tmp/RtmpYwk3AR/file7e3a223d821a/new_df.parquet file...</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Successfully read file: /tmp/RtmpYwk3AR/file7e3a223d821a/new_df.parquet</span></span>
+<span><span class="co">#&gt; Reading /tmp/RtmpeyTkBf/file7ce8336f1b00/new_df.parquet file...</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Successfully read file: /tmp/RtmpeyTkBf/file7ce8336f1b00/new_df.parquet</span></span>
 <span><span class="co">#&gt; Checking column requirements:</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> ID column</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Code column</span></span>
@@ -302,9 +302,9 @@ data frame object:</p>
 <code class="sourceCode R"><span></span>
 <span><span class="va">mb_filter</span></span>
 <span><span class="co">#&gt; Unit: milliseconds</span></span>
-<span><span class="co">#&gt;     expr       min       lq      mean    median        uq       max neval</span></span>
-<span><span class="co">#&gt;  parquet  574.7607  578.261  601.6247  584.7537  591.7107  725.6506   100</span></span>
-<span><span class="co">#&gt;   tibble 1327.0236 1334.781 1359.7061 1340.2747 1351.7668 1494.4267   100</span></span>
+<span><span class="co">#&gt;     expr       min        lq      mean    median        uq       max neval</span></span>
+<span><span class="co">#&gt;  parquet  474.7402  483.7473  502.4785  490.5457  496.2187  602.4834   100</span></span>
+<span><span class="co">#&gt;   tibble 1189.9842 1218.1484 1240.0531 1231.4165 1250.5977 1338.8213   100</span></span>
 <span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">mb_filter</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Parquet vs csv filtering"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: `aes_string()` was deprecated in ggplot2 3.0.0.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use tidy evaluation idioms with `aes()`.</span></span>
@@ -328,7 +328,7 @@ data frame object:</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0. Provided without <strong>any warranty</strong>.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1. Provided without <strong>any warranty</strong>.</p>
 </div>
 
     </footer>
