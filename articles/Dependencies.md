@@ -71,7 +71,7 @@ You can also visualize how all the dependencies fit together:
     #> ℹ Loading metadata database
     #> ✔ Loading metadata database ... done
     #> 
-    #> local::. 0.3.0 [new][bld]
+    #> local::. 0.3.1 [new][bld]
     #> ├─arrow 25.0.0 [new][bld][cmp]
     #> │ ├─assertthat 0.2.1 [new][bld]
     #> │ ├─bit64 4.8.2 [new][bld][cmp]

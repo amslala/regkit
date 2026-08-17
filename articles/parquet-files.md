@@ -131,8 +131,8 @@ diag_parquet <- read_diag_data(
   code_col = "code",
   log_path = l_path)
 #> ℹ You have provided a parquet file or database. Due to the characteristics of these data objects, the console output and logging will provide minimal information.
-#> Reading /tmp/RtmpaiGn3J/file7d6c7aed5a3/new_df.parquet file...
-#> ✔ Successfully read file: /tmp/RtmpaiGn3J/file7d6c7aed5a3/new_df.parquet
+#> Reading /tmp/RtmpxdSJNY/file7dad1d5c33ed/new_df.parquet file...
+#> ✔ Successfully read file: /tmp/RtmpxdSJNY/file7dad1d5c33ed/new_df.parquet
 #> Checking column requirements:
 #> ✔ ID column
 #> ✔ Code column
@@ -192,7 +192,7 @@ filtered_parquet <- filter_diag_data(
 #> ℹ Remaining number of columns: 3
 #> ℹ Unique IDs in dataset: 38459
 #> ℹ Unique codes in dataset: 21
-#> ℹ Codes in dataset: "F452", "F844", "F4533", "F454", "F849", "F4530", "F848", "F4532", "F450", "F843", "F842", "F840", "F458", "F845", "F841", "F451", "F4531", "F4534", …, "F4538", and "F459"
+#> ℹ Codes in dataset: "F849", "F4534", "F4530", "F842", "F451", "F840", "F844", "F4532", "F845", "F841", "F843", "F450", "F452", "F454", "F458", "F4538", "F4531", "F453", …, "F4533", and "F459"
 #> 
 #> Rows: 38,714
 #> Columns: 3
@@ -252,8 +252,8 @@ mb_filter <- microbenchmark::microbenchmark(
 mb_filter
 #> Unit: milliseconds
 #>     expr       min        lq      mean    median        uq       max neval
-#>  parquet  541.4833  544.5777  564.9119  547.8127  551.7285  672.1418   100
-#>   tibble 1274.8370 1282.1211 1303.0946 1290.0197 1295.8472 1454.1440   100
+#>  parquet  543.6078  547.4669  567.4631  550.2277  553.1879  680.5187   100
+#>   tibble 1330.3914 1339.0574 1360.1946 1346.2845 1357.3250 1475.7559   100
 ggplot2::autoplot(mb_filter) + ggplot2::ggtitle("Parquet vs csv filtering")
 #> Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
 #> ℹ Please use tidy evaluation idioms with `aes()`.
