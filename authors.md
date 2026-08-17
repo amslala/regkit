@@ -15,7 +15,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/amslala/regkit/blob/v0.3.1/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/amslala/regkit/blob/master/DESCRIPTION)
 
 Martinez Sanchez A, Hannigan L, Ask H, Pettersen J, Havdahl A (2026).
 *regkit: Facilitating manipulation, analysis and visualization of data

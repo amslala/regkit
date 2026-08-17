@@ -12,16 +12,16 @@ representativeness that are much needed, particularly in epidemiological
 research. Although registers are rich sources of information,
 pre–processing and working with the large datasets they produce can be
 challenging and time-consuming – especially for researchers with limited
-programming experience – and the process is vulnerable to both
-unintended variations across projects and highly consequential errors.
+programming experience – and the process might create both unintended
+variations across projects and errors.
 
 The `regkit` R package is an open-source toolkit designed to aid
 researchers in performing efficient and well-documented manipulation,
-analysis and visualization of individual-level data from Norwegian
-health and population registers. With it, we aim to facilitate
+analysis, and visualization of individual-level data from the Norwegian
+health and population registers. With `regkit`, we aim to facilitate
 reproducible descriptive epidemiology based on Norwegian health data,
 supplemented with sociodemographic information, such as income and
-education information, from other registry sources. The package includes
+education information, from other registries. The package includes
 functions to validate, filter, and link health (diagnostic) and
 administrative (sociodemographic) data. For transparency, each function
 creates a log that documents the function’s internal data processing,
@@ -36,21 +36,21 @@ visualize the underlying data.
 Due to their characteristics, Nordic registers are highly regarded for
 their unique potential in current epidemiological research
 \[@Jervelund_2020; @Maret-Ouda_2017\]. In the last decades,
-epidemiological research in the Nordic countries has harnessed the
-advantages of registry data, such as primary and secondary health care
-registers \[@Miettunen_2011;  @Thygesen_2014\]. In part, this is due to
-the introduction of personal identification numbers into the Nordic
-population-based health registers, which enables linkage to other data
-sources, allowing long-term, multi-dimensional follow-up of individuals
-in the population. Registry data from national statistical institutes
-(NSIs) are a widely-used source of auxiliary information in this regard.
+epidemiological research in the Nordic countries has showed how
+advantagous are these registry data \[@Miettunen_2011;
+ @Thygesen_2014\]. In part, this is possible thanks to the personal
+identification number, which enables linkage of data for each person
+from various registries, allowing long-term, multi-dimensional follow-up
+of individuals in the population. Registry data from national
+statistical institutes are a widely-used source of auxiliary information
+in this regard.
 
 In Norway, the Norwegian Patient Registry (NPR) is used in a large
 variety of research projects \[@Bakken_2020\]. As of 2025, more than
 1000 research papers have been published based on data from the NPR
 \[@NorwegianInstituteofPublicHealth_2024\]. Statistics Norway (SSB)
 provides sociodemographic individual-level data on various topics, such
-as social welfare, education and income. For instance, between 2021 and
+as social welfare, education, and income. For instance, between 2021 and
 2024, SSB delivered around 900 individual-level data assignments to both
 public authorities and research institutes for analytic and research
 purposes  \[@StatisticsNorway_2024; @StatisticsNorway_2025\]. Despite
@@ -78,7 +78,7 @@ a robust, transparent, and reproducible way.
 Considering the confidential nature of health and administrative
 register data, a large proportion of the code used in research is not
 publicly available. Nonetheless, some few open-source software solutions
-have been developed to dealt with the processing and analysis of
+have been developed to deal with the processing and analysis of
 Norwegian survey and register data. For instance, `phenotools`
 \[@Hannigan_2021\] is an R package that aims to facilitate efficient and
 reproducible use of survey information from Norwegian cohort data.
@@ -95,7 +95,7 @@ using open-source R packages to assist researchers working with
 Norwegian survey and register data. The justification for building
 `regkit` as a new package, rather than contributing to existing
 packages, is that currently available software focuses on relatively
-narrow, well-defined use-cases (e.g. tabular suppression, disease
+narrow, well-defined use-cases (e.g., tabular suppression, disease
 surveillance) as opposed to broad operations with large, linked
 individual-level datasets aimed at facilitating descriptive
 epidemiological analyses. In addition, building a new package has
@@ -107,49 +107,48 @@ creation of realistic simulated data.
 # Software design
 
 The package `regkit` was built following the principles of modularity
-and flexibility, as such the functions included in the package operate
-independently from one another, which increases their possible
-application in various research projects. Given the potential of
-multinational registry-based cohort studies \[@Maret-Ouda_2017\], it is
-important to note that, while the package workflow is originally
-designed for Norwegian data sources, its flexibility may allow for use
-with other national registries. Similarly, to improve interoperability
-across projects, `regkit` depends primarily on widely used `tidyverse`
-packages that many users working with register data are likely to have
-installed already. In addition, packages used in functions only relevant
-to a specific use case
-(e.g. [`plot_map()`](https://amslala.github.io/regkit/reference/plot_map.md))
+and flexibility, which increases their possible application in various
+research projects. Given the potential of multinational registry-based
+cohort studies \[@Maret-Ouda_2017\], it is important to note that, while
+the package workflow is originally designed for Norwegian data sources,
+its flexibility may allow for use with other national registries.
+Similarly, to improve interoperability across projects, `regkit` depends
+primarily on the widely used `tidyverse` packages that many users
+working with register data are likely to have installed already. In
+addition, packages used in functions only relevant to a specific use
+case (e.g.,
+[`plot_map()`](https://amslala.github.io/regkit/reference/plot_map.md))
 are listed as *Suggest*, keeping the core installation as lean as
 possible. The current unit test suite provides good coverage of the main
-functions, helping to ensure the reliability of the package.
+functions, ensuring the reliability of the package.
 
-Considering that the target user base of `regkit` (social scientists,
-epidemiologists) might have limited programming experience, we aimed to
+Considering that an average user of `regkit` (social scientist,
+epidemiologist) may have limited programming experience, we aimed to
 provide a user-friendly and educational framework and functions. For
 instance, one of the first challenges researchers working with
-population-based registers encounter is that of efficiently manipulating
-very large datasets into smaller and tidier datasets with which they can
-work analytically. The `regkit` package includes reading and filtering
-functions
-(e.g. [`read_diag_data()`](https://amslala.github.io/regkit/reference/read_diag_data.md),
+population-based registers encounter is how to efficiently manipulate
+large datasets into smaller and tidier datasets with which they can work
+analytically. The `regkit` package includes reading and filtering
+functions (e.g.,
+[`read_diag_data()`](https://amslala.github.io/regkit/reference/read_diag_data.md),
 [`filter_diag_data()`](https://amslala.github.io/regkit/reference/filter_diag_data.md))
 that support files in parquet format \[@ApacheParquet_2025\], which
-seamlessly enables users to efficiently work with larger-than-memory
-files in R without requiring deeper knowledge on the inner workings of
-parquet format objects. Furthermore, most functions automatically
-generate a log file that records and timestamps the function call,
-internal data transformations, warnings, errors, and general outputs.
-These logs can help researchers keep track of and document all
-manipulation or processing steps applied to their datasets.
+enables to efficiently work with larger-than-memory files in R without
+requiring deeper knowledge on the inner workings of parquet format
+objects. Furthermore, most functions automatically generate a log file
+that records and timestamps the function call, internal data
+transformations, warnings, errors, and general outputs. These logs can
+help researchers keep track of and document all manipulation or
+processing steps applied to their datasets.
 
 The package also includes functions that are particularly useful for
 descriptive epidemiology analyses, such as the computation of prevalence
 and incidence rates, along with the function
 [`plot_rates()`](https://amslala.github.io/regkit/reference/plot_rates.md)
-for visualizing the results. There are some specific challenges related
-to Norwegian registry data that are addressed in the helper functions of
-`regkit`, such as harmonizing municipality codes and retrieving
-population counts from SSB’s open data.
+for visualizing the results. Moreover, there are some specific
+challenges related to Norwegian registry data that are addressed in the
+helper functions of `regkit`, such as harmonizing municipality codes and
+retrieving population counts from SSB’s open data.
 
 In addition to helping solve practical challenges associated with
 processing, manipulation, and analysis of Norwegian register data,

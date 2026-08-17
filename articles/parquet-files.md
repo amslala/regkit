@@ -131,8 +131,8 @@ diag_parquet <- read_diag_data(
   code_col = "code",
   log_path = l_path)
 #> ℹ You have provided a parquet file or database. Due to the characteristics of these data objects, the console output and logging will provide minimal information.
-#> Reading /tmp/RtmpeyTkBf/file7ce8336f1b00/new_df.parquet file...
-#> ✔ Successfully read file: /tmp/RtmpeyTkBf/file7ce8336f1b00/new_df.parquet
+#> Reading /tmp/RtmpaiGn3J/file7d6c7aed5a3/new_df.parquet file...
+#> ✔ Successfully read file: /tmp/RtmpaiGn3J/file7d6c7aed5a3/new_df.parquet
 #> Checking column requirements:
 #> ✔ ID column
 #> ✔ Code column
@@ -196,8 +196,8 @@ filtered_parquet <- filter_diag_data(
 #> 
 #> Rows: 38,714
 #> Columns: 3
-#> $ id        <chr> "P000000669", "P000023038", "P000097523", "P000108943", "P00…
-#> $ code      <chr> "F841", "F4531", "F458", "F454", "F4538", "F4531", "F842", "…
+#> $ id        <chr> "P010467145", "P010467716", "P010470463", "P010471759", "P01…
+#> $ code      <chr> "F458", "F844", "F4531", "F452", "F844", "F848", "F4533", "F…
 #> $ diag_year <int> 2012, 2012, 2012, 2012, 2012, 2012, 2012, 2012, 2012, 2012, …
 ```
 
@@ -252,8 +252,8 @@ mb_filter <- microbenchmark::microbenchmark(
 mb_filter
 #> Unit: milliseconds
 #>     expr       min        lq      mean    median        uq       max neval
-#>  parquet  474.7402  483.7473  502.4785  490.5457  496.2187  602.4834   100
-#>   tibble 1189.9842 1218.1484 1240.0531 1231.4165 1250.5977 1338.8213   100
+#>  parquet  541.4833  544.5777  564.9119  547.8127  551.7285  672.1418   100
+#>   tibble 1274.8370 1282.1211 1303.0946 1290.0197 1295.8472 1454.1440   100
 ggplot2::autoplot(mb_filter) + ggplot2::ggtitle("Parquet vs csv filtering")
 #> Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
 #> ℹ Please use tidy evaluation idioms with `aes()`.
