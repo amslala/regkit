@@ -29,19 +29,19 @@ authors:
     orcid: 0000-0003-3123-5411
     affiliation: "1, 5"
 affiliations:
- - name: PsychGen Centre for Genetic Epidemiology and Mental Health, Norwegian Institute of Public Health
+ - name: PsychGen Centre for Genetic Epidemiology and Mental Health, Norwegian Institute of Public Health, Oslo, Norway
    index: 1
    ror: 046nvst19
- - name:  Department of Psychology, University of Oslo
+ - name:  Department of Psychology, University of Oslo, Oslo, Norway
    index: 2
    ror: 01xtthb56
- - name:  Center for Precision Psychiatry, University of Oslo
+ - name:  Center for Precision Psychiatry, University of Oslo, Oslo, Norway
    index: 3
    ror: 01xtthb56
- - name: PROMENTA Research Center, Department of Psychology, University of Oslo
+ - name: PROMENTA Research Center, Department of Psychology, University of Oslo, Oslo, Norway
    index: 4
    ror: 01xtthb56
- - name: Psychiatric Genetic Epidemiology Group, Research Department, Lovisenberg Diaconal Hospital
+ - name: Psychiatric Genetic Epidemiology Group, Research Department, Lovisenberg Diaconal Hospital, Oslo, Norway
    index: 5
    ror: 03ym7ve89
 date: 10 March 2026
