@@ -82,7 +82,7 @@ have been developed to deal with the processing and analysis of
 Norwegian survey and register data. For instance, `phenotools`
 \[@Hannigan_2021\] is an R package that aims to facilitate efficient and
 reproducible use of survey information from Norwegian cohort data.
-Similarly, `csverse` \[@White_2025\] is a suite of packages focusing on
+Similarly, `niphr` \[@White_2025\] is a suite of packages focusing on
 the preparation and analysis of Norwegian disease surveillance and
 linked register data. Finally, the Norwegian statistics bureau
 (Statistics Norway) has developed a handful of packages addressing

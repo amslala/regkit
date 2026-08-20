@@ -74,7 +74,7 @@ You can also visualize how all the dependencies fit together:
     #> local::. 0.3.1 [new][bld]
     #> ├─arrow 25.0.0 [new][bld][cmp]
     #> │ ├─assertthat 0.2.1 [new][bld]
-    #> │ ├─bit64 4.8.2 [new][bld][cmp]
+    #> │ ├─bit64 4.8.4 [new][bld][cmp]
     #> │ │ └─bit 4.6.0 [new][bld][cmp]
     #> │ ├─cpp11 0.5.5 [new][bld]
     #> │ ├─glue 1.8.1 [new][bld][cmp]

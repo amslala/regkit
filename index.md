@@ -28,11 +28,6 @@ You can install the development version of regkit from
 
 # install.packages("pak")
 pak::pak("amslala/regkit")
-
-
-# or 
-# install.packages("devtools")
-devtools::install_github("amslala/regkit")
 ```
 
 ### TSD

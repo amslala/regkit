@@ -189,8 +189,8 @@ files:</p>
 <span>  code_col <span class="op">=</span> <span class="st">"code"</span>,</span>
 <span>  log_path <span class="op">=</span> <span class="va">l_path</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> You have provided a parquet file or database. Due to the characteristics of these data objects, the console output and logging will provide minimal information.</span></span>
-<span><span class="co">#&gt; Reading /tmp/RtmpxdSJNY/file7dad1d5c33ed/new_df.parquet file...</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Successfully read file: /tmp/RtmpxdSJNY/file7dad1d5c33ed/new_df.parquet</span></span>
+<span><span class="co">#&gt; Reading /tmp/RtmpqfFFIV/file7e165eff3791/new_df.parquet file...</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Successfully read file: /tmp/RtmpqfFFIV/file7e165eff3791/new_df.parquet</span></span>
 <span><span class="co">#&gt; Checking column requirements:</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> ID column</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Code column</span></span>
@@ -252,8 +252,8 @@ observations:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Rows: 38,714</span></span>
 <span><span class="co">#&gt; Columns: 3</span></span>
-<span><span class="co">#&gt; $ id        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "P010467145"<span style="color: #949494;">, </span>"P010467716"<span style="color: #949494;">, </span>"P010470463"<span style="color: #949494;">, </span>"P010471759"<span style="color: #949494;">, </span>"P01…</span></span>
-<span><span class="co">#&gt; $ code      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "F458"<span style="color: #949494;">, </span>"F844"<span style="color: #949494;">, </span>"F4531"<span style="color: #949494;">, </span>"F452"<span style="color: #949494;">, </span>"F844"<span style="color: #949494;">, </span>"F848"<span style="color: #949494;">, </span>"F4533"<span style="color: #949494;">, </span>"F…</span></span>
+<span><span class="co">#&gt; $ id        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "P000000669"<span style="color: #949494;">, </span>"P000023038"<span style="color: #949494;">, </span>"P000097523"<span style="color: #949494;">, </span>"P000108943"<span style="color: #949494;">, </span>"P00…</span></span>
+<span><span class="co">#&gt; $ code      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "F841"<span style="color: #949494;">, </span>"F4531"<span style="color: #949494;">, </span>"F458"<span style="color: #949494;">, </span>"F454"<span style="color: #949494;">, </span>"F4538"<span style="color: #949494;">, </span>"F4531"<span style="color: #949494;">, </span>"F842"<span style="color: #949494;">, </span>"…</span></span>
 <span><span class="co">#&gt; $ diag_year <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2012<span style="color: #949494;">, </span>2012<span style="color: #949494;">, </span>2012<span style="color: #949494;">, </span>2012<span style="color: #949494;">, </span>2012<span style="color: #949494;">, </span>2012<span style="color: #949494;">, </span>2012<span style="color: #949494;">, </span>2012<span style="color: #949494;">, </span>2012<span style="color: #949494;">, </span>2012<span style="color: #949494;">, </span>…</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -303,8 +303,8 @@ data frame object:</p>
 <span><span class="va">mb_filter</span></span>
 <span><span class="co">#&gt; Unit: milliseconds</span></span>
 <span><span class="co">#&gt;     expr       min        lq      mean    median        uq       max neval</span></span>
-<span><span class="co">#&gt;  parquet  543.6078  547.4669  567.4631  550.2277  553.1879  680.5187   100</span></span>
-<span><span class="co">#&gt;   tibble 1330.3914 1339.0574 1360.1946 1346.2845 1357.3250 1475.7559   100</span></span>
+<span><span class="co">#&gt;  parquet  599.2026  603.7604  621.0211  605.8931  610.6912  726.2824   100</span></span>
+<span><span class="co">#&gt;   tibble 1244.3355 1258.3069 1276.0735 1266.2035 1277.5633 1406.5775   100</span></span>
 <span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">mb_filter</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Parquet vs csv filtering"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: `aes_string()` was deprecated in ggplot2 3.0.0.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use tidy evaluation idioms with `aes()`.</span></span>
