@@ -131,8 +131,8 @@ diag_parquet <- read_diag_data(
   code_col = "code",
   log_path = l_path)
 #> ℹ You have provided a parquet file or database. Due to the characteristics of these data objects, the console output and logging will provide minimal information.
-#> Reading /tmp/RtmpqfFFIV/file7e165eff3791/new_df.parquet file...
-#> ✔ Successfully read file: /tmp/RtmpqfFFIV/file7e165eff3791/new_df.parquet
+#> Reading /tmp/Rtmp1Pomwa/file7e394af2bb1b/new_df.parquet file...
+#> ✔ Successfully read file: /tmp/Rtmp1Pomwa/file7e394af2bb1b/new_df.parquet
 #> Checking column requirements:
 #> ✔ ID column
 #> ✔ Code column
@@ -192,12 +192,12 @@ filtered_parquet <- filter_diag_data(
 #> ℹ Remaining number of columns: 3
 #> ℹ Unique IDs in dataset: 38459
 #> ℹ Unique codes in dataset: 21
-#> ℹ Codes in dataset: "F849", "F4534", "F4530", "F842", "F451", "F840", "F844", "F4532", "F845", "F841", "F843", "F450", "F452", "F454", "F458", "F4538", "F4531", "F453", …, "F4533", and "F459"
+#> ℹ Codes in dataset: "F452", "F844", "F4533", "F454", "F849", "F4530", "F848", "F4532", "F450", "F843", "F842", "F840", "F458", "F845", "F841", "F451", "F4531", "F4534", …, "F4538", and "F459"
 #> 
 #> Rows: 38,714
 #> Columns: 3
-#> $ id        <chr> "P000000669", "P000023038", "P000097523", "P000108943", "P00…
-#> $ code      <chr> "F841", "F4531", "F458", "F454", "F4538", "F4531", "F842", "…
+#> $ id        <chr> "P023214344", "P023220089", "P023220706", "P023222447", "P02…
+#> $ code      <chr> "F843", "F458", "F4530", "F848", "F4533", "F844", "F844", "F…
 #> $ diag_year <int> 2012, 2012, 2012, 2012, 2012, 2012, 2012, 2012, 2012, 2012, …
 ```
 
@@ -252,8 +252,8 @@ mb_filter <- microbenchmark::microbenchmark(
 mb_filter
 #> Unit: milliseconds
 #>     expr       min        lq      mean    median        uq       max neval
-#>  parquet  599.2026  603.7604  621.0211  605.8931  610.6912  726.2824   100
-#>   tibble 1244.3355 1258.3069 1276.0735 1266.2035 1277.5633 1406.5775   100
+#>  parquet  538.1677  543.6479  562.4761  547.0394  551.6353  667.0424   100
+#>   tibble 1274.7150 1281.3053 1298.1080 1287.9093 1292.2846 1398.5008   100
 ggplot2::autoplot(mb_filter) + ggplot2::ggtitle("Parquet vs csv filtering")
 #> Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
 #> ℹ Please use tidy evaluation idioms with `aes()`.
