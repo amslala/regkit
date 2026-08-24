@@ -72,7 +72,7 @@ You can also visualize how all the dependencies fit together:
     #> ✔ Loading metadata database ... done
     #> 
     #> local::. 0.3.1 [new][bld]
-    #> ├─arrow 25.0.0 [new][bld][cmp]
+    #> ├─arrow 25.0.1 [new][bld][cmp]
     #> │ ├─assertthat 0.2.1 [new][bld]
     #> │ ├─bit64 4.8.4 [new][bld][cmp]
     #> │ │ └─bit 4.6.0 [new][bld][cmp]
@@ -169,7 +169,7 @@ You can also visualize how all the dependencies fit together:
     #> │ │ └─vctrs
     #> │ └─tibble
     #> ├─glue
-    #> ├─klassR 1.0.6 [new][bld]
+    #> ├─klassR 1.0.7 [new][bld]
     #> │ ├─httr 1.4.8 [new][bld]
     #> │ │ ├─curl 7.1.0 [new][bld][cmp]
     #> │ │ ├─jsonlite 2.0.0 [new][bld][cmp]

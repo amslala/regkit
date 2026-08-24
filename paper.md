@@ -28,33 +28,34 @@ creates a log that documents the function’s internal data processing,
 warnings/errors, and corresponding outputs. Finally, considering the
 extensive use of registers in epidemiological research, `regkit`
 includes functions intended to help users compute common descriptive
-epidemiology statistics, such as prevalence and incidence rates, and
+epidemiological statistics, such as prevalence and incidence rates, and
 visualize the underlying data.
 
 # Statement of need
 
-Due to their characteristics, Nordic registers are highly regarded for
-their unique potential in current epidemiological research
-\[@Jervelund_2020; @Maret-Ouda_2017\]. In the last decades,
-epidemiological research in the Nordic countries has showed how
-advantageous are these registry data \[@Laugesen_2021; @Viippola_2023;
-@Ludvigsson_2016; @Bakken_2020\]. In part, this is possible thanks to
-the personal identification number, which enables linkage of data for
+Nordic registers are highly regarded for their unique potential in
+current epidemiological research \[@Jervelund_2020; @Maret-Ouda_2017\].
+In the last decades, epidemiological research in the Nordic countries
+has showcased many of the advantages of these registry data
+\[@Laugesen_2021; @Viippola_2023; @Ludvigsson_2016; @Bakken_2020\]. In
+part, Nordic registers’ suitability for research is due to the existence
+of personal identification numbers, which enable linkage of data for
 each person from various registries, allowing long-term,
-multi-dimensional follow-up of individuals in the population. Registry
-data from national statistical institutes are a widely-used source of
-auxiliary information in this regard.
+multi-dimensional follow-up of individuals in the population.
+Sociodemographic data from national statistical institutes are a
+widely-used source of auxiliary information in epidemiological research
+thanks to this possibility of cross-registry linkage.
 
 In Norway, the Norwegian Patient Registry (NPR) is used in a large
 variety of research projects \[@Bakken_2020\]. As of 2025, more than
 1000 research papers have been published based on data from the NPR
 \[@NorwegianInstituteofPublicHealth_2024\]. Statistics Norway (SSB)
 provides sociodemographic individual-level data on various topics, such
-as social welfare, education, and income. For instance, between 2021 and
-2024, SSB delivered around 900 individual-level data assignments to both
-public authorities and research institutes for analytic and research
-purposes \[@StatisticsNorway_2024; @StatisticsNorway_2025\]. Despite
-their relatively widespread use in research, health and administrative
+as social welfare, education, and income. Between 2021 and 2024, SSB
+delivered around 900 individual-level data assignments to both public
+authorities and research institutes for analytic and research purposes
+\[@StatisticsNorway_2024; @StatisticsNorway_2025\]. Despite their
+relatively widespread use in research, health and administrative
 registers are not designed with research or statistical purposes in
 mind. This creates numerous potential challenges, inefficiencies, and
 vulnerabilities in the process of carrying out epidemiological research
@@ -64,14 +65,14 @@ Considering the wide range of researchers using individual-level
 registers in Norway, it is highly likely that there are differences in
 the way researchers pre-process and prepare their data for analysis.
 Access to register individual-level data is regulated by strict
-confidentiality laws, which makes “hands-on” training or tutorials hard
-to access and standardize. The use of proprietary software to manipulate
-and analyze the data further hinders efforts to ensure reproducibility
-and transparency across research projects working with the same data
-\[@Mathur_2023\]. In this context, we have identified the need for an
-open-source toolkit to assist researchers working with Norwegian
-individual-level registry data to prepare, manipulate, and analyze it in
-a robust, transparent, and reproducible way.
+confidentiality laws, which makes “hands-on” training or tutorials
+difficult to access and standardize. The use of proprietary software to
+manipulate and analyze the data further hinders efforts to ensure
+reproducibility and transparency across research projects working with
+the same data \[@Mathur_2023\]. In this context, we have identified the
+need for an open-source toolkit to assist researchers working with
+Norwegian individual-level registry data to prepare, manipulate, and
+analyze them in a robust, transparent, and reproducible way.
 
 # State of the field
 
@@ -107,9 +108,9 @@ to facilitate the creation of realistic simulated data.
 # Software design
 
 The package `regkit` was built following the principles of modularity
-and flexibility, which increases their possible application in various
+and flexibility, which increases its possible application in various
 research projects. For instance, although the package was originally
-designed for Norwegian data sources, its flexibility may allow for used
+designed for Norwegian data sources, its flexibility may allow for use
 with other national registries. Similarly, to improve interoperability
 across projects, `regkit` imports widely known packages (e.g.,
 `ggplot2`, `dplyr`, `purrr`, etc.) that many users working with register
@@ -120,27 +121,28 @@ are listed as *Suggest*, keeping the core installation as lean as
 possible. The current unit test suite provides good coverage of the main
 functions, ensuring the reliability of the package.
 
-Considering that an average user of `regkit` (social scientist,
-epidemiologist) may have limited programming experience, we provide
-user-friendly and educational framework and functions. For instance, one
-of the first challenges researchers working with population-based
-registers encounter is how to efficiently manipulate large datasets into
-smaller and tidier datasets with which they can work analytically. The
-`regkit` package includes reading and filtering functions (e.g.,
+Considering that an average user of `regkit` (social scientists or
+epidemiologists) may have limited programming experience, we provide a
+user-friendly educational framework and accessible documentation of
+functions. For instance, one of the first challenges researchers working
+with population-based registers encounter is how to efficiently
+manipulate large datasets into smaller and tidier datasets with which
+they can work analytically. The `regkit` package includes reading and
+filtering functions (e.g.,
 [`read_diag_data()`](https://amslala.github.io/regkit/reference/read_diag_data.md),
 [`filter_diag_data()`](https://amslala.github.io/regkit/reference/filter_diag_data.md))
 that support files in parquet format \[@ApacheParquet_2025\], which
-enables to efficiently work with larger-than-memory files in R without
-requiring deeper knowledge on the inner workings of parquet format
-objects. Furthermore, most functions automatically generate a log file
-that records and timestamps the function call, internal data
+enables users to work efficiently with larger-than-memory files in R
+without requiring deeper knowledge on the inner workings of parquet
+format objects. Furthermore, most functions automatically generate a log
+file that records and timestamps the function call, internal data
 transformations, warnings, errors, and general outputs. These logs can
 help researchers keep track of and document all manipulation or
 processing steps applied to their datasets.
 
 The package also includes functions that are particularly useful for
-descriptive epidemiology analyses, such as the computation of prevalence
-and incidence rates, along with the function
+descriptive epidemiological analyses, such as the computation of
+prevalence and incidence rates, along with the function
 [`plot_rates()`](https://amslala.github.io/regkit/reference/plot_rates.md)
 for visualizing the results. Moreover, there are some specific
 challenges related to Norwegian registry data that are addressed in the
@@ -158,7 +160,7 @@ main functions and real-life examples of descriptive epidemiology. The
 vignettes and possibility of creating simulated individual-level
 datasets with the function
 [`simulate_data()`](https://amslala.github.io/regkit/reference/simulate_data.md)
-also allow research-groups to use the package as zero-risk training
+also allow research groups to use the package as zero-risk training
 material for new members, and to plan and structure analytic projects
 prior to obtaining data access.
 
@@ -201,7 +203,7 @@ conceptually to the iterative development of the package.
 AMS was supported by the Research Council of Norway (#336085). JHP and
 HA were supported by the Research Council of Norway (#324620), and
 NordForsk(#156298). LJH was supported by the South-Eastern Norway
-Regional Health Authority (#2922083). AH was supported by the Research
+Regional Health Authority (#2022083). AH was supported by the Research
 Council of Norway (#336085), the South Eastern Norway Regional Health
 Authority (#2020022), and the European Union’s Horizon Europe Research
 and Innovation programme (FAMILY \#101057529). Thanks to Guido Biele and
