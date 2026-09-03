@@ -202,11 +202,11 @@ conceptually to the iterative development of the package.
 
 AMS was supported by the Research Council of Norway (#336085). JHP and
 HA were supported by the Research Council of Norway (#324620), and
-NordForsk(#156298). LJH was supported by the South-Eastern Norway
+NordForsk (#156298). LJH was supported by the South-Eastern Norway
 Regional Health Authority (#2022083). AH was supported by the Research
 Council of Norway (#336085), the South Eastern Norway Regional Health
 Authority (#2020022), and the European Union’s Horizon Europe Research
-and Innovation programme (FAMILY \#101057529). Thanks to Guido Biele and
+and Innovation program (FAMILY \#101057529). Thanks to Guido Biele and
 Lasse Bang for their assistance during the early stages of this project.
 
 # References

@@ -74,7 +74,7 @@ You can also visualize how all the dependencies fit together:
     #> local::. 0.3.1 [new][bld]
     #> ├─arrow 25.0.1 [new][bld][cmp]
     #> │ ├─assertthat 0.2.1 [new][bld]
-    #> │ ├─bit64 4.8.4 [new][bld][cmp]
+    #> │ ├─bit64 4.8.6 [new][bld][cmp]
     #> │ │ └─bit 4.6.0 [new][bld][cmp]
     #> │ ├─cpp11 0.5.5 [new][bld]
     #> │ ├─glue 1.8.1 [new][bld][cmp]
@@ -154,10 +154,12 @@ You can also visualize how all the dependencies fit together:
     #> │ │ └─viridisLite 0.4.3 [new][bld]
     #> │ ├─vctrs
     #> │ └─withr
-    #> ├─ggthemes 5.2.0 [new][bld]
+    #> ├─ggthemes 6.0.0 [new][bld]
+    #> │ ├─cli
     #> │ ├─ggplot2
     #> │ ├─lifecycle
     #> │ ├─purrr
+    #> │ ├─rlang
     #> │ ├─scales
     #> │ ├─stringr 1.6.0 [new][bld]
     #> │ │ ├─cli
@@ -170,8 +172,8 @@ You can also visualize how all the dependencies fit together:
     #> │ └─tibble
     #> ├─glue
     #> ├─klassR 1.0.7 [new][bld]
-    #> │ ├─httr 1.4.8 [new][bld]
-    #> │ │ ├─curl 7.1.0 [new][bld][cmp]
+    #> │ ├─httr 1.4.9 [new][bld]
+    #> │ │ ├─curl 8.0.0 [new][bld][cmp]
     #> │ │ ├─jsonlite 2.0.0 [new][bld][cmp]
     #> │ │ ├─mime 0.13 [new][bld][cmp]
     #> │ │ ├─openssl 2.4.2 [new][bld][cmp]
@@ -197,7 +199,7 @@ You can also visualize how all the dependencies fit together:
     #> │   └─xml2 1.6.0 [new][bld][cmp]
     #> │     ├─cli
     #> │     └─rlang
-    #> ├─logger 0.4.2 [new][bld]
+    #> ├─logger 0.4.3 [new][bld]
     #> ├─purrr
     #> ├─rlang
     #> ├─stringr
